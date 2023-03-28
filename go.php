@@ -9,15 +9,6 @@ require_once("user/protect.php");
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-	<style>
-      @media screen and (min-width: 720px) {
-        .custom-container {
-          max-width: calc(0.75 * 960px);
-          min-width: 600px;
-          width: 100%;
-        }
-      }
-    </style>
   </head>
   <body>
     <div class="page-overlay" id="page-overlay">
@@ -45,9 +36,9 @@ require_once("user/protect.php");
 					</div>
 					<div class="column is-narrow">
 					<div class="buttons">
-						<button type="button" class="button is-small" id="modebutton">DARK MODE</button>
-						<?php if ($masterkeymode==false && $runbutton==true) {echo('<button type="button" class="button is-small" id="apibutton">API KEY</button>');} ?>
-						<button type="button" class="button is-small" id="logoutbutton">LOGOUT</button>
+						<button type="button" class="button is-small is-dark" id="modebutton">DARK MODE</button>
+						<?php if ($masterkeymode==false && $runbutton==true) {echo('<button type="button" class="button is-small is-info" id="apibutton">API KEY</button>');} ?>
+						<button type="button" class="button is-small is-danger" id="logoutbutton">LOGOUT</button>
 					</div>
 					</div>
 				</div>
