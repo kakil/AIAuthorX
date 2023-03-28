@@ -9,6 +9,15 @@ require_once("user/protect.php");
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+	<style>
+      @media screen and (min-width: 720px) {
+        .custom-container {
+          max-width: calc(0.75 * 960px);
+          min-width: 600px;
+          width: 100%;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="page-overlay" id="page-overlay">
@@ -19,39 +28,43 @@ require_once("user/protect.php");
     </div>
     <section class="section">
       <div class="container">
-        <div class="logo-section has-text-centered">
-          <figure class="image">
-            <img class="logo-image" src="<?php echo($logo); ?>">
-          </figure>
-          <input type="input" style="display:none;" id="apikeystorage" value="<?php if ($masterkeymode==true){echo($masterapikey);}else{echo($_SESSION["user"]["user_apikey"]);} ?>" />
-        </div>
-        <div class="prompt-selector-section">
-          <div class="columns">
-            <div class="column">
-              <div class="select is-fullwidth">
-                <select id="promptselector" class="promptselector" autocomplete="off"></select>
-              </div>
-            </div>
-            <div class="column is-narrow">
-              <div class="buttons">
-                <button type="button" class="button is-small" id="modebutton">DARK MODE</button>
-                <?php if ($masterkeymode==false && $runbutton==true) {echo('<button type="button" class="button is-small" id="apibutton">API KEY</button>');} ?>
-                <button type="button" class="button is-small" id="logoutbutton">LOGOUT</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="prompt-display-section">
-          <div id="promptdata" class="content" >
-            <div contentEditable="true" id="innerprompt" class="innerprompt" >I want you to act as an academician. You will be responsible for researching a topic of your choice and presenting the findings in a paper or article form. Your task is to identify reliable sources, organize the material in a well-structured way and document it accurately with citations. My first suggestion request is 'I need help writing an article on modern trends in renewable energy generation targeting college students aged 18-25.'</div>
-          </div>
-          <div class="buttons">
-            <button type="button" class="button is-primary" id="copybutton">COPY PROMPT</button>
-            <?php if ($runbutton==true){echo('<button type="button" class="button is-success" id="runbutton">RUN PROMPT</button>');}  ?>
-          </div>
-        </div>
-        <?php echo($footer); ?>
-      </div>
+		<div class="column is-three-fifths is-offset-one-fifth">
+			<div class="box">
+				<div class="logo-section has-text-centered">
+				<figure class="image">
+					<img class="logo-image" src="<?php echo($logo); ?>">
+				</figure>
+				<input type="input" style="display:none;" id="apikeystorage" value="<?php if ($masterkeymode==true){echo($masterapikey);}else{echo($_SESSION["user"]["user_apikey"]);} ?>" />
+				</div>
+				<div class="prompt-selector-section">
+				<div class="columns">
+					<div class="column">
+					<div class="select is-fullwidth">
+						<select id="promptselector" class="promptselector" autocomplete="off"></select>
+					</div>
+					</div>
+					<div class="column is-narrow">
+					<div class="buttons">
+						<button type="button" class="button is-small" id="modebutton">DARK MODE</button>
+						<?php if ($masterkeymode==false && $runbutton==true) {echo('<button type="button" class="button is-small" id="apibutton">API KEY</button>');} ?>
+						<button type="button" class="button is-small" id="logoutbutton">LOGOUT</button>
+					</div>
+					</div>
+				</div>
+				</div>
+				<div class="prompt-display-section">
+				<div id="promptdata" class="content" >
+					<div contentEditable="true" id="innerprompt" class="innerprompt" >I want you to act as an academician. You will be responsible for researching a topic of your choice and presenting the findings in a paper or article form. Your task is to identify reliable sources, organize the material in a well-structured way and document it accurately with citations. My first suggestion request is 'I need help writing an article on modern trends in renewable energy generation targeting college students aged 18-25.'</div>
+				</div>
+				<div class="buttons">
+					<button type="button" class="button is-primary" id="copybutton">COPY PROMPT</button>
+					<?php if ($runbutton==true){echo('<button type="button" class="button is-success" id="runbutton">RUN PROMPT</button>');}  ?>
+				</div>
+				</div>
+				<?php echo($footer); ?>
+			</div>  <!-- Box END -->
+		</div>  <!-- Column END -->
+      </div> <!-- Container END -->
     </section>
 
 			
