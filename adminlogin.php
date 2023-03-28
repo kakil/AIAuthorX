@@ -18,26 +18,47 @@ if (isset($_SESSION["adminuser"])) {
 <html>
   <head>
     <title>Login Page</title>
-    <link rel="stylesheet" href="css/login.css">
-	<style>
-	.center {
-	  display: block;
-	  margin-left: auto;
-	  margin-right: auto;
-	  width: 100%;
-	}	
-	</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   </head>
   <body>
     <?php
-    if (isset($_POST["username"])) { echo "<div id='notify'>Invalid user/password</div>"; }
+    if (isset($_POST["username"])) { echo "<div id='notify' class='notification is-danger'>Invalid user/password</div>"; }
     ?>
-    <form id="login" method="post">
-		<img class="center" style="max-width:100%; height:auto;" src="img/logo.png">
-		<div style="text-align:center; margin-top:10px;"><h2 >ADMIN LOGIN</h2></div>
-		<input type="username" name="username" placeholder="Username" required>
-		<input type="password" name="password" placeholder="Password" required>
-		<input type="submit" value="Sign In">
-    </form>
+
+    <section class="section">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <figure class="image has-text-centered">
+              <img src="img/logo.png" style="max-width: 100%; height: auto;">
+            </figure>
+
+            <h2 class="title has-text-centered">ADMIN LOGIN</h2>
+
+            <form id="login" method="post">
+              <div class="field">
+                <label class="label">Username</label>
+                <div class="control">
+                  <input class="input" type="text" name="username" placeholder="Username" required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                  <input class="input" type="password" name="password" placeholder="Password" required>
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <input class="button is-primary" type="submit" value="Sign In">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   </body>
 </html>

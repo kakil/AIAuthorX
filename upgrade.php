@@ -51,75 +51,42 @@ $register=$urlhere."register.php";
 <!doctype HTML>
 <html>
 <head>
-<title></title>
-<style>
-* {
-  font-family: Arial, Helvetica, sans-serif;
-  box-sizing: border-box;
-  color: #6f6f6f;
-  font-size:14px;
-}
-
-
-#notify {
-  background: #ffd9e3;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-
-#setup {
-  max-width: 900px;
-  border: 1px solid #ddd;
-  background: #f2f2f2;
-  margin: 0 auto;
-  padding: 20px;
-}
-#setup h2 {
-  color: #6f6f6f;
-  padding: 0;
-  margin: 0 0 10px 0;
-}
-#setup label, #setup input, #setup textarea, #setup select {
-  width: 100%;
-  margin: 10px 0;
-}
-#setup input, #setup textarea, #setup select {
-  padding: 10px;
-}
-#setup input[type=submit] {
-  background: #4f69db;
-  color: #fff;
-  border: 0;
-}
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-}	
-</style>
+<title>Upgrade</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
 
     <?php
-    if (isset($_POST["email"])) { echo "<div id='notify'>Invalid user/password</div>"; }
+    if (isset($_POST["email"])) { echo "<div id='notify' class='notification is-danger'>Invalid user/password</div>"; }
     ?>
 
+    <section class="section">
+        <div class="container">
+            <h2 class="title has-text-centered">UPGRADE - Please answer the following questions and press GO.</h2>
 
-    <form id="setup" method="post">
-		
-		<div style="text-align:center; margin-top:10px;"><h2 style="font-size:18px" >UPGRADE - Please answer the following questions and press GO.</h2></div>
-		<br>
-		
-		Admin Username
-		<input type="text" name="adminuser" value="admin">
-		Admin Password
-		<input type="text" name="adminpassword" value="">
-		
-		<input type="submit" value="Go">
-    </form>
-<script>
-</script>
+            <form id="setup" method="post">
+                <div class="field">
+                    <label class="label">Admin Username</label>
+                    <div class="control">
+                        <input class="input" type="text" name="adminuser" value="admin">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Admin Password</label>
+                    <div class="control">
+                        <input class="input" type="text" name="adminpassword" value="">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="button is-primary" type="submit" value="Go">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
 </body>
 </html>
+

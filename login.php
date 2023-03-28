@@ -17,30 +17,48 @@ if (isset($_SESSION["user"])) {
 <html>
   <head>
     <title>Login Page</title>
-    <link rel="stylesheet" href="css/login.css">
-	<style>
-	.center {
-	  display: block;
-	  margin-left: auto;
-	  margin-right: auto;
-	  width: 100%;
-	}	
-	</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   </head>
   <body>
-
     <?php
-    if (isset($_POST["email"])) { echo "<div id='notify'>Invalid user/password</div>"; }
+      if (isset($_POST["email"])) { echo "<div id='notify' class='notification is-danger'>Invalid user/password</div>"; }
     ?>
 
-
-    <form id="login" method="post">
-		<img class="center" style="max-width:100%; height:auto;" src="img/logo.png">
-		<div style="text-align:center; margin-top:10px;"><h2 >MEMBER LOGIN</h2></div>
-		<input type="email" name="email" placeholder="Email" required>
-		<input type="password" name="password" placeholder="Password" required>
-		<input type="submit" value="Sign In">
-		<div style="text-align:center; margin-top:10px;"><a href="forgotpassword.php">Forgot Password</a></div>
-    </form>
+    <section class="section">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-4">
+            <form id="login" method="post">
+              <figure class="image">
+                <img class="center" style="max-width:100%; height:auto;" src="img/logo.png">
+              </figure>
+              <h2 class="title is-4 has-text-centered">MEMBER LOGIN</h2>
+              <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                  <input class="input" type="email" name="email" placeholder="Email" required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                  <input class="input" type="password" name="password" placeholder="Password" required>
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <input class="button is-link is-fullwidth" type="submit" value="Sign In">
+                </div>
+              </div>
+              <div class="has-text-centered">
+                <a href="forgotpassword.php">Forgot Password</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   </body>
 </html>

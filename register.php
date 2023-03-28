@@ -25,27 +25,51 @@ if (isset($_SESSION["user"])) {
 <html>
   <head>
     <title>User Registration</title>
-    <link rel="stylesheet" href="css/login.css">
-	<style>
-	.center {
-	  display: block;
-	  margin-left: auto;
-	  margin-right: auto;
-	  width: 100%;
-	}	
-	</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   </head>
   <body>
     <?php
-    if (isset($_POST["email"])) { echo "<div id='notify'>Email exists or invalid password or Name not entered - please correct!</div>"; }
+      if (isset($_POST["email"])) { echo "<div id='notify' class='notification is-danger'>Email exists or invalid password or Name not entered - please correct!</div>"; }
     ?>
-	<form id="login" method="post">
-		<img class="center" style="max-width:100%; height:auto;" src="img/logo.png">
-		<div style="text-align:center; margin-top:10px;"><h2 >CREATE YOUR ACCOUNT</h2></div>
-		<input type="name" name="name" placeholder="Your Name" required>
-		<input type="email" name="email" placeholder="Email" required>
-		<input type="password" name="password" placeholder="Password">
-		<input type="submit" value="Create Account">
-    </form>
+
+    <section class="section">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-4">
+            <form id="login" method="post">
+              <figure class="image">
+                <img class="center" style="max-width:100%; height:auto;" src="img/logo.png">
+              </figure>
+              <h2 class="title is-4 has-text-centered">CREATE YOUR ACCOUNT</h2>
+              <div class="field">
+                <label class="label">Your Name</label>
+                <div class="control">
+                  <input class="input" type="text" name="name" placeholder="Your Name" required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                  <input class="input" type="email" name="email" placeholder="Email" required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                  <input class="input" type="password" name="password" placeholder="Password">
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <input class="button is-link is-fullwidth" type="submit" value="Create Account">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   </body>
 </html>

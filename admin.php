@@ -60,44 +60,50 @@ function replaceKeys($oldKey, $newKey, array $input){
 
 ?>
 <!doctype HTML>
-	<html>
-		<head>
-			<title><?php echo($sitename); ?></title>
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-			<link rel="stylesheet" href="css/main.css">
-			<script src="admintable.js"></script>
-		</head>
-		<body >
+<html>
+  <head>
+    <title><?php echo($sitename); ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="admintable.js"></script>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-12">
+            <figure class="image has-text-centered">
+              <img class="logo-image" style="width: 200px; height: auto;" src="<?php echo($logo); ?>">
+            </figure>
+            <h2 class="title has-text-centered">Admin Panel</h2>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-12">
+            <div class="field has-addons">
+              <label class="label">Search: </label>
+              <div class="control">
+                <input class="input" type="text" onkeyup="filter(event)">
+              </div>
+            </div>
+            <button type="button" class="button is-small" style="float: right; margin-bottom: 5px;" onclick="logout();">LOGOUT</button>
 
-			<div class="main-container">
-				<div class="logo-section">
-					<img class="logo-image" style="width:200px; height:auto;"  src="<?php echo($logo); ?>">
-					<br>
-					Admin Panel
-				</div>
+            <table id="user-table" class="table is-striped is-bordered" style="margin-top: 10px; width: 100%;">
+              <thead>
+                <tr></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <div id="paginator"></div>
+          </div>
+        </div>
+        <?php echo($footer); ?>
+      </div>
+    </section>
+  </body>
+</html>
 
-				<div class="table-container">
-					<label>Search: </label><input type="text" onkeyup="filter(event)">
-					<button type="button" class="custom-button-small" style="float:right; margin-bottom:5px;" onclick="logout();">LOGOUT</button>
-					
-					<table id="user-table" class="table is-striped is-bordered" style="margin-top:10px; width:100%;"	>
-						<thead>
-							<tr>
-								
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-					<div id="paginator"></div>
-				</div>				
-					
-				
-				<?php echo($footer); ?>
-			</div>
-			<div style="min-height:100%"></div>
-		</body>
 	<script>
 	function logout(){
 		window.location.assign('adminlogout.php');

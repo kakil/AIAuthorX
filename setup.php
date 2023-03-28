@@ -90,98 +90,121 @@ $register=$urlhere."register.php";
 <html>
 <head>
 <title></title>
-<style>
-* {
-  font-family: Arial, Helvetica, sans-serif;
-  box-sizing: border-box;
-  color: #6f6f6f;
-  font-size:14px;
-}
-
-
-#notify {
-  background: #ffd9e3;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-
-#setup {
-  max-width: 900px;
-  border: 1px solid #ddd;
-  background: #f2f2f2;
-  margin: 0 auto;
-  padding: 20px;
-}
-#setup h2 {
-  color: #6f6f6f;
-  padding: 0;
-  margin: 0 0 10px 0;
-}
-#setup label, #setup input, #setup textarea, #setup select {
-  width: 100%;
-  margin: 10px 0;
-}
-#setup input, #setup textarea, #setup select {
-  padding: 10px;
-}
-#setup input[type=submit] {
-  background: #4f69db;
-  color: #fff;
-  border: 0;
-}
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-}	
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
+  <section class="section">
+    <div class="container">
+      <?php
+      if (isset($_POST["email"])) { echo "<div id='notify' class='notification is-danger'>Invalid user/password</div>"; }
+      ?>
+      <form id="setup" method="post">
+        <h2 class="title is-4 has-text-centered">Setup - Please answer the following questions and press GO.</h2>
+        <div class="field">
+          <label class="label">Database Host (usually "localhost"):</label>
+          <div class="control">
+            <input class="input" type="text" name="user_db_host" value="localhost" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Database Name:</label>
+          <div class="control">
+            <input class="input" type="text" name="user_db_name" placeholder="database_name" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Database User:</label>
+          <div class="control">
+            <input class="input" type="text" name="user_db_user" placeholder="database_user" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Database Password:</label>
+          <div class="control">
+            <input class="input" type="text" name="user_db_password" placeholder="database_password" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Site Name (Site Name for your title tag - Letters/Numbers only):</label>
+          <div class="control">
+            <input class="input" type="text" name="sitename" pattern="[a-zA-Z0-9 ]+" placeholder="Your Site Name">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Logout Redirect (Link to go to when user logs out - leave at login.php if you want to return to login screen):</label>
+          <div class="control">
+            <input class="input" type="text" name="logoutredirect" value="login.php">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Admin Username:</label>
+          <div class="control">
+            <input class="input" type="text" name="adminuser" value="admin">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Admin Password:</label>
+          <div class="control">
+            <input class="input" type="text" name="adminpassword" value="">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Footer HTML (HTML for your footer - feel free to modify the example below):</label>
+          <div class="control">
+            <textarea class="textarea" name="footerhtml">
+              <br>
+              <br>
+              <br>
+              <hr>
+              <div style="color:#777; font:size:14px; display:block; float:left;">(C)2023 Your Software Name - For terms click 
+                <a href="terms.php" target="_BLANK">HERE</a>
+              </div>
+              <div style="color:#777; float:right">Click 
+                <a href="https://supportlink.com">HERE</a> for support
+              </div>
+              <br>
+              <hr>
+            </textarea>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Show the "Run Prompt" button (Select No to disable connections to OpenAI):</label>
+          <div class="control">
+            <div class="select">
+              <select name="runbutton" required>
+<option value="true" selected="selected">Yes</option>
+<option value="false">No</option>
+</select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Use My OpenAI API Key (select "No" to make end user enter their own key - recommended):</label>
+          <div class="control">
+            <div class="select">
+              <select name="masterkeymode" required>
+                <option value="true">Yes</option>
+                <option value="false" selected="selected">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">OpenAI Key (Enter your key here only if you don't want individual use API keys):</label>
+          <div class="control">
+            <input class="input" type="text" name="masterapikey" placeholder="Your API Key">
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <input class="button is-primary" type="submit" value="Go">
+          </div>
+        </div>
+      </form>
+    </div>
 
-    <?php
-    if (isset($_POST["email"])) { echo "<div id='notify'>Invalid user/password</div>"; }
-    ?>
-
-
-    <form id="setup" method="post">
-		
-		<div style="text-align:center; margin-top:10px;"><h2 style="font-size:18px" >Setup - Please answer the following questions and press GO.</h2></div>
-		<br>
-		Database Host (usually "localhost"):
-		<input type="text" name="user_db_host" value="localhost" required>
-		Database Name:
-		<input type="text" name="user_db_name" placeholder="database_name" required>
-		Database User:
-		<input type="text" name="user_db_user" placeholder="database_user" required>
-		Database Password:
-		<input type="text" name="user_db_password" placeholder="database_password" required>
-		Site Name (Site Name for your title tag - Letters/Numbers only)
-		<input type="text" name="sitename" pattern="[a-zA-Z0-9 ]+" placeholder="Your Site Name">
-		Logout Redirect (Link to go to when user logs out - leave at login.php if you want to return to login screen)
-		<input type="text" name="logoutredirect" value="login.php">
-		Admin Username
-		<input type="text" name="adminuser" value="admin">
-		Admin Password
-		<input type="text" name="adminpassword" value="">
-		Footer HTML (HTML for your footer - feel free to modify the example below)
-		<textarea name="footerhtml"><br><br><br><hr><div style="color:#777; font:size:14px; display:block; float:left;">(C)2023 Your Software Name - For terms click <a href="terms.php" target="_BLANK">HERE</a></div><div style="color:#777; float:right">Click <a href="https://supportlink.com">HERE</a> for support</div><br><hr></textarea>
-		Show the "Run Prompt" button (Select No to disable connections to OpenAI)<br>
-		<select name="runbutton" required style="width:80px;">
-			<option value="true" selected="selected">Yes</option>
-			<option value="false" >No</option>
-		</select><br>
-		Use My OpenAI API Key (select "No" to make end user enter their own key - recommended)<br>
-		<select name="masterkeymode" required style="width:80px">
-			<option value="true">Yes</option>
-			<option value="false" selected="selected">No</option>
-		</select><br>
-		OpenAI Key (Enter your key here only if you don't want individual use API keys):
-		<input type="text" name="masterapikey" placeholder="Your API Key" >		
-		<input type="submit" value="Go">
-    </form>
-<script>
-</script>
+  </section>
 </body>
 </html>

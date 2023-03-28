@@ -3,45 +3,57 @@ require_once("config.php");
 require_once("user/protect.php");
 ?>
 <!doctype HTML>
-	<html>
-		<head>
-			<title><?php echo($sitename); ?></title>
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<link rel="stylesheet" href="css/main.css">
+<html>
+  <head>
+    <title><?php echo($sitename); ?></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  </head>
+  <body>
+    <div class="page-overlay" id="page-overlay">
+      <div class="inside-overlay">
+        <span class="loader"></span>
+        <br><b>PLEASE WAIT</b>
+      </div>
+    </div>
+    <section class="section">
+      <div class="container">
+        <div class="logo-section has-text-centered">
+          <figure class="image">
+            <img class="logo-image" src="<?php echo($logo); ?>">
+          </figure>
+          <input type="input" style="display:none;" id="apikeystorage" value="<?php if ($masterkeymode==true){echo($masterapikey);}else{echo($_SESSION["user"]["user_apikey"]);} ?>" />
+        </div>
+        <div class="prompt-selector-section">
+          <div class="columns">
+            <div class="column">
+              <div class="select is-fullwidth">
+                <select id="promptselector" class="promptselector" autocomplete="off"></select>
+              </div>
+            </div>
+            <div class="column is-narrow">
+              <div class="buttons">
+                <button type="button" class="button is-small" id="modebutton">DARK MODE</button>
+                <?php if ($masterkeymode==false && $runbutton==true) {echo('<button type="button" class="button is-small" id="apibutton">API KEY</button>');} ?>
+                <button type="button" class="button is-small" id="logoutbutton">LOGOUT</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-display-section">
+          <div id="promptdata" class="content" >
+            <div contentEditable="true" id="innerprompt" class="innerprompt" >I want you to act as an academician. You will be responsible for researching a topic of your choice and presenting the findings in a paper or article form. Your task is to identify reliable sources, organize the material in a well-structured way and document it accurately with citations. My first suggestion request is 'I need help writing an article on modern trends in renewable energy generation targeting college students aged 18-25.'</div>
+          </div>
+          <div class="buttons">
+            <button type="button" class="button is-primary" id="copybutton">COPY PROMPT</button>
+            <?php if ($runbutton==true){echo('<button type="button" class="button is-success" id="runbutton">RUN PROMPT</button>');}  ?>
+          </div>
+        </div>
+        <?php echo($footer); ?>
+      </div>
+    </section>
 
-		</head>
-		<body>
-		<div class="page-overlay" id="page-overlay">
-			<div class="inside-overlay">
-				<span class="loader"></span>
-				<br><b>PLEASE WAIT</b>
-			</div>
-		</div>
-			<div class="main-container">
-				<div class="logo-section">
-					<img class="logo-image" src="<?php echo($logo); ?>">
-					<input type="input" style="display:none;" id="apikeystorage" value="<?php if ($masterkeymode==true){echo($masterapikey);}else{echo($_SESSION["user"]["user_apikey"]);} ?>" />
-				</div>
-				<div class="prompt-selector-section">
-				
-					<select id="promptselector" class="promptselector" autocomplete="off">
-					</select>
-					
-					<span style="float:right">
-						<button type="button" class="custom-button-small" id="modebutton">DARK MODE</button>
-						<?php if ($masterkeymode==false && $runbutton==true) {echo('<button type="button" class="custom-button-small" id="apibutton">API KEY</button>');} ?>
-						<button type="button" class="custom-button-small" id="logoutbutton">LOGOUT</button>
-					</span>
-				</div>
-				<div class="prompt-display-section">
-					<div id="promptdata" class="promptdata" ><div contentEditable="true" id="innerprompt" class="innerprompt" >I want you to act as an academician. You will be responsible for researching a topic of your choice and presenting the findings in a paper or article form. Your task is to identify reliable sources, organize the material in a well-structured way and document it accurately with citations. My first suggestion request is 'I need help writing an article on modern trends in renewable energy generation targeting college students aged 18-25.'</div></div>
-					<br>
-					<button type="button" class="custom-button" id="copybutton">COPY PROMPT</button>
-					<?php if ($runbutton==true){echo('<button type="button" class="custom-button" id="runbutton">RUN PROMPT</button>');}  ?>
-					
-				</div>
-				<?php echo($footer); ?>
-			</div>
 			
 <script>
 
@@ -214,7 +226,7 @@ document.addEventListener('click', function (event) {
 				localStorage.setItem("promptmodeZNWEBCH29T", "DARK");
 			} else {
 				event.target.innerText="DARK MODE";
-				document.body.style.background="#EAEAEA";
+				document.body.style.background="#FFFFFF";
 				localStorage.setItem("promptmodeZNWEBCH29T", "LIGHT");
 			}
 		
@@ -287,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	if (mode!=null){
 		if (mode=="LIGHT") {
 			document.getElementById("modebutton").innerText="DARK MODE";
-			document.body.style.background="#EAEAEA";
+			document.body.style.background="#FFFFFF";
 		} else {
 			document.getElementById("modebutton").innerText="LIGHT MODE";
 			document.body.style.background="#444444";
