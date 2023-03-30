@@ -1,1 +1,49 @@
-			
+/* LOADER STYLES */
+.loader-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: #fff;
+	opacity: 0;
+	z-index: -1;
+	transition: opacity .3s;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 6px;
+	
+  }
+
+  .loader {
+	height: 80px;
+	width: 80px;
+  }
+  
+  .is-active {
+	opacity: 1;
+	z-index: 1;
+  }
+
+  .box {
+	padding: 40px;
+	position: relative;
+  }
+
+  .colored-column {
+	background-color: #f9f9f9; /* Change this to any color you want */
+	padding: 1.5rem; /* Add some padding inside the column */
+  }
+
+  .shadow-column {
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .custom-column {
+	padding: 1.5rem; /* Add some padding inside the column */
+	border-radius: 10px;
+	background-color: #f9f9f9;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  

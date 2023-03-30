@@ -26,6 +26,18 @@ if (isset($_SESSION["user"])) {
       if (isset($_POST["email"])) { echo "<div id='notify' class='notification is-danger'>Invalid user/password</div>"; }
     ?>
 
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand ml-6">
+		<a class="navbar-item" href="https://toolkitsforsuccess.com">
+			<img src="img/logo.png" alt="Toolkits For Success: Content that starts Conversations that puts Cash in your pocket." width="200" height="30">
+		</a>
+		</div>
+		<div class="navbar-end mr-6">
+		<div class="navbar-item">
+		
+		</div>
+		</div>
+	</nav>
     <section class="section">
       <div class="container">
         <div class="columns is-centered">

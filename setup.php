@@ -86,125 +86,172 @@ $register=$urlhere."register.php";
 
 
 ?>
+
 <!doctype HTML>
 <html>
 <head>
-<title></title>
+<title>App Setup</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand ml-6">
+      <a class="navbar-item" href="https://toolkitsforsuccess.com">
+        <img src="img/logo.png" alt="Toolkits For Success: Content that starts Conversations that puts Cash in your pocket." width="200" height="30">
+      </a>
+		</div>
+	</nav>
   <section class="section">
-    <div class="container">
-      <?php
-      if (isset($_POST["email"])) { echo "<div id='notify' class='notification is-danger'>Invalid user/password</div>"; }
-      ?>
-      <form id="setup" method="post">
-        <h2 class="title is-4 has-text-centered">Setup - Please answer the following questions and press GO.</h2>
-        <div class="field">
-          <label class="label">Database Host (usually "localhost"):</label>
-          <div class="control">
-            <input class="input" type="text" name="user_db_host" value="localhost" required>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Database Name:</label>
-          <div class="control">
-            <input class="input" type="text" name="user_db_name" placeholder="database_name" required>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Database User:</label>
-          <div class="control">
-            <input class="input" type="text" name="user_db_user" placeholder="database_user" required>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Database Password:</label>
-          <div class="control">
-            <input class="input" type="text" name="user_db_password" placeholder="database_password" required>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Site Name (Site Name for your title tag - Letters/Numbers only):</label>
-          <div class="control">
-            <input class="input" type="text" name="sitename" pattern="[a-zA-Z0-9 ]+" placeholder="Your Site Name">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Logout Redirect (Link to go to when user logs out - leave at login.php if you want to return to login screen):</label>
-          <div class="control">
-            <input class="input" type="text" name="logoutredirect" value="login.php">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Admin Username:</label>
-          <div class="control">
-            <input class="input" type="text" name="adminuser" value="admin">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Admin Password:</label>
-          <div class="control">
-            <input class="input" type="text" name="adminpassword" value="">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Footer HTML (HTML for your footer - feel free to modify the example below):</label>
-          <div class="control">
-            <textarea class="textarea" name="footerhtml">
-              <br>
-              <br>
-              <br>
-              <hr>
-              <div style="color:#777; font:size:14px; display:block; float:left;">(C)2023 Your Software Name - For terms click 
-                <a href="terms.php" target="_BLANK">HERE</a>
-              </div>
-              <div style="color:#777; float:right">Click 
-                <a href="https://supportlink.com">HERE</a> for support
-              </div>
-              <br>
-              <hr>
-            </textarea>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Show the "Run Prompt" button (Select No to disable connections to OpenAI):</label>
-          <div class="control">
-            <div class="select">
-              <select name="runbutton" required>
-<option value="true" selected="selected">Yes</option>
-<option value="false">No</option>
-</select>
+  <div class="container">
+      <div class="columns is-centered">
+          <div class="column is-half">
+            <div>
+              <h1 class="title is-3 mb-3 has-text-centered">App Setup</h1>
+            </div>
+            <div>
+              <h5 class="subtitle is-5 has-text-centered"><i>Please answer the following questions and press SUBMIT.</i></h5>
             </div>
           </div>
-        </div>
-        <div class="field">
-          <label class="label">Use My OpenAI API Key (select "No" to make end user enter their own key - recommended):</label>
-          <div class="control">
-            <div class="select">
-              <select name="masterkeymode" required>
-                <option value="true">Yes</option>
-                <option value="false" selected="selected">No</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">OpenAI Key (Enter your key here only if you don't want individual use API keys):</label>
-          <div class="control">
-            <input class="input" type="text" name="masterapikey" placeholder="Your API Key">
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <input class="button is-primary" type="submit" value="Go">
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
-
   </section>
+  <!-- End Title Section -->
+  <section class="section">
+    <div class="container is-light">  
+      <div class="columns is-centered">
+        <div class="column is-half custom-column">
+          <form id="setup" method="post">
+            <!-- Database Host -->
+            <div class="field mb-5">
+              <label class="label">Database Host (usually "localhost"):</label>
+              <div class="control">
+                <input class="input" type="text" name="user_db_host" value="localhost" required>
+              </div>
+            </div>
+            <!-- Database Name -->
+            <div class="field mb-5">
+              <label class="label">Database Name:</label>
+              <div class="control">
+                <input class="input" type="text" name="user_db_name" placeholder="database_name" required>
+              </div>
+            </div>
+            <!-- Database User -->
+            <div class="field mb-5">
+              <label class="label">Database User:</label>
+              <div class="control">
+                <input class="input" type="text" name="user_db_user" placeholder="database_user" required>
+              </div>
+            </div>
+            <!-- Database Password -->
+            <div class="field mb-5">
+              <label class="label">Database Password:</label>
+              <div class="control">
+                <input class="input" type="text" name="user_db_password" placeholder="database_password" required>
+              </div>
+            </div>
+            <!-- Site Name -->
+            <div class="field mb-5">
+              <label class="label">Site Name (Site Name for your title tag - Letters/Numbers only):</label>
+              <div class="control">
+                <input class="input" type="text" name="sitename" pattern="[a-zA-Z0-9 ]+" placeholder="Your Site Name">
+              </div>
+            </div>
+            <!-- Logout Redirect Link Value -->
+            <div class="field mb-5">
+              <label class="label">Logout Redirect (Link to go to when user logs out - leave at login.php if you want to return to login screen):</label>
+              <div class="control">
+                <input class="input" type="text" name="logoutredirect" value="login.php">
+              </div>
+            </div>
+            <!-- Admin username value -->
+            <div class="field mb-5">
+              <label class="label">Admin Username:</label>
+              <div class="control">
+                <input class="input" type="text" name="adminuser" value="admin">
+              </div>
+            </div>
+            <!-- Admin password -->
+            <div class="field mb-5">
+              <label class="label">Admin Password:</label>
+              <div class="control">
+                <input class="input" type="text" name="adminpassword" value="">
+              </div>
+            </div>
+            <!-- Footer HTML -->
+            <div class="field mb-5">
+              <label class="label">Footer HTML (HTML for your footer - feel free to modify the example below):</label>
+              <div class="control">
+                <textarea class="textarea" name="footerhtml">
+                <footer class="footer">
+                  <div class="content has-text-centered">
+                    <div class="columns is-vcentered">
+                      <div class="column is-half">
+                        <p class="is-size-7 has-text-grey">(C)2023 Your Software Name - For terms click <a href="terms.php" target="_BLANK">HERE</a></p>
+                      </div>
+                      <div class="column is-half">
+                        <p class="is-size-7 has-text-grey is-pulled-right">Click <a href="https://supportlink.com">HERE</a> for support</p>
+                      </div>
+                    </div>
+                  </div>
+                </footer>
+                </textarea>
+              </div>
+            </div>
+            <!-- Prompt Button Toggle -->
+            <div class="field mb-5">
+              <label class="label">Show the "Run Prompt" button (Select No to disable connections to OpenAI):</label>
+              <div class="control">
+                <div class="select">
+                  <select name="runbutton" required>
+                    <option value="true" selected="selected">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- OpenAI Toggle -->
+            <div class="field mb-5">
+              <label class="label">Use My OpenAI API Key (select "No" to make end user enter their own key - recommended):</label>
+              <div class="control">
+                <div class="select">
+                  <select name="masterkeymode" required>
+                    <option value="true">Yes</option>
+                    <option value="false" selected="selected">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="field mb-5">
+              <label class="label">OpenAI Key (Enter your key here only if you don't want individual use API keys):</label>
+              <div class="control">
+                <input class="input" type="text" name="masterapikey" placeholder="Your API Key">
+              </div>
+            </div>
+            <!-- Add other fields here -->
+            
+            <!-- Submit Button -->
+            <div class="field mb-5">
+              <div class="control">
+                <button class="button is-primary" type="submit">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>AI Author X</strong> Made By <a href="https://toolkitsforsuccess.com">ToolkitsForSuccess</a> in Florida. © AkilDev LLC 2023 - All Rights Reserved.
+    </p>
+  </div>
+</footer>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>
+

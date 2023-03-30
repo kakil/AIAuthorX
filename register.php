@@ -34,6 +34,13 @@ if (isset($_SESSION["user"])) {
       if (isset($_POST["email"])) { echo "<div id='notify' class='notification is-danger'>Email exists or invalid password or Name not entered - please correct!</div>"; }
     ?>
 
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+		<a class="navbar-item" href="https://toolkitsforsuccess.com">
+			<img src="img/logo.png" alt="Toolkits For Success: Content that starts Conversations that puts Cash in your pocket." width="150" height="28">
+		</a>
+		</div>
+	</nav>
     <section class="section">
       <div class="container">
         <div class="columns is-centered">
@@ -71,5 +78,12 @@ if (isset($_SESSION["user"])) {
         </div>
       </div>
     </section>
+	<footer class="footer">
+		<div class="content has-text-centered">
+			<p>
+				<?php echo($footer); ?>
+			</p>
+		</div>
+	</footer>
   </body>
 </html>

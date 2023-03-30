@@ -62,6 +62,13 @@ $register=$urlhere."register.php";
     if (isset($_POST["email"])) { echo "<div id='notify' class='notification is-danger'>Invalid user/password</div>"; }
     ?>
 
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://toolkitsforsuccess.com">
+          <img src="img/logo.png" alt="Toolkits For Success: Content that starts Conversations that puts Cash in your pocket." width="150" height="28">
+        </a>
+      </div>
+    </nav>
     <section class="section">
         <div class="container">
             <h2 class="title has-text-centered">UPGRADE - Please answer the following questions and press GO.</h2>
