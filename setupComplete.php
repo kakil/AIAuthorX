@@ -1,89 +1,24 @@
 <?php
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-$domain = $_SERVER['HTTP_HOST'];
-$path = pathinfo($_SERVER['PHP_SELF'], PATHINFO_DIRNAME);
-$urlhere = $protocol . '://' . $domain . $path . '/';
+session_start();
 
-if (isset($_POST["user_db_name"])) {
-extract($_POST);
+if (isset($_SESSION['register'], $_SESSION['admin'], $_SESSION['login'])) {
+    $register = $_SESSION['register'];
+    $admin = $_SESSION['admin'];
+    $login = $_SESSION['login'];
 
-define("USER_DB_HOST", "$user_db_host");
-define("USER_DB_NAME", "$user_db_name");
-define("USER_DB_CHARSET", "utf8mb4");
-define("USER_DB_USER", "$user_db_user");
-define("USER_DB_PASSWORD", "$user_db_password");
-
-
-
-try {
-     $db = new PDO("mysql:dbname=".USER_DB_NAME.";host=".USER_DB_HOST, USER_DB_USER, USER_DB_PASSWORD );
-     $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );//Error Handling
-     $sql ="SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
-START TRANSACTION;
-SET time_zone = '+00:00';
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
-
-CREATE TABLE IF NOT EXISTS `users` (
-  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(255) NOT NULL,
-  `user_email` varchar(255) NOT NULL,
-  `user_password` varchar(255) NOT NULL,
-  `user_creation` varchar(255) NOT NULL,
-  `user_lastlogin` varchar(255) NOT NULL,
-  `user_logins` bigint(20) NOT NULL,
-  `user_apikey` varchar(255) NOT NULL,
-  `user_status` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_email` (`user_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
-COMMIT;
-" ;
-     $db->exec($sql);
-     
-
-} catch(PDOException $e) {
-    echo ("DATABASE ERROR!");
-	die();
+   
+    // Unset session variables after displaying the content
+    unset($_SESSION['register']);
+    unset($_SESSION['admin']);
+    unset($_SESSION['login']);
+} else {
+    header("Location: setup.php");
+    exit();
 }
 
-$configout=<<<EOT
-<?php
-\$sitename="$sitename";
-\$logo="img/logo.png";
-\$runbutton=$runbutton; 
-\$masterkeymode=$masterkeymode;
-\$masterapikey="$masterapikey";
-\$logoutredirect="$logoutredirect";
-\$adminuser="$adminuser";
-\$adminpassword="$adminpassword";
-\$footer=<<<EOTFOOTER
-$footerhtml
-EOTFOOTER;
-
-define("USER_DB_HOST", "$user_db_host");
-define("USER_DB_NAME", "$user_db_name");
-define("USER_DB_CHARSET", "utf8mb4");
-define("USER_DB_USER", "$user_db_user");
-define("USER_DB_PASSWORD", "$user_db_password");
-?>
-EOT;
-
-file_put_contents("config.php",$configout);
-$register=$urlhere."register.php";
-	$admin=$urlhere."admin.php";
-	$login=$urlhere."login.php";
-	echo ('<div style="font-family:Sans-Serif; border:2px solid #444; background:#EEE; width:400px; padding:20px; margin:0 auto; border-radius:5px; margin-top:100px;">Congratulations! Your software is ready to use!<br><br>You can create your first user account here : <a href="'.$register.'">'.$register.'</a><br><br>You can login as a user here : <a href="'.$login.'">'.$login.'</a><br><br>You can login to the admin interface here : <a href="'.$admin.'">'.$admin.'</a><br><br></div>');
-	unlink("setup.php");
-	unlink("upgrade.php");
-	exit();
-	
-}
-
+// $register = "https://takeactionreviews.com/myPromptSaaSTest/register.php";
+// $login = "https://takeactionreviews.com/myPromptSaaSTest/login.php";
+// $admin = "https://takeactionreviews.com/myPromptSaaSTest/admin.php";
 
 ?>
 
@@ -93,7 +28,7 @@ $register=$urlhere."register.php";
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>App Setup - AI Author X - Admin Dashboard by ToolkitsForSuccess.com</title>
+  <title>App Setup Complete - AI Author X - Admin Dashboard by ToolkitsForSuccess.com</title>
 
   <!-- Bulma is included -->
   <link rel="stylesheet" href="css/main.min.css">
@@ -151,37 +86,16 @@ $register=$urlhere."register.php";
           </a>
         </li>
         <li>
-          <a href="forms.html" class="is-active has-icon">
-            <span class="icon"><i class="mdi mdi-square-edit-outline"></i></span>
+          <a href="setup.php" class="has-icon">
+            <span class="icon"><i class="mdi mdi-view-list"></i></span>
             <span class="menu-item-label">Setup</span>
           </a>
         </li>
         <li>
-          <a href="profile.html" class="has-icon">
+          <a href="profile.html" class="is-active has-icon">
             <span class="icon"><i class="mdi mdi-account-circle"></i></span>
-            <span class="menu-item-label">Profile</span>
+            <span class="menu-item-label">Setup Complete</span>
           </a>
-        </li>
-        <li>
-          <a class="has-icon has-dropdown-icon">
-            <span class="icon"><i class="mdi mdi-view-list"></i></span>
-            <span class="menu-item-label">Submenus</span>
-            <div class="dropdown-icon">
-              <span class="icon"><i class="mdi mdi-plus"></i></span>
-            </div>
-          </a>
-          <ul>
-            <li>
-              <a href="#void">
-                <span>Sub-item One</span>
-              </a>
-            </li>
-            <li>
-              <a href="#void">
-                <span>Sub-item Two</span>
-              </a>
-            </li>
-          </ul>
         </li>
       </ul>
       <p class="menu-label">About</p>
@@ -207,7 +121,7 @@ $register=$urlhere."register.php";
         <div class="level-item">
           <ul>
             <li>Admin</li>
-            <li>Setup</li>
+            <li>Setup Complete</li>
           </ul>
         </div>
       </div>
@@ -218,7 +132,7 @@ $register=$urlhere."register.php";
       <div class="level">
         <div class="level-left">
           <div class="level-item"><h1 class="title">
-            App Setup
+            Congratulations! Your SaaS is ready for users!
           </h1></div>
         </div>
         <div class="level-right" style="display: none;">
@@ -228,255 +142,124 @@ $register=$urlhere."register.php";
     </div>
   </section>
   <section class="section is-main-section">
-    <form id="setup" method="post">
-        <div class="card">
-        <header class="card-header">
+    <div class="tile is-ancestor">
+      <!-- Create User Account Card -->
+      <div class="tile is-parent">
+        <div class="card tile is-child" style="width: 480px;">
+          <header class="card-header">
             <p class="card-header-title">
-            <span class="icon"><i class="mdi mdi-ballot"></i></span>
-            Database Setup
+              <span class="icon"><i class="mdi mdi-account-circle default"></i></span>
+              Create User Account
             </p>
-        </header>
-        <div class="card-content">
-            <!-- Database Host Name -->
+          </header>
+          <div class="card-content">
             <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                <label class="label">Database Host (usually "localhost"):</label>
-                </div>
+                <div class="field-label is-normal"><label class="label">First User</label></div>
                 <div class="field-body">
-                <div class="field">
-                    <p class="control is-expanded has-icons-left">
-                        <input class="input" type="text" name="user_db_host" value="localhost" required>
-                        <span class="icon is-small is-left"><i class="mdi mdi-database"></i></span>
+                  <div class="field">
+                    <div class="field file">
+                        <a class="button is-primary">
+                          <span class="icon"><i class="mdi mdi-account-circle default"></i></span>
+                          <span>Create Account</span>
+                        </a>
+                    </div>
+                    <p class="is-size-7">
+                        <a href="<?php echo $register; ?>"><?php echo $register; ?></a>
                     </p>
+                  </div>
                 </div>
-                </div>
-            </div>
-            <!-- Database Name -->
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                <label class="label">Database Name:</label>
-                </div>
-                <div class="field-body">
-                <div class="field">
-                    <p class="control is-expanded has-icons-left">
-                        <input class="input" type="text" name="user_db_name" placeholder="database_name" required>
-                        <span class="icon is-small is-left"><i class="mdi mdi-database"></i></span>
-                    </p>
-                </div>
-                </div>
-            </div>
-            <!-- Database User Name -->
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                <label class="label">Database User:</label>
-                </div>
-                <div class="field-body">
-                <div class="field">
-                    <p class="control is-expanded has-icons-left">
-                        <input class="input" type="text" name="user_db_user" placeholder="database_user" required>
-                        <span class="icon is-small is-left"><i class="mdi mdi-account"></i></span>
-                    </p>
-                </div>
-                </div>
-            </div>
-            <!-- Database Password -->
-            <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                <label class="label">Database Password:</label>
-                </div>
-                <div class="field-body">
-                <div class="field">
-                    <p class="control is-expanded has-icons-left">
-                        <input class="input" type="text" name="user_db_password" placeholder="database_password" required>
-                        <span class="icon is-small is-left"><i class="mdi mdi-textbox-password"></i></span>
-                    </p>
-                </div>
-                </div>
-            </div>
-        
+              </div>
+          </div>
         </div>
-        </div>
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">
-                <span class="icon"><i class="mdi mdi-ballot-outline default"></i></span>
-                Website Setup
-                </p>
-            </header>
-            <div class="card-content">
-                <!-- Site Name -->
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">Site Name:</label>
+      </div>
+      <!-- Login As User Card -->
+      <div class="tile is-parent">
+        <div class="card tile is-child" style="width: 480px;">
+          <header class="card-header">
+            <p class="card-header-title">
+              <span class="icon"><i class="mdi mdi-account default"></i></span>
+              Login As User
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="field is-horizontal">
+              <div class="field-label is-normal"><label class="label">Login User</label></div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="field file">
+                      <a class="button is-primary">
+                        <span class="icon"><i class="mdi mdi-login default"></i></span>
+                        <span>Login</span>
+                      </a>
                     </div>
-                    <div class="field-body">
-                        <div class="field">
-                        <p class="control is-expanded has-icons-left">
-                            <input class="input" type="text" name="sitename" pattern="[a-zA-Z0-9 ]+" placeholder="Your Site Name">
-                            <span class="icon is-small is-left">
-                            <i class="mdi mdi-web"></i>
-                            </span>
-                        </p>
-                        <p class="help">(Site Name for your title tag - Letters/Numbers only)</p>
-                        </div>
-                    </div>
+                    <p class="is-size-7">
+                      <a href="<?php echo $login; ?>"><?php echo $login; ?></a>
+                    </p>
                 </div>
-                <!-- Logout Redirect Link -->
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">Logout Redirect Link:</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                        <p class="control is-expanded has-icons-left">
-                        <input class="input" type="text" name="logoutredirect" value="login.php">
-                            <span class="icon is-small is-left">
-                            <i class="mdi mdi-link-variant"></i>
-                            </span>
-                        </p>
-                        <p class="help">(Link to go to when user logs out - leave at login.php if you want to return to login screen)</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Admin User Name -->
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                    <label class="label">Admin Username:</label>
-                    </div>
-                    <div class="field-body">
-                    <div class="field">
-                        <p class="control is-expanded has-icons-left">
-                        <input class="input" type="text" name="adminuser" value="admin">
-                            <span class="icon is-small is-left"><i class="mdi mdi-account"></i></span>
-                        </p>
-                    </div>
-                    </div>
-                </div>
-                <!-- Admin Password -->
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                    <label class="label">Admin Password:</label>
-                    </div>
-                    <div class="field-body">
-                    <div class="field">
-                        <p class="control is-expanded has-icons-left">
-                        <input class="input" type="text" name="adminpassword" value="">
-                            <span class="icon is-small is-left"><i class="mdi mdi-textbox-password"></i></span>
-                        </p>
-                    </div>
-                    </div>
-                </div>
-                <!-- Footer HTML -->
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">Footer HTML </label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                        <div class="control">
-                            <textarea class="textarea" name="footerhtml">
-                            <footer class="footer">
-                                <div class="content has-text-centered">
-                                <div class="columns is-vcentered">
-                                    <div class="column is-half">
-                                    <p class="is-size-7 has-text-grey">(C)2023 Your Software Name - For terms click <a href="terms.php" target="_BLANK">HERE</a></p>
-                                    </div>
-                                    <div class="column is-half">
-                                    <p class="is-size-7 has-text-grey is-pulled-right">Click <a href="https://supportlink.com">HERE</a> for support</p>
-                                    </div>
-                                </div>
-                                </div>
-                            </footer>
-                            </textarea>
-                            <p class="help">(HTML for your footer - feel free to modify the example below)</p>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <hr/>
-                <!-- Prompt Button Toggle -->
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">Show the "Run Prompt" button:</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field is-narrow">
-                            <div class="control">
-                                <div class="select">
-                                    <select name="runbutton" required>
-                                        <option value="true" selected="selected">Yes</option>
-                                        <option value="false">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <p class="help">(Select No to disable connections to OpenAI)</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- OpenAI Button Toggle -->
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">Use My OpenAI API Key:</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field is-narrow">
-                            <div class="control">
-                                <div class="select">
-                                    <select name="masterkeymode" required>
-                                        <option value="true" selected="selected">Yes</option>
-                                        <option value="false">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <p class="help">(select "No" to make end user enter their own key - recommended)</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- OpenAI API Key -->
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">OpenAI API Key:</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                        <p class="control is-expanded has-icons-left">
-                        <input class="input" type="text" name="masterapikey" placeholder="Your API Key">
-                            <span class="icon is-small is-left">
-                            <i class="mdi mdi-link-variant"></i>
-                            </span>
-                        </p>
-                        <p class="help">(Enter your key here only if you don't want individual use API keys)</p>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <!-- Form Submit/Reset Buttons -->
-                <div class="field is-horizontal">
-                    <div class="field-label">
-                    <!-- Left empty for spacing -->
-                    </div>
-                    <div class="field-body">
-                    <div class="field">
-                        <div class="field is-grouped">
-                        <div class="control">
-                            <button type="submit" class="button is-primary">
-                            <span>Submit</span>
-                            </button>
-                        </div>
-                        <div class="control">
-                            <button type="button" class="button is-primary is-outlined">
-                            <span>Reset</span>
-                            </button>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
+              </div>
             </div>
+          </div>
         </div>
-    </form>
+      </div>
+    </div>  
+    <div class="tile is-ancestor">
+    <!-- Login As Admin Card -->
+      <div class="tile is-parent">
+        <div class="card tile is-child" style="width: 480px;">
+          <header class="card-header">
+            <p class="card-header-title">
+              <span class="icon"><i class="mdi mdi-account-multiple default"></i></span>
+              Login As Admin
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="field is-horizontal">
+              <div class="field-label is-normal"><label class="label">Login Admin</label></div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="field file">
+                      <a class="button is-primary">
+                        <span class="icon"><i class="mdi mdi-login default"></i></span>
+                        <span>Login</span>
+                      </a>
+                    </div>
+                    <p class="is-size-7">
+                      <a href="<?php echo $admin; ?>"><?php echo $admin; ?></a>
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Blank Card -->
+      <div class="tile is-parent">
+        <div class="card tile is-child" style="width: 480px; visibility: hidden;">
+          <header class="card-header">
+            <p class="card-header-title">
+              <span class="icon"><i class="mdi mdi-account-multiple default"></i></span>
+              Login As Admin
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="field is-horizontal">
+              <div class="field-label is-normal"><label class="label">Login Admin</label></div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="field file">
+                      <a class="button is-primary">
+                        <span class="icon"><i class="mdi mdi-login default"></i></span>
+                        <span>Login</span>
+                      </a>
+                    </div>
+                    <p class="is-size-7">
+                      <a href="<?php echo $admin; ?>"><?php echo $admin; ?></a>
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
   </section>
   
   <footer class="footer">
