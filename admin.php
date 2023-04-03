@@ -20,9 +20,9 @@ $results = $st->fetchAll();
 
 
 foreach ($results as $key => $value) {
-
-    $human_readable_date = date("Y-m-d", $value['user_creation']);
-    $results[$key]['user_creation'] = $human_readable_date;
+    
+  $human_readable_date = date("Y-m-d", (int)$value['user_creation']);
+  $results[$key]['user_creation'] = $human_readable_date;
 	if ($results[$key]['user_status']=="1") {
 		$results[$key]['user_status']="OK";
 		$results[$key]['Action'] = '<button type="button" class="button is-small is-danger" onclick="ban('.$results[$key]['user_id'].',0);">Ban</button>';
@@ -35,30 +35,46 @@ foreach ($results as $key => $value) {
 
 }
 
-
-
-$results=replaceKeys("user_name","Name",$results);
-$results=replaceKeys("user_id","ID",$results);
-$results=replaceKeys("user_email","Email",$results);
-$results=replaceKeys("user_creation","Created",$results);
-$results=replaceKeys("user_logins","# Logins",$results);
-$results=replaceKeys("user_status","Status",$results);
-
-function replaceKeys($oldKey, $newKey, array $input){
-    $return = array(); 
-    foreach ($input as $key => $value) {
-        if ($key===$oldKey)
-            $key = $newKey;
-
-        if (is_array($value))
-            $value = replaceKeys( $oldKey, $newKey, $value);
-
-        $return[$key] = $value;
+// banned users
+$bannedUsers = [];
+foreach ($results as $key => $value) {
+    
+    if ($results[$key]['user_status'] == "BAN") {
+        $bannedUsers[] = $results[$key];
     }
-    return $return; 
+}
+
+
+
+foreach ($results as $key => $value) {
+  $results[$key] = replaceKeys("user_name", "Name", $results[$key]);
+  $results[$key] = replaceKeys("user_id", "ID", $results[$key]);
+  $results[$key] = replaceKeys("user_email", "Email", $results[$key]);
+  $results[$key] = replaceKeys("user_creation", "Created", $results[$key]);
+  $results[$key] = replaceKeys("user_logins", "# Logins", $results[$key]);
+  $results[$key] = replaceKeys("user_status", "Status", $results[$key]);
+}
+
+
+function replaceKeys($oldKey, $newKey, array $input) {
+  $return = array(); 
+  foreach ($input as $key => $value) {
+      if (is_array($value)) {
+          $value = replaceKeys($oldKey, $newKey, $value);
+      }
+
+      if ($key === $oldKey) {
+          $return[$newKey] = $value;
+      } else {
+          $return[$key] = $value;
+      }
+  }
+  return $return; 
 }
 
 ?>
+
+
 <!doctype HTML>
 <html lang="en" class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded">
   <head>
@@ -178,55 +194,107 @@ function replaceKeys($oldKey, $newKey, array $input){
       </div>
     </div>
   </section>
+  <!-- All Users -->
   <section class="section is-main-section">
-        <div class="card has-table">
-          <header class="card-header">
-            <p class="card-header-title">
-              <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
-              Active Users
-            </p>
-            <a href="#" class="card-header-icon">
-              <span class="icon"><i class="mdi mdi-reload"></i></span>
-            </a>
-          </header> <!-- END TABLE HEADER -->
-          <div class="card-content">
-            <div class="b-table has-pagination">
-              <div class="table-wrapper has-mobile-cards">
-                <table class="table is-fullwidth is-striped is-hoverable is-fullwidth" id="user-table">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Created</th>
-                      <th># Logins</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead> <!-- END THEAD -->
-                  <tbody id="user-table-body"></tbody> <!-- END TBODY -->
-                </table> <!-- END TABLE -->
-              </div> <!-- END TABLE-WRAPPER HAS-MOBILE-CARDS -->
-              <div class="notification">
-                <div class="level">
-                  <div class="level-left">
-                    <div class="level-item">
-                      <nav class="pagination" role="navigation" aria-label="pagination">
-                        <ul class="pagination-list" id="pagination-list"></ul>
-                      </nav>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <small>Page <span id="current-page"></span> of <span id="total-pages"></span></small>
-                    </div>
-                  </div>
+    <div class="card has-table">
+      <header class="card-header">
+        <p class="card-header-title">
+          <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+          Active Users
+        </p>
+        <a href="#" class="card-header-icon">
+          <span class="icon"><i class="mdi mdi-reload"></i></span>
+        </a>
+      </header> <!-- END TABLE HEADER -->
+      <div class="card-content">
+        <div class="b-table has-pagination">
+          <div class="table-wrapper has-mobile-cards">
+            <table class="table is-fullwidth is-striped is-hoverable is-fullwidth" id="user-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Created</th>
+                  <th># Logins</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead> <!-- END THEAD -->
+              <tbody id="user-table-body"></tbody> <!-- END TBODY -->
+            </table> <!-- END TABLE -->
+          </div> <!-- END TABLE-WRAPPER HAS-MOBILE-CARDS -->
+          <div class="notification">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <nav class="pagination" role="navigation" aria-label="pagination">
+                    <ul class="pagination-list" id="pagination-list"></ul>
+                  </nav>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <small>Page <span id="current-page"></span> of <span id="total-pages"></span></small>
                 </div>
               </div>
             </div>
-          </div><!-- END OF CARD-CONTENT -->
-        </div> <!-- END CARD HAS-TABLE -->
-      </section>
+          </div>
+        </div>
+      </div><!-- END OF CARD-CONTENT -->
+    </div> <!-- END CARD HAS-TABLE -->
+  </section>
+
+  <!-- Banned Users -->
+  <section class="section is-main-section">
+    <div class="card has-table">
+      <header class="card-header">
+        <p class="card-header-title">
+          <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+          Banned Users
+        </p>
+        <a href="#" class="card-header-icon">
+          <span class="icon"><i class="mdi mdi-reload"></i></span>
+        </a>
+      </header> <!-- END TABLE HEADER -->
+      <div class="card-content">
+        <div class="b-table has-pagination">
+          <div class="table-wrapper has-mobile-cards">
+            <table class="table is-fullwidth is-striped is-hoverable is-fullwidth" id="user-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Created</th>
+                  <th># Logins</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead> <!-- END THEAD -->
+              <tbody id="banned-users-table-body"></tbody> <!-- END TBODY -->
+            </table> <!-- END TABLE -->
+          </div> <!-- END TABLE-WRAPPER HAS-MOBILE-CARDS -->
+          <div class="notification">
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <nav class="pagination" role="navigation" aria-label="pagination">
+                    <ul class="pagination-list" id="banned-pagination-list"></ul>
+                  </nav>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <small>Page <span id="banned-current-page"></span> of <span id="banned-total-pages"></span></small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- END OF CARD-CONTENT -->
+    </div> <!-- END CARD HAS-TABLE -->
+  </section>
   
   <footer class="footer">
     <div class="container-fluid">
@@ -285,6 +353,8 @@ function replaceKeys($oldKey, $newKey, array $input){
 <script>
   window.onload = function() {
   setPage(1);
+  displayBannedUsersTable();
+  setBannedPage(1);
 }
 
 function logout() {
@@ -308,6 +378,12 @@ const perPage = 2;
 const totalItems = results.length;
 const totalPages = Math.ceil(totalItems / perPage);
 
+//banned users
+const bannedUsers = results.filter(row => row.Status === "BAN");
+const bannedPerPage = 2;
+const totalBannedItems = bannedUsers.length;
+const totalBannedPages = Math.ceil(totalBannedItems / bannedPerPage);
+
 function displayTable(page) {
   const table = document.getElementById("user-table-body");
   const startIndex = (page - 1) * perPage;
@@ -328,6 +404,29 @@ function displayTable(page) {
   }
   table.innerHTML = html;
 }
+
+//banned users
+function displayBannedTable(page) {
+  const table = document.getElementById("banned-users-table-body");
+  const startIndex = (page - 1) * bannedPerPage;
+  const endIndex = startIndex + bannedPerPage;
+  const paginatedBannedUsers = bannedUsers.slice(startIndex, endIndex);
+
+  let html = "";
+  for (const row of paginatedBannedUsers) {
+    html += `<tr>
+              <td>${row.ID}</td>
+              <td>${row.Name}</td>
+              <td>${row.Email}</td>
+              <td>${row.Created}</td>
+              <td>${row['# Logins']}</td>
+              <td>${row.Status}</td>
+              <td>${row.Action}</td>
+            </tr>`;
+  }
+  table.innerHTML = html;
+}
+
 
 function displayPagination(page) {
   const paginationList = document.getElementById("pagination-list");
@@ -371,6 +470,50 @@ function displayPagination(page) {
   }
 }
 
+//banned users
+function displayBannedPagination(page) {
+  const paginationList = document.getElementById("banned-pagination-list");
+  let html = "";
+
+  if (totalBannedPages > 1) {
+    let startPage, endPage;
+    if (totalBannedPages <= 5) {
+      startPage = 1;
+      endPage = totalBannedPages;
+    } else {
+      if (page <= 3) {
+        startPage = 1;
+        endPage = 5;
+      } else if (page + 1 >= totalBannedPages) {
+        startPage = totalBannedPages - 4;
+        endPage = totalBannedPages;
+      } else {
+        startPage = page - 2;
+        endPage = page + 2;
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      html += `<li>
+                <a class="pagination-link${i === page ? " is-current" : ""}" data-banned-page="${i}" href="#">${i}</a>
+              </li>`;
+    }
+
+    paginationList.innerHTML = `
+      <li>
+        <a class="pagination-previous${page === 1 ? " is-disabled" : ""}" data-banned-page="${page - 1}" href="#">Previous</a>
+      </li>
+      ${html}
+      <li>
+        <a class="pagination-next${page === totalBannedPages ? " is-disabled" : ""}" data-banned-page="${page + 1}" href="#">Next</a>
+      </li>
+    `;
+  } else {
+    paginationList.innerHTML = "";
+  }
+}
+
+
 function setPage(page) {
   displayTable(page);
   displayPagination(page);
@@ -383,7 +526,25 @@ function setPage(page) {
   totalPagesElement.textContent = totalPages;
 }
 
+//banned users
+function setBannedPage(page) {
+  displayBannedTable(page);
+  displayBannedPagination(page);
+
+  // Update current page and total pages in HTML elements
+  let currentPageElement = document.getElementById("banned-current-page");
+  currentPageElement.textContent = page;
+
+  let totalPagesElement = document.getElementById("banned-total-pages");
+  totalPagesElement.textContent = totalBannedPages;
+}
+
+
+
 setPage(1);
+displayBannedUsersTable();
+setBannedPage(1);
+
 
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("pagination-link")) {
@@ -409,6 +570,34 @@ document.addEventListener("click", (e) => {
     setPage(page);
   }
 });
+
+
+//banned users
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("pagination-link") && e.target.hasAttribute("data-banned-page")) {
+    e.preventDefault();
+    const page = parseInt(e.target.dataset.bannedPage);
+    setBannedPage(page);
+  }
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("pagination-previous") && !e.target.classList.contains("is-disabled") && e.target.hasAttribute("data-banned-page")) {
+    e.preventDefault();
+    const page = parseInt(e.target.dataset.bannedPage);
+    setBannedPage(page);
+  }
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("pagination-next") && !e.target.classList.contains("is-disabled") && e.target.hasAttribute("data-banned-page")) {
+    e.preventDefault();
+    const page = parseInt(e.target.dataset.bannedPage);
+    setBannedPage(page);
+  }
+});
+
+
 
 function setCurrentPage(page) {
   currentPage = page;
@@ -475,5 +664,25 @@ const totalPagesElement = document.getElementById("total-pages");
 totalPagesElement.textContent = totalPages;
 updatePaginationList();
 displayData();
+
+// Banned Users
+function displayBannedUsersTable() {
+  const table = document.getElementById("banned-users-table-body");
+
+  let html = "";
+  for (const row of bannedUsers) {
+    html += `<tr>
+              <td>${row.ID}</td>
+              <td>${row.Name}</td>
+              <td>${row.Email}</td>
+              <td>${row.Created}</td>
+              <td>${row['# Logins']}</td>
+              <td>${row.Status}</td>
+              <td>${row.Action}</td>
+            </tr>`;
+  }
+  table.innerHTML = html;
+}
+
 
 </script>
