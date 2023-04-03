@@ -374,6 +374,13 @@ function displayPagination(page) {
 function setPage(page) {
   displayTable(page);
   displayPagination(page);
+
+  // Update current page and total pages in HTML elements
+  let currentPageElement = document.getElementById("current-page");
+  currentPageElement.textContent = page;
+
+  let totalPagesElement = document.getElementById("total-pages");
+  totalPagesElement.textContent = totalPages;
 }
 
 setPage(1);
@@ -469,84 +476,4 @@ totalPagesElement.textContent = totalPages;
 updatePaginationList();
 displayData();
 
-
-  function setTable(data, options, paginationOptions) {
-    const currentPage = 1;
-    const table = document.getElementById(options.tableId);
-    const tableBody = table.querySelector("tbody");
-
-    // Set up pagination
-    const perPage = paginationOptions.perPage;
-    const listId = paginationOptions.listId;
-    const previousPageId = paginationOptions.previousPageId;
-    const nextPageId = paginationOptions.nextPageId;
-    const totalRows = data.length;
-    const totalPages = Math.ceil(totalRows / perPage);
-    
-    // Display current page number
-    const currentPageElement = document.getElementById("current-page");
-    currentPageElement.textContent = currentPage;
-    console.log("Current page: " + currentPage)
-
-    // Display total pages number
-    const totalPagesElement = document.getElementById("total-pages");
-    totalPagesElement.textContent = totalPages;
-    console.log("Number of pages: " + totalPages);
-
-    // Create pagination links
-    const paginationList = document.getElementById(listId);
-    for (let i = 1; i <= totalPages; i++) {
-      const paginationLink = document.createElement("li");
-      const paginationButton = document.createElement("a");
-      paginationButton.textContent = i;
-      paginationButton.dataset.page = i;
-      paginationButton.addEventListener("click", function() {
-        currentPage = parseInt(this.dataset.page);
-        displayTableData();
-        currentPageElement.textContent = currentPage;
-      });
-      paginationLink.appendChild(paginationButton);
-      paginationList.appendChild(paginationLink);
-    }
-
-    // Set up Next and Previous buttons
-    previousPageButton.addEventListener("click", function() {
-    if (currentPage > 1) {
-        currentPage--;
-        displayTableData();
-        currentPageElement.textContent = currentPage;
-      }
-    });
-
-    nextPageButton.addEventListener("click", function() {
-      if (currentPage < totalPages) {
-        currentPage++;
-        displayTableData();
-        currentPageElement.textContent = currentPage;
-      }
-    });
-
-    function displayTableData() {
-      const start = (currentPage - 1) * perPage;
-      const end = start + perPage;
-      const tableData = data.slice(start, end);
-
-      // Clear table body
-      tableBody.innerHTML = "";
-
-      // Add table rows
-      tableData.forEach(function(rowData) {
-        const row = document.createElement("tr");
-        for (const [key, value] of Object.entries(rowData)) {
-          const cell = document.createElement("td");
-          cell.textContent = value;
-          row.appendChild(cell);
-        }
-        tableBody.appendChild(row);
-      });
-    }
-
-    // Initial display of table data
-    displayTableData();
-  }
 </script>
