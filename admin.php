@@ -94,13 +94,8 @@ function replaceKeys($oldKey, $newKey, array $input) {
     <div id="app">
       <nav id="navbar-main" class="navbar is-fixed-top is-dark">
         <div class="navbar-brand">
-          <a class="navbar-item" href="https://toolkitsforsuccess.com">
-            <img src="img/logo.png" alt="Toolkits For Success: Content that starts Conversations that puts Cash in your pocket." width="200" height="30">
-          </a>
-        </div>
-        <div class="navbar-brand is-right">
-          <a class="navbar-item jb-navbar-menu-toggle" data-target="navbar-menu">
-            <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
+          <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+            <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
           </a>
         </div>
         <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
@@ -115,39 +110,24 @@ function replaceKeys($oldKey, $newKey, array $input) {
       <aside class="aside is-placed-left is-expanded">
     <div class="aside-tools">
       <div class="aside-tools-label">
-        <a class="navbar-item" href="https://toolkitsforsuccess.com">
+        <a class="navbar-item" style="text-decoration: none; cursor: default;" href="https://toolkitsforsuccess.com">
             <img src="img/logo.png" alt="Toolkits For Success: Content that starts Conversations that puts Cash in your pocket." width="200" height="30">
         </a>
       </div>
     </div>
     <div class="menu is-menu-main">
-      <p class="menu-label">General</p>
+      <p class="menu-label">Admin</p>
       <ul class="menu-list">
         <li>
-          <a href="index.html" class="has-icon">
-            <span class="icon"><i class="mdi mdi-desktop-mac"></i></span>
-            <span class="menu-item-label">Dashboard</span>
-          </a>
-        </li>
-      </ul>
-      <p class="menu-label">Examples</p>
-      <ul class="menu-list">
-        <li>
-          <a href="tables.html" class="has-icon">
-            <span class="icon has-update-mark"><i class="mdi mdi-table"></i></span>
-            <span class="menu-item-label">Tables</span>
+          <a href="admin.php" class="has-icon is-active">
+            <span class="icon has-update-mark"><i class="mdi mdi-account-multiple"></i></span>
+            <span class="menu-item-label">User Admin</span>
           </a>
         </li>
         <li>
-          <a href="setup.php" class="has-icon">
-            <span class="icon"><i class="mdi mdi-view-list"></i></span>
-            <span class="menu-item-label">Setup</span>
-          </a>
-        </li>
-        <li>
-          <a href="profile.html" class="is-active has-icon">
-            <span class="icon"><i class="mdi mdi-account-circle"></i></span>
-            <span class="menu-item-label">Setup Complete</span>
+          <a href="login.php" class="has-icon">
+            <span class="icon"><i class="mdi mdi-login"></i></span>
+            <span class="menu-item-label">User Login</span>
           </a>
         </li>
       </ul>
@@ -155,7 +135,7 @@ function replaceKeys($oldKey, $newKey, array $input) {
       <ul class="menu-list">
         <li>
           <a href="https://toolkitsforsuccess.com" target="_blank" class="has-icon">
-            <span class="icon"><i class="mdi mdi-github-circle"></i></span>
+            <span class="icon"><i class="mdi mdi-web"></i></span>
             <span class="menu-item-label">Toolkits For Success</span>
           </a>
         </li>
@@ -163,6 +143,13 @@ function replaceKeys($oldKey, $newKey, array $input) {
           <a href="https://toolkitsforsuccess.com" class="has-icon">
             <span class="icon"><i class="mdi mdi-help-circle"></i></span>
             <span class="menu-item-label">About</span>
+          </a>
+        </li>
+        <hr>
+        <li>
+          <a href="adminlogout.php" class="has-icon">
+            <span class="icon"><i class="mdi mdi-logout"></i></span>
+            <span class="menu-item-label">Logout Admin</span>
           </a>
         </li>
       </ul>
@@ -194,6 +181,45 @@ function replaceKeys($oldKey, $newKey, array $input) {
       </div>
     </div>
   </section>
+  <section>
+  <div class="tile is-ancestor mt-3" style="display: flex; justify-content: center;">
+    <!-- Active User Count Card -->
+    <div class="tile is-parent is-3">
+      <div class="card tile is-child" style="width: 240px; height: 240px;">
+        <header class="card-header">
+          <p class="card-header-title" style="display: flex; align-items: center; justify-content: center;">
+            <span class="icon" style="margin-right: 5px;"><i class="mdi mdi-account default"></i></span>
+            Total Users
+          </p>
+        </header>
+        <div class="card-content">
+          <button id="total-users-button" class="button is-primary is-large is-fullwidth" style="width: 100px; height: 100px; font-size: 36px; font-weight: bold; margin: auto;">
+            Button
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Banned User Count Card -->
+    <div class="tile is-parent is-3 is-offset-1">
+      <div class="card tile is-child" style="width: 240px; height: 240px;">
+        <header class="card-header">
+          <p class="card-header-title" style="display: flex; align-items: center; justify-content: center;">
+            <span class="icon" style="margin-right: 5px;"><i class="mdi mdi-account-off default"></i></span>
+            Banned Users
+          </p>
+        </header>
+        <div class="card-content">
+          <button id="banned-users-button" class="button is-danger is-large is-fullwidth" style="width: 100px; height: 100px; font-size: 36px; font-weight: bold; margin: auto;">
+            Button
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
   <!-- All Users -->
   <section class="section is-main-section">
     <div class="notification is-info">
@@ -417,13 +443,13 @@ function displayTable(page, data = results) {
   let html = "";
   for (const row of paginatedResults) {
     html += `<tr>
-              <td>${row.ID}</td>
-              <td>${row.Name}</td>
-              <td>${row.Email}</td>
-              <td>${row.Created}</td>
-              <td>${row['# Logins']}</td>
-              <td>${row.Status}</td>
-              <td>${row.Action}</td>
+              <td class="text-left">${row.ID}</td>
+              <td class="text-left">${row.Name}</td>
+              <td class="text-left">${row.Email}</td>
+              <td class="text-left">${row.Created}</td>
+              <td class="text-left">${row['# Logins']}</td>
+              <td class="text-left">${row.Status}</td>
+              <td class="text-left">${row.Action}</td>
             </tr>`;
   }
   table.innerHTML = html;
@@ -440,13 +466,13 @@ function displayBannedTable(page, data = bannedUsers) {
   let html = "";
   for (const row of paginatedBannedUsers) {
     html += `<tr>
-              <td>${row.ID}</td>
-              <td>${row.Name}</td>
-              <td>${row.Email}</td>
-              <td>${row.Created}</td>
-              <td>${row['# Logins']}</td>
-              <td>${row.Status}</td>
-              <td>${row.Action}</td>
+              <td class="text-left">${row.ID}</td>
+              <td class="text-left">${row.Name}</td>
+              <td class="text-left">${row.Email}</td>
+              <td class="text-left">${row.Created}</td>
+              <td class="text-left">${row['# Logins']}</td>
+              <td class="text-left">${row.Status}</td>
+              <td class="text-left">${row.Action}</td>
             </tr>`;
   }
   table.innerHTML = html;
@@ -702,13 +728,13 @@ function displayBannedUsersTable() {
   let html = "";
   for (const row of bannedUsers) {
     html += `<tr>
-              <td>${row.ID}</td>
-              <td>${row.Name}</td>
-              <td>${row.Email}</td>
-              <td>${row.Created}</td>
-              <td>${row['# Logins']}</td>
-              <td>${row.Status}</td>
-              <td>${row.Action}</td>
+              <td class="text-left">${row.ID}</td>
+              <td class="text-left">${row.Name}</td>
+              <td class="text-left">${row.Email}</td>
+              <td class="text-left">${row.Created}</td>
+              <td class="text-left">${row['# Logins']}</td>
+              <td class="text-left">${row.Status}</td>
+              <td class="text-left">${row.Action}</td>
             </tr>`;
   }
   table.innerHTML = html;
@@ -734,6 +760,13 @@ function handleBannedSearch() {
   setBannedPage(1);
   displayBannedTable(1, filteredBannedUsers);
 }
+
+//Display Total Users
+const bannedUsersButton = document.getElementById("banned-users-button");
+const totalUsersButton = document.getElementById("total-users-button");
+// Replace these numbers with the actual number of users and banned users
+totalUsersButton.innerText = results.length;
+bannedUsersButton.innerText = bannedUsers.length;
 
 
 </script>
