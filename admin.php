@@ -196,11 +196,23 @@ function replaceKeys($oldKey, $newKey, array $input) {
   </section>
   <!-- All Users -->
   <section class="section is-main-section">
+    <div class="notification is-info">
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <div>
+              <span class="icon"><i class="mdi mdi-account-search default"></i></span>
+              <b class="mr-3">Search:</b><input type="text" id="search-input" placeholder="Search users...">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- Search All Users -->
     <div class="card has-table">
       <header class="card-header">
         <p class="card-header-title">
           <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
-          Active Users
+          All Users
         </p>
         <a href="#" class="card-header-icon">
           <span class="icon"><i class="mdi mdi-reload"></i></span>
@@ -247,6 +259,18 @@ function replaceKeys($oldKey, $newKey, array $input) {
 
   <!-- Banned Users -->
   <section class="section is-main-section">
+    <div class="notification is-info">
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <div>
+              <span class="icon"><i class="mdi mdi-account-search default"></i></span>
+              <b class="mr-3">Search:</b><input type="text" id="banned-search-input" placeholder="Search banned users...">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- Search Banned Users -->
     <div class="card has-table">
       <header class="card-header">
         <p class="card-header-title">
@@ -384,11 +408,11 @@ const bannedPerPage = 2;
 const totalBannedItems = bannedUsers.length;
 const totalBannedPages = Math.ceil(totalBannedItems / bannedPerPage);
 
-function displayTable(page) {
+function displayTable(page, data = results) {
   const table = document.getElementById("user-table-body");
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
-  const paginatedResults = results.slice(startIndex, endIndex);
+  const paginatedResults = data.slice(startIndex, endIndex);
 
   let html = "";
   for (const row of paginatedResults) {
@@ -405,12 +429,13 @@ function displayTable(page) {
   table.innerHTML = html;
 }
 
+
 //banned users
-function displayBannedTable(page) {
+function displayBannedTable(page, data = bannedUsers) {
   const table = document.getElementById("banned-users-table-body");
   const startIndex = (page - 1) * bannedPerPage;
   const endIndex = startIndex + bannedPerPage;
-  const paginatedBannedUsers = bannedUsers.slice(startIndex, endIndex);
+  const paginatedBannedUsers = data.slice(startIndex, endIndex);
 
   let html = "";
   for (const row of paginatedBannedUsers) {
@@ -426,7 +451,6 @@ function displayBannedTable(page) {
   }
   table.innerHTML = html;
 }
-
 
 function displayPagination(page) {
   const paginationList = document.getElementById("pagination-list");
@@ -597,6 +621,12 @@ document.addEventListener("click", (e) => {
   }
 });
 
+//Search
+const searchInput = document.getElementById("search-input");
+searchInput.addEventListener("input", handleSearch);
+
+const bannedSearchInput = document.getElementById("banned-search-input");
+bannedSearchInput.addEventListener("input", handleBannedSearch);
 
 
 function setCurrentPage(page) {
@@ -682,6 +712,27 @@ function displayBannedUsersTable() {
             </tr>`;
   }
   table.innerHTML = html;
+}
+
+//Search
+function handleSearch() {
+  const searchQuery = searchInput.value.trim().toLowerCase();
+  const filteredResults = results.filter(row => {
+    const values = Object.values(row).map(value => value.toString().toLowerCase());
+    return values.some(value => value.includes(searchQuery));
+  });
+  setPage(1);
+  displayTable(1, filteredResults);
+}
+
+function handleBannedSearch() {
+  const searchQuery = bannedSearchInput.value.trim().toLowerCase();
+  const filteredBannedUsers = bannedUsers.filter(row => {
+    const values = Object.values(row).map(value => value.toString().toLowerCase());
+    return values.some(value => value.includes(searchQuery));
+  });
+  setBannedPage(1);
+  displayBannedTable(1, filteredBannedUsers);
 }
 
 
