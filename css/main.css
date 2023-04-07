@@ -12842,7 +12842,22 @@ footer.footer .logo img {
   object-fit: contain;
 }
 
+.login-logo-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+}
+
 .copy-message {
   font-weight: bold;
   color: #23d160; /* is-success color in Bulma */
+}
+
+.custom-shadow {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
 }

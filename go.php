@@ -90,8 +90,8 @@ require_once("user/protect.php");
       </aside>
       <section class="section">
 			<div class="container">
-				<div class="columns">
-				<div class="column is-6 is-offset-3">
+				<div class="columns is-flex is-justify-content-center">
+				<div class="column is-6-desktop is-8-tablet is-12-mobile">
 					<div class="box">
 					<div class="loader-wrapper" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: rgba(255, 255, 255, 0.5); display: none; justify-content: center; align-items: center; z-index: 1;">
 					<div class="loader is-loading" style="height: 80px; width: 80px;"></div>
@@ -102,8 +102,8 @@ require_once("user/protect.php");
 							</figure>
 						</div>
 						<div class="prompt-selector-section">
-							<div class="columns">
-								<div class="column">
+							<div class="columns is-multiline">
+								<div class="column is-full">
 									<div class="select is-9">
 										<select id="promptselector" class="promptselector" autocomplete="off"></select>
 									</div>
@@ -129,6 +129,12 @@ require_once("user/protect.php");
 						</div>
 						
 					</div>  <!-- Box END -->
+					<article class="message is-dark" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);">
+						<div class="message-body">
+							<!-- Your content here -->
+							The above prompt can be edited.  Please replace with your topic, target audience, and query where appropriate.
+						</div>
+					</article>
 				</div>  <!-- Column END -->
 				</div> <!-- Columns END -->
 			</div> <!-- Container END -->
@@ -163,93 +169,45 @@ require_once("user/protect.php");
 		<div class="modal-background jb-modal-close"></div>
 		<div class="modal-card">
 			<header class="modal-card-head">
-			<p class="modal-card-title">OpenAI API Key</p>
-			<button class="delete jb-modal-close" aria-label="close"></button>
+				<p class="modal-card-title">OpenAI API Key</p>
+				<button class="delete jb-modal-close" aria-label="close"></button>
 			</header>
 			<section class="modal-card-body">
-			<label for="apikeystorage-modal">Set Key:</label>
-			<input type="input" id="apikeystorage-modal" class="inputbox" style="width:50%" value="<?php if ($masterkeymode==true){echo($masterapikey);}else{echo($_SESSION["user"]["user_apikey"]);} ?>" />
+				<label for="apikeystorage-modal">Set Key:</label>
+				<input type="input" id="apikeystorage-modal" class="inputbox" style="width:50%" value="<?php if ($masterkeymode==true){echo($masterapikey);}else{echo($_SESSION["user"]["user_apikey"]);} ?>" />
 			</section>
 			<footer class="modal-card-foot">
-			<button class="button jb-modal-close">Cancel</button>
-			<button class="button is-success" id="savekeybutton">Save</button>
+				<button class="button jb-modal-close">Cancel</button>
+				<button class="button is-success" id="savekeybutton">Save</button>
 			</footer>
 		</div>
 		<button class="modal-close is-large jb-modal-close" aria-label="close"></button>
 	</div>
 		
 	<!-- Scripts below are for demo only -->
-    <script type="text/javascript" src="js/main.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 
     <!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
 	<script>
-
-		var smq = {
-			Popup: function(config) {
-
-				this.conf = config || {};
-
-				this.init = function() {
-				var conf = config || {};
-				
-				var existingNodes = document.getElementsByTagName("smq-popup");
-				if(existingNodes && existingNodes.length > 0) {
-					for(var i = 0; i<existingNodes.length; i++) {
-					document.body.removeChild(existingNodes[i]);
-					}
-				}
-
-				
-				this.nodePopup = document.createElement("smq-popup");
-				this.nodePopup.innerHTML = '<div class="window"><a class="close">x</a class="close"><header class="api-header"><h1 class="api-title"></h1></header><div class="api-content"></div></div>';
-				this.nodePopup.getElementsByClassName("api-title")[0].innerHTML = this.conf.title || "";
-				this.nodePopup.getElementsByClassName("api-content")[0].innerHTML = this.conf.innerHtml || "";
-
-				
-				this.nodeClose = this.nodePopup.getElementsByClassName("close")[0];
-				this.nodeClose.addEventListener("click", function() {
-					this.close();
-				}.bind(this), false);
-				};
-
-				this.show = function() {
-				
-				document.body.appendChild(this.nodePopup);
-				};
-
-				this.close = function() {
-				this.nodePopup ? document.body.removeChild(this.nodePopup) : null;
-				this.nodePopup = undefined;
-				};
-
-				this.init(config);
-
-			}
-		};
-
 					
 		function enableselect(){
 			document.getElementById('promptselector').disabled=false; 
 			document.getElementById('copybutton').disabled=false;
 			document.getElementById('runbutton').disabled=false; 
-			//document.getElementById('logoutbutton').disabled=false;
-			//document.getElementById('modebutton').disabled=false;
 			var apielement =  document.getElementById('apibutton');
 			if (typeof(apielement) != 'undefined' && apielement != null)
 			{
 			apielement.disabled=false;	
 			}	
 
-			document.getElementById('page-overlay').style.display='none';
+			//document.getElementById('page-overlay').style.display='none';
 		}
 
 		function disableselect(){
 			document.getElementById('promptselector').disabled=true;
 			document.getElementById('copybutton').disabled=true;
 			document.getElementById('runbutton').disabled=true;
-			//document.getElementById('logoutbutton').disabled=true;
-			//document.getElementById('modebutton').disabled=true;
 			var apielement =  document.getElementById('apibutton');
 			if (typeof(apielement) != 'undefined' && apielement != null)
 			{
@@ -292,16 +250,6 @@ require_once("user/protect.php");
 
 		document.addEventListener('click', function (event) {
 
-			// if (event.target.matches('#apibutton')) {
-			// 	userapikey=document.getElementById('apikeystorage').value;
-			// 	var apiPopup = new smq.Popup({
-			// 	title: 'OpenAI API Key',
-			// 	innerHtml: '<div style="font-size:18px; text-align:center"><span style="min-width:30%">Set Key </span><input type="text" class="inputbox" id="apikey" style="width:50%" value="'+userapikey+'" /> <button type="button" class="custom-save-button" style="height:40x" id="savekeybutton">SAVE</button></div>'
-			// 	});
-			// 	apiPopup.show();		
-				
-			// }
-
 			if (event.target.matches('#savekeybutton')) {
 					var proposedkey=document.getElementById('apikeystorage-modal').value;
 					var xhr = new XMLHttpRequest();
@@ -311,30 +259,58 @@ require_once("user/protect.php");
 							var resp=this.responseText;
 							
 							if (resp=="nokey") {
-								var apinokeyPopup = new smq.Popup({
-								title: 'Error!',
-								innerHtml: '<div style="font-size:18px; text-align:center">You need to enter a key!</div>'
-								});
-								apinokeyPopup.show();
+								var copyMessage = document.getElementById('copy-prompt-message');
+								copyMessage.innerText = 'You need to enter an API Key!';
+								document.getElementById('apikeystorage-modal').value = '';
+
+								// Add the has-text-danger class to change the text color
+								copyMessage.classList.add('has-text-danger');
+
+								// Optionally, hide the message after a few seconds
+								setTimeout(() => {
+									copyMessage.innerText = '';
+								}, 3000);
+
+								jQuery('.loader-wrapper').css('display', 'none');
 							} else if (resp=="invalid") {
-								var apinotvalidPopup = new smq.Popup({
-								title: 'Error!',
-								innerHtml: '<div style="font-size:18px; text-align:center">That key is not valid!</div>'
-								});
-								apinotvalidPopup.show();
+								var copyMessage = document.getElementById('copy-prompt-message');
+								copyMessage.innerText = 'That API Key is not valid!';
+								document.getElementById('apikeystorage-modal').value = '';
+
+								copyMessage.classList.add('has-text-danger');
+
+								// Optionally, hide the message after a few seconds
+								setTimeout(() => {
+									copyMessage.innerText = '';
+								}, 3000);
+
+								jQuery('.loader-wrapper').css('display', 'none');
 							} else if (resp=="saved") {
-								var apisavedPopup = new smq.Popup({
-								title: 'Saved',
-								innerHtml: '<div style="font-size:18px; text-align:center">Your OpenAI API Key has been saved!</div>'
-								});
+								var copyMessage = document.getElementById('copy-prompt-message');
+								copyMessage.innerText = 'API Key Saved!';
+								copyMessage.classList.remove('has-text-danger');
+								copyMessage.classList.add('has-text-success');
+
+								// Optionally, hide the message after a few seconds
+								setTimeout(() => {
+									copyMessage.innerText = '';
+								}, 3000);
+								
 								document.getElementById('apikeystorage-modal').value=proposedkey
-								apisavedPopup.show();
+								jQuery('.loader-wrapper').css('display', 'none');
 							} else {
-								var apierrorPopup = new smq.Popup({
-								title: 'Error!',
-								innerHtml: '<div style="font-size:18px; text-align:center">Unknown Error - Your API Key has not been saved!</div>'
-								});
-								apierrorPopup.show();
+								var copyMessage = document.getElementById('copy-prompt-message');
+								copyMessage.innerText = 'Unknown Error - Your API Key has not been saved!';
+								document.getElementById('apikeystorage-modal').value = '';
+
+								copyMessage.classList.add('has-text-danger');
+
+								// Optionally, hide the message after a few seconds
+								setTimeout(() => {
+									copyMessage.innerText = '';
+								}, 3000);
+
+								jQuery('.loader-wrapper').css('display', 'none');
 							}
 						}
 					}
@@ -346,30 +322,7 @@ require_once("user/protect.php");
 			if (event.target.matches('#logoutbutton')) {
 				window.location.assign('logout.php');
 			}
-			// if (event.target.matches('#modebutton')) {
-				
-			// 	if (event.target.innerText=="DARK MODE"){
-			// 			event.target.innerText="LIGHT MODE";
-			// 			document.body.style.background="#444444";
-			// 			localStorage.setItem("promptmodeZNWEBCH29T", "DARK");
-			// 		} else {
-			// 			event.target.innerText="DARK MODE";
-			// 			document.body.style.background="#FFFFFF";
-			// 			localStorage.setItem("promptmodeZNWEBCH29T", "LIGHT");
-			// 		}
-				
-			// }					
 			
-			// if (event.target.matches('#copybutton')) { 
-			// 	var promptindex = document.getElementById('promptselector').value;
-			// 	if (!navigator.clipboard || promptindex==-1) {return;} 
-			// 	navigator.clipboard.writeText(document.getElementById('innerprompt').textContent);
-			// 	var copyPopup = new smq.Popup({
-			// 	title: 'Copied',
-			// 	innerHtml: '<div style="font-size:18px; text-align:center">Copied to clipboard!</div>'
-			// 	});
-			// 	copyPopup.show();
-			// } 
 			if (event.target.matches('#responsebutton')) { 
 				if (!navigator.clipboard) {return;} 
 				navigator.clipboard.writeText(document.getElementById('responsedata').value).then(() => {
@@ -384,6 +337,7 @@ require_once("user/protect.php");
 			}		
 			
 			if (event.target.matches('#copybutton')) { 
+				jQuery('.loader-wrapper').css('display', 'none');
 				if (!navigator.clipboard) {return;} 
 				navigator.clipboard.writeText(document.getElementById('innerprompt').innerText).then(() => {
 					var copyMessage = document.getElementById('copy-prompt-message');
@@ -448,25 +402,13 @@ require_once("user/protect.php");
 			}
 			xhr.send("mode=3");	
 			
-			// if (mode!=null){
-			// 	if (mode=="LIGHT") {
-			// 		document.getElementById("modebutton").innerText="DARK MODE";
-			// 		document.body.style.background="#FFFFFF";
-			// 	} else {
-			// 		document.getElementById("modebutton").innerText="LIGHT MODE";
-			// 		document.body.style.background="#444444";
-			// 	}
-			// }
 		});
 
 		$(document).ready(function(){
-  $('.button').on('click', function(){
-    $('.loader-wrapper').css('display', 'flex');
-    // setTimeout(function(){
-    //   $('.loader-wrapper').css('display', 'none');
-    // }, 3000)
-  })
-})
+			$('.button').on('click', function(){
+				$('.loader-wrapper').css('display', 'flex');
+			})
+		})
 
 
 
@@ -498,13 +440,34 @@ require_once("user/protect.php");
 
 			Array.from(modal.getElementsByClassName('jb-modal-close')).forEach(function (el) {
 				el.addEventListener('click', function (e) {
-				e.currentTarget.closest('.modal').classList.remove('is-active');
-				document.documentElement.classList.remove('is-clipped');
-				document.body.removeChild(modal);
+					e.currentTarget.closest('.modal').classList.remove('is-active');
+					document.documentElement.classList.remove('is-clipped');
+					document.body.removeChild(modal);
 				});
-			});
-			
+			})	
 		}
+
+		$(document).ready(function() {
+			$('.jb-modal-close').on('click', function() {
+				$('.modal').removeClass('is-active');
+				hideLoader();
+			});
+
+			$('#apibutton').on('click', function() {
+				$('#api-key-modal').addClass('is-active');
+			});
+
+			$('#savekeybutton').on('click', function() {
+				let apiKey = $('#apikeystorage-modal').val();
+				$('#apikeystorage').val(apiKey);
+				$('#api-key-modal').removeClass('is-active');
+				hideLoader();
+			});
+
+			function hideLoader() {
+				$('.loader-wrapper').hide();
+			}
+		});
 
 	</script>
 	</body>

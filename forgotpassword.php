@@ -20,7 +20,7 @@ if (isset($_SESSION["user"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Forgot Password Page</title>
     <!-- Bulma is included -->
-    <link rel="stylesheet" href="css/main.min.css">
+    <link rel="stylesheet" href="css/main.css">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -56,12 +56,14 @@ if (isset($_SESSION["user"])) {
           <div class="columns is-centered">
             <div class="column is-4">
               <form id="login" method="post">
-                <figure class="image">
-                  <img class="center" style="max-width:100%; height:auto;" src="img/logo_light.png">
-                </figure>
+                <div class="logo-container mt-5">
+                  <figure class="image mb-5 has-text-centered">
+                    <img class="logo-image" src="img/logo.png" width="300" height="60">
+                  </figure>
+                </div>
                 <h2 class="title is-4 has-text-centered">FORGOT PASSWORD</h2>
-                <p class="has-text-centered has-text-grey">
-                  Enter your email below and press NEW PASSWORD and a new password will be emailed to you.
+                <p class="has-text-left has-text-grey mb-3">
+                  Enter your email below and a new password will be emailed to you.
                 </p>
                 <div class="field">
                   <label class="label">Email</label>
