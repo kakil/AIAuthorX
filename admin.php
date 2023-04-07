@@ -108,295 +108,293 @@ function replaceKeys($oldKey, $newKey, array $input) {
         </div>
       </nav> <!-- END NAV -->
       <aside class="aside is-placed-left is-expanded">
-    <div class="aside-tools">
-      <div class="aside-tools-label">
-        <a class="navbar-item" style="text-decoration: none; cursor: default;" href="https://toolkitsforsuccess.com">
+        <div class="aside-tools">
+          <div class="aside-tools-label mt-2">
             <img src="img/logo.png" alt="Toolkits For Success: Content that starts Conversations that puts Cash in your pocket." width="200" height="30">
-        </a>
-      </div>
-    </div>
-    <div class="menu is-menu-main">
-      <p class="menu-label">Admin</p>
-      <ul class="menu-list">
-        <li>
-          <a href="admin.php" class="has-icon is-active">
-            <span class="icon has-update-mark"><i class="mdi mdi-account-multiple"></i></span>
-            <span class="menu-item-label">User Admin</span>
-          </a>
-        </li>
-        <li>
-          <a href="login.php" class="has-icon">
-            <span class="icon"><i class="mdi mdi-login"></i></span>
-            <span class="menu-item-label">User Login</span>
-          </a>
-        </li>
-      </ul>
-      <p class="menu-label">About</p>
-      <ul class="menu-list">
-        <li>
-          <a href="https://toolkitsforsuccess.com" target="_blank" class="has-icon">
-            <span class="icon"><i class="mdi mdi-web"></i></span>
-            <span class="menu-item-label">Toolkits For Success</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://toolkitsforsuccess.com" class="has-icon">
-            <span class="icon"><i class="mdi mdi-help-circle"></i></span>
-            <span class="menu-item-label">About</span>
-          </a>
-        </li>
-        <hr>
-        <li>
-          <a href="adminlogout.php" class="has-icon">
-            <span class="icon"><i class="mdi mdi-logout"></i></span>
-            <span class="menu-item-label">Logout Admin</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </aside>
-  <section class="section is-title-bar">
-    <div class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <ul>
-            <li>Admin</li>
-            <li>Users</li>
+          </div>
+        </div>
+        <div class="menu is-menu-main">
+          <p class="menu-label">Admin</p>
+          <ul class="menu-list">
+            <li>
+              <a href="admin.php" class="has-icon is-active">
+                <span class="icon has-update-mark"><i class="mdi mdi-account-multiple"></i></span>
+                <span class="menu-item-label">User Admin</span>
+              </a>
+            </li>
+            <li>
+              <a href="login.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-login"></i></span>
+                <span class="menu-item-label">User Login</span>
+              </a>
+            </li>
+          </ul>
+          <p class="menu-label">About</p>
+          <ul class="menu-list">
+            <li>
+              <a href="https://toolkitsforsuccess.com" target="_blank" class="has-icon">
+                <span class="icon"><i class="mdi mdi-web"></i></span>
+                <span class="menu-item-label">Toolkits For Success</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://toolkitsforsuccess.com" class="has-icon">
+                <span class="icon"><i class="mdi mdi-help-circle"></i></span>
+                <span class="menu-item-label">About</span>
+              </a>
+            </li>
+            <hr>
+            <li>
+              <a href="adminlogout.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-logout"></i></span>
+                <span class="menu-item-label">Logout Admin</span>
+              </a>
+            </li>
           </ul>
         </div>
-      </div>
-    </div>
-  </section>
-  <section class="hero is-hero-bar">
-    <div class="hero-body">
-      <div class="level">
-        <div class="level-left">
-          <div class="level-item"><h1 class="title">
-            User Administration
-          </h1></div>
-        </div>
-        <div class="level-right" style="display: none;">
-          <div class="level-item"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section>
-  <div class="tile is-ancestor mt-3" style="display: flex; justify-content: center;">
-    <!-- Active User Count Card -->
-    <div class="tile is-parent is-3">
-      <div class="card tile is-child" style="width: 240px; height: 240px;">
-        <header class="card-header">
-          <p class="card-header-title" style="display: flex; align-items: center; justify-content: center;">
-            <span class="icon" style="margin-right: 5px;"><i class="mdi mdi-account default"></i></span>
-            Total Users
-          </p>
-        </header>
-        <div class="card-content">
-          <button id="total-users-button" class="button is-primary is-large is-fullwidth" style="width: 100px; height: 100px; font-size: 36px; font-weight: bold; margin: auto;">
-            Button
-          </button>
-        </div>
-      </div>
-    </div>
-    <!-- Banned User Count Card -->
-    <div class="tile is-parent is-3 is-offset-1">
-      <div class="card tile is-child" style="width: 240px; height: 240px;">
-        <header class="card-header">
-          <p class="card-header-title" style="display: flex; align-items: center; justify-content: center;">
-            <span class="icon" style="margin-right: 5px;"><i class="mdi mdi-account-off default"></i></span>
-            Banned Users
-          </p>
-        </header>
-        <div class="card-content">
-          <button id="banned-users-button" class="button is-danger is-large is-fullwidth" style="width: 100px; height: 100px; font-size: 36px; font-weight: bold; margin: auto;">
-            Button
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-  <!-- All Users -->
-  <section class="section is-main-section">
-    <div class="notification is-info">
-      <div class="level">
-        <div class="level-left">
-          <div class="level-item">
-            <div>
-              <span class="icon"><i class="mdi mdi-account-search default"></i></span>
-              <b class="mr-3">Search:</b><input type="text" id="search-input" placeholder="Search users...">
+      </aside>
+      <section class="section is-title-bar">
+        <div class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <ul>
+                <li>Admin</li>
+                <li>Users</li>
+              </ul>
             </div>
           </div>
         </div>
-      </div>
-    </div> <!-- Search All Users -->
-    <div class="card has-table">
-      <header class="card-header">
-        <p class="card-header-title">
-          <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
-          All Users
-        </p>
-        <a href="#" class="card-header-icon">
-          <span class="icon"><i class="mdi mdi-reload"></i></span>
-        </a>
-      </header> <!-- END TABLE HEADER -->
-      <div class="card-content">
-        <div class="b-table has-pagination">
-          <div class="table-wrapper has-mobile-cards">
-            <table class="table is-fullwidth is-striped is-hoverable is-fullwidth" id="user-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Created</th>
-                  <th># Logins</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead> <!-- END THEAD -->
-              <tbody id="user-table-body"></tbody> <!-- END TBODY -->
-            </table> <!-- END TABLE -->
-          </div> <!-- END TABLE-WRAPPER HAS-MOBILE-CARDS -->
-          <div class="notification">
-            <div class="level">
-              <div class="level-left">
-                <div class="level-item">
-                  <nav class="pagination" role="navigation" aria-label="pagination">
-                    <ul class="pagination-list" id="pagination-list"></ul>
-                  </nav>
-                </div>
-              </div>
-              <div class="level-right">
-                <div class="level-item">
-                  <small>Page <span id="current-page"></span> of <span id="total-pages"></span></small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div><!-- END OF CARD-CONTENT -->
-    </div> <!-- END CARD HAS-TABLE -->
-  </section>
-
-  <!-- Banned Users -->
-  <section class="section is-main-section">
-    <div class="notification is-info">
-      <div class="level">
-        <div class="level-left">
-          <div class="level-item">
-            <div>
-              <span class="icon"><i class="mdi mdi-account-search default"></i></span>
-              <b class="mr-3">Search:</b><input type="text" id="banned-search-input" placeholder="Search banned users...">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> <!-- Search Banned Users -->
-    <div class="card has-table">
-      <header class="card-header">
-        <p class="card-header-title">
-          <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
-          Banned Users
-        </p>
-        <a href="#" class="card-header-icon">
-          <span class="icon"><i class="mdi mdi-reload"></i></span>
-        </a>
-      </header> <!-- END TABLE HEADER -->
-      <div class="card-content">
-        <div class="b-table has-pagination">
-          <div class="table-wrapper has-mobile-cards">
-            <table class="table is-fullwidth is-striped is-hoverable is-fullwidth" id="user-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Created</th>
-                  <th># Logins</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead> <!-- END THEAD -->
-              <tbody id="banned-users-table-body"></tbody> <!-- END TBODY -->
-            </table> <!-- END TABLE -->
-          </div> <!-- END TABLE-WRAPPER HAS-MOBILE-CARDS -->
-          <div class="notification">
-            <div class="level">
-              <div class="level-left">
-                <div class="level-item">
-                  <nav class="pagination" role="navigation" aria-label="pagination">
-                    <ul class="pagination-list" id="banned-pagination-list"></ul>
-                  </nav>
-                </div>
-              </div>
-              <div class="level-right">
-                <div class="level-item">
-                  <small>Page <span id="banned-current-page"></span> of <span id="banned-total-pages"></span></small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div><!-- END OF CARD-CONTENT -->
-    </div> <!-- END CARD HAS-TABLE -->
-  </section>
-  
-  <footer class="footer">
-    <div class="container-fluid">
-      <div class="level">
-        <div class="level-left">
-          <div class="level-item">
-            © 2023, ToolkitsForSuccess.com
-          </div>
-          <div class="level-item">
-            <a href="https://toolkitsforsuccess.com" style="height: 20px">
-              <img src="https://img.shields.io/badge/release-v1.0.0-lightgrey">
-            </a>
-          </div>
-        </div>
-        <div class="level-right">
-          <div class="level-item">
-            <div class="logo">
-              <a href="https://toolkitsforsuccess.com"><img src="img/ToolkitsForSuccess_logo.png" alt="ToolkitsForSuccess.com"></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <div id="sample-modal" class="modal">
-    <div class="modal-background jb-modal-close"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Confirm action</p>
-        <button class="delete jb-modal-close" aria-label="close"></button>
-      </header>
-      <section class="modal-card-body">
-        <p>This will permanently delete <b>Some Object</b></p>
-        <p>This is sample modal</p>
       </section>
-      <footer class="modal-card-foot">
-        <button class="button jb-modal-close">Cancel</button>
-        <button class="button is-danger jb-modal-close">Delete</button>
+      <section class="hero is-hero-bar">
+        <div class="hero-body">
+          <div class="level">
+            <div class="level-left">
+              <div class="level-item"><h1 class="title">
+                User Administration
+              </h1></div>
+            </div>
+            <div class="level-right" style="display: none;">
+              <div class="level-item"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="tile is-ancestor mt-3" style="display: flex; justify-content: center;">
+          <!-- Active User Count Card -->
+          <div class="tile is-parent is-3">
+            <div class="card tile is-child" style="width: 240px; height: 240px;">
+              <header class="card-header">
+                <p class="card-header-title" style="display: flex; align-items: center; justify-content: center;">
+                  <span class="icon" style="margin-right: 5px;"><i class="mdi mdi-account default"></i></span>
+                  Total Users
+                </p>
+              </header>
+              <div class="card-content">
+                <button id="total-users-button" class="button is-primary is-large is-fullwidth" style="width: 100px; height: 100px; font-size: 36px; font-weight: bold; margin: auto;">
+                  Button
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Banned User Count Card -->
+          <div class="tile is-parent is-3 is-offset-1">
+            <div class="card tile is-child" style="width: 240px; height: 240px;">
+              <header class="card-header">
+                <p class="card-header-title" style="display: flex; align-items: center; justify-content: center;">
+                  <span class="icon" style="margin-right: 5px;"><i class="mdi mdi-account-off default"></i></span>
+                  Banned Users
+                </p>
+              </header>
+              <div class="card-content">
+                <button id="banned-users-button" class="button is-danger is-large is-fullwidth" style="width: 100px; height: 100px; font-size: 36px; font-weight: bold; margin: auto;">
+                  Button
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+      <!-- All Users -->
+      <section class="section is-main-section">
+        <div class="notification is-info">
+          <div class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <div>
+                  <span class="icon"><i class="mdi mdi-account-search default"></i></span>
+                  <b class="mr-3">Search:</b><input type="text" id="search-input" placeholder="Search users...">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Search All Users -->
+        <div class="card has-table">
+          <header class="card-header">
+            <p class="card-header-title">
+              <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+              All Users
+            </p>
+            <a href="#" class="card-header-icon">
+              <span class="icon"><i class="mdi mdi-reload"></i></span>
+            </a>
+          </header> <!-- END TABLE HEADER -->
+          <div class="card-content">
+            <div class="b-table has-pagination">
+              <div class="table-wrapper has-mobile-cards">
+                <table class="table is-fullwidth is-striped is-hoverable is-fullwidth" id="user-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Created</th>
+                      <th># Logins</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead> <!-- END THEAD -->
+                  <tbody id="user-table-body"></tbody> <!-- END TBODY -->
+                </table> <!-- END TABLE -->
+              </div> <!-- END TABLE-WRAPPER HAS-MOBILE-CARDS -->
+              <div class="notification">
+                <div class="level">
+                  <div class="level-left">
+                    <div class="level-item">
+                      <nav class="pagination" role="navigation" aria-label="pagination">
+                        <ul class="pagination-list" id="pagination-list"></ul>
+                      </nav>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <small>Page <span id="current-page"></span> of <span id="total-pages"></span></small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- END OF CARD-CONTENT -->
+        </div> <!-- END CARD HAS-TABLE -->
+      </section>
+
+      <!-- Banned Users -->
+      <section class="section is-main-section">
+        <div class="notification is-info">
+          <div class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <div>
+                  <span class="icon"><i class="mdi mdi-account-search default"></i></span>
+                  <b class="mr-3">Search:</b><input type="text" id="banned-search-input" placeholder="Search banned users...">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Search Banned Users -->
+        <div class="card has-table">
+          <header class="card-header">
+            <p class="card-header-title">
+              <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+              Banned Users
+            </p>
+            <a href="#" class="card-header-icon">
+              <span class="icon"><i class="mdi mdi-reload"></i></span>
+            </a>
+          </header> <!-- END TABLE HEADER -->
+          <div class="card-content">
+            <div class="b-table has-pagination">
+              <div class="table-wrapper has-mobile-cards">
+                <table class="table is-fullwidth is-striped is-hoverable is-fullwidth" id="user-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Created</th>
+                      <th># Logins</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead> <!-- END THEAD -->
+                  <tbody id="banned-users-table-body"></tbody> <!-- END TBODY -->
+                </table> <!-- END TABLE -->
+              </div> <!-- END TABLE-WRAPPER HAS-MOBILE-CARDS -->
+              <div class="notification">
+                <div class="level">
+                  <div class="level-left">
+                    <div class="level-item">
+                      <nav class="pagination" role="navigation" aria-label="pagination">
+                        <ul class="pagination-list" id="banned-pagination-list"></ul>
+                      </nav>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <small>Page <span id="banned-current-page"></span> of <span id="banned-total-pages"></span></small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- END OF CARD-CONTENT -->
+        </div> <!-- END CARD HAS-TABLE -->
+      </section>
+      
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="level">
+            <div class="level-left">
+              <div class="level-item">
+                © 2023, ToolkitsForSuccess.com
+              </div>
+              <div class="level-item">
+                <a href="https://toolkitsforsuccess.com" style="height: 20px">
+                  <img src="https://img.shields.io/badge/release-v1.0.0-lightgrey">
+                </a>
+              </div>
+            </div>
+            <div class="level-right">
+              <div class="level-item">
+                <div class="logo">
+                  <a href="https://toolkitsforsuccess.com"><img src="img/ToolkitsForSuccess_logo.png" alt="ToolkitsForSuccess.com"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </footer>
+
+      <div id="sample-modal" class="modal">
+        <div class="modal-background jb-modal-close"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Confirm action</p>
+            <button class="delete jb-modal-close" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            <p>This will permanently delete <b>Some Object</b></p>
+            <p>This is sample modal</p>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button jb-modal-close">Cancel</button>
+            <button class="button is-danger jb-modal-close">Delete</button>
+          </footer>
+        </div>
+        <button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+      </div>
     </div>
-    <button class="modal-close is-large jb-modal-close" aria-label="close"></button>
-  </div>
-</div>
 
-<!-- Scripts below are for demo only -->
-<script type="text/javascript" src="js/main.min.js"></script>
+    <!-- Scripts below are for demo only -->
+    <script type="text/javascript" src="js/main.min.js"></script>
 
-<!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
-<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
+    <!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
 
-</body>
+  </body>
 </html>
 
 
