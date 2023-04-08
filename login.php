@@ -8,7 +8,7 @@ if (isset($_POST["email"])) {
 
 
 if (isset($_SESSION["user"])) {
-	header("Location: go.php");
+	header("Location: awesomeprompts.php");
 	exit();
 }
 
