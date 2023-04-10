@@ -1,6 +1,6 @@
 <?php
-	require_once("config.php");
-	require_once("user/protect.php");
+require_once("config.php");
+require_once("user/protect.php");
 ?>
 
 <!doctype HTML>
@@ -24,11 +24,11 @@
     <div id="app">
       <nav id="navbar-main" class="navbar is-fixed-top is-dark">
         <div class="navbar-brand">
-         	 <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+          	<a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
             	<span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
           	</a>
 		  	<div class="navbar-item has-text-centered">
-            	<h1>Awesome Prompts</h1>
+            	<h1>Content Tools Prompts</h1>
         	</div>
         </div>
         <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
@@ -55,8 +55,8 @@
           <p class="menu-label">Admin</p>
           <ul class="menu-list">
             <li>
-              <a href="awesomeprompts.php" class="has-icon is-active">
-                <span class="icon has-update-mark"><i class="mdi mdi-lightbulb-on"></i></span>
+              <a href="awesomeprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-lightbulb-on"></i></span>
                 <span class="menu-item-label">Awesome Prompts</span>
               </a>
             </li>
@@ -67,8 +67,8 @@
               </a>
             </li>
 			<li>
-              <a href="contenttoolsprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+              <a href="contenttoolsprompts.php" class="has-icon is-active">
+                <span class="icon has-update-mark"><i class="mdi mdi-bullhorn"></i></span>
                 <span class="menu-item-label">Content Tools Prompts</span>
               </a>
             </li>
@@ -134,7 +134,7 @@
 						</div>
 						<div class="prompt-display-section mt-3">
 							<div id="promptdata" class="content" >
-								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">I want you to act as an academician. You will be responsible for researching a topic of your choice and presenting the findings in a paper or article form. Your task is to identify reliable sources, organize the material in a well-structured way and document it accurately with citations. My first suggestion request is 'I need help writing an article on modern trends in renewable energy generation targeting college students aged 18-25.'</div>
+								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">Please write a structured markdown blog post in a press release style like an experienced news reporter in English for the Keyword [topic] . The article should include Creative Title, SEO meta description, Introduction, headings, sub headings, bullet points or Numbered list if needed, frequently asked questions and conclusion. The post should not be less than 1200 words. Do not change the original keyword while writing the Title. Use the keyword at least 2-3 times in the text body.</div>
 							</div>
 							<div id="copy-prompt-message" class="copy-prompt-message has-text-success has-text-weight-bold has-text-centered mb-3"></div>
 							<div class="buttons">
@@ -231,54 +231,8 @@
 			
 		}
 
-		//Text animation function
-		!function (e, t) {
-		"object" == typeof exports && "undefined" != typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define(t) : (e = "undefined" != typeof globalThis ? globalThis : e || self).tint = t()
-		}(this, (function () {
-		"use strict";
-		return function (e, {
-			items: t = [],
-			typeSpeed: n = 100,
-			deleteSpeed: o = 50,
-			delayBetweenItems: i = 2e3,
-			loop: r = !0,
-			startDelay: s = 0,
-			startsAtIndex: l = 0,
-			cursor: d = !0,
-			cursorChar: c = "|",
-			cursorCharBlinkSpeed: u = 500,
-			cursorCharBlinkTransitionSpeed: a = .15,
-			startOnView: f = !0,
-			startOnViewOffset: p = 0
-		} = {}) {
-			if (!t.length) throw new Error("tint: No items option was provided");
-			let m, y, w, g, h = !1,
-			T = l,
-			C = t[T],
-			b = e.getBoundingClientRect();
-			const v = document.createElement("span");
-
-			function x(s) {
-			const l = s.length,
-				d = t[T % l];
-			if (h ? (m = o, C = d.substring(0, C.length - 1)) : C = d.substring(0, C.length + 1), e.textContent = `${C}`, !r && C === s[l - 1]) return enableselect(), clearTimeout(w), clearTimeout(y), void clearInterval(g);
-			h || C !== d ? h && "" === C && (h = !1, T++, m = n) : (h = !0, m = i), w = setTimeout((function () {
-				x(t)
-			}), m)
-			}
-			v.textContent = c, d && (e.insertAdjacentElement("afterend", v), v.style.transition = `opacity ${a}s`, g = setInterval((() => {
-			v.style.opacity = "0" === v.style.opacity ? "1" : "0"
-			}), u)), e.textContent = t[0], !f || b.bottom <= window.innerHeight && b.top >= 0 ? y = setTimeout((function () {
-			x(t)
-			}), s - i) : window.addEventListener("scroll", (function n() {
-			b = e.getBoundingClientRect(), b.bottom <= window.innerHeight - p && b.top >= 0 + p && (y = setTimeout((function () {
-				x(t)
-			}), s - i), window.removeEventListener("scroll", n))
-			}), !1)
-		}
-		}));
-		//end text animation function	
-
+		!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e="undefined"!=typeof globalThis?globalThis:e||self).tint=t()}(this,(function(){"use strict";return function(e,{items:t=[],typeSpeed:n=100,deleteSpeed:o=50,delayBetweenItems:i=2e3,loop:r=!0,startDelay:s=0,startsAtIndex:l=0,cursor:d=!0,cursorChar:c="|",cursorCharBlinkSpeed:u=500,cursorCharBlinkTransitionSpeed:a=.15,startOnView:f=!0,startOnViewOffset:p=0}={}){if(!t.length)throw new Error("tint: No items option was provided");let m,y,w,g,h=!1,T=l,C=t[T],b=e.getBoundingClientRect();const v=document.createElement("span");function x(s){const l=s.length,d=t[T%l];if(h?(m=o,C=d.substring(0,C.length-1)):C=d.substring(0,C.length+1),e.textContent=`${C}`,!r&&C===s[l-1])return enableselect(),clearTimeout(w),clearTimeout(y),void clearInterval(g);h||C!==d?h&&""===C&&(h=!1,T++,m=n):(h=!0,m=i),w=setTimeout((function(){x(t)}),m)}v.textContent=c,d&&(e.insertAdjacentElement("afterend",v),v.style.transition=`opacity ${a}s`,g=setInterval((()=>{v.style.opacity="0"===v.style.opacity?"1":"0"}),u)),e.textContent=t[0],!f||b.bottom<=window.innerHeight&&b.top>=0?y=setTimeout((function(){x(t)}),s-i):window.addEventListener("scroll",(function n(){b=e.getBoundingClientRect(),b.bottom<=window.innerHeight-p&&b.top>=0+p&&(y=setTimeout((function(){x(t)}),s-i),window.removeEventListener("scroll",n))}),!1)}}));				
+					
 		document.getElementById('promptselector').addEventListener('change', function() {
 			var promptindex=document.getElementById('promptselector').value;
 			
@@ -291,8 +245,7 @@
 				var data = {"prompt": promptindex};
 				var xhr = new XMLHttpRequest();
 				xhr.open("POST", 'promptrequest.php', true);
-				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xhr.onreadystatechange = function() {
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");xhr.onreadystatechange = function() {
 					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 						const typ = document.querySelector("#innerprompt");
 						tint(typ, {
@@ -305,9 +258,8 @@
 						
 					}
 				}
-				
-				var dataFile = 'promptdata.php'
-				xhr.send("promptindex=" + promptindex + "&mode=1" + "&datafile=" + encodeURIComponent(dataFile));
+				var datafile = "contenttoolspromptdata.php";
+				xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
 			}
 		});
 
@@ -415,67 +367,59 @@
 
 
 			if (event.target.matches('#runbutton')) {
-				console.log("Run Prompt Button Pressed");
-				var apikey = document.getElementById('apikeystorage-modal').value;
-				var runButton = document.getElementById('runbutton');
+			console.log("Run Prompt Button Pressed");
+			var apikey = document.getElementById('apikeystorage-modal').value;
+			var runButton = document.getElementById('runbutton');
 
-				// Show the loader
-				var loaderWrapper = document.querySelector('.loader-wrapper');
-				loaderWrapper.classList.add('is-active');
+			// Show the loader
+			var loaderWrapper = document.querySelector('.loader-wrapper');
+      		loaderWrapper.classList.add('is-active');
 
-				var prompt = document.getElementById('innerprompt').textContent;
-				var promptindex = document.getElementById('promptselector').value;
-				console.log("Prompt: " + prompt);
-				console.log("API Key: " + apikey);
-				if (promptindex != -1 && apikey.length > 45) {
+			var prompt = document.getElementById('innerprompt').textContent;
+			var promptindex = document.getElementById('promptselector').value;
+			console.log("Prompt: " + prompt);
+			console.log("API Key: " + apikey);
+			if (promptindex != -1 && apikey.length > 45) {
 
-					disableselect();
+				disableselect();
 
-					var xhr = new XMLHttpRequest();
-					xhr.open("POST", 'promptrequest.php', true);
-					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-					xhr.onreadystatechange = function () {
-						if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-							const typ = document.querySelector("#innerprompt");
-							//console.log("Response: " + this.responseText);
-							const airesp = JSON.parse(this.responseText);
-							const content = airesp.choices[0].message.content;
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", 'promptrequest.php', true);
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.onreadystatechange = function () {
+					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+						const typ = document.querySelector("#innerprompt");
+						const airesp = JSON.parse(this.responseText);
+						const content = airesp.choices[0].message.content;
 
-							var modalContent = '<div class="innerresponse" id="responsedata">' + content + '</div><div style="margin:0 auto; text-align:center; padding-top:15px;"><button type="button" class="custom-button" id="responsebutton">COPY & CLOSE</button></div>';
-							loaderWrapper.classList.remove('is-active');
-							showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
+						var modalContent = '<div class="innerresponse" id="responsedata">' + content + '</div><div style="margin:0 auto; text-align:center; padding-top:15px;"><button type="button" class="custom-button" id="responsebutton">COPY & CLOSE</button></div>';
+						loaderWrapper.classList.remove('is-active');
+						showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
 
-							enableselect();
-						}
+						enableselect();
 					}
-					console.log('Prompt value:', prompt);
-					if (typeof prompt === 'string') {
-						prompt = prompt.replace(/"/gi, "'");
-					}
-					//xhr.send("promptindex=" + encodeURIComponent(prompt) + "&mode=2");
-					var dataFile = 'promptdata.php';
-					xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
 				}
+				var dataFile = "contenttoolspromptdata.php"
+				prompt = prompt.replace(/"/gi, "'");
+				xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
+			}
 			}
 		},false);
 
 		document.addEventListener("DOMContentLoaded", function() {
-			var mode = localStorage.getItem("promptmodeZNWEBCH29T");
-
-			var datafile = "promptdata.php"; // Set the datafile variable to the desired file name
+			var mode=localStorage.getItem("promptmodeZNWEBCH29T");
 
 			var xhr = new XMLHttpRequest();
 			xhr.open("POST", 'promptrequest.php', true);
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.onreadystatechange = function() {
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");xhr.onreadystatechange = function() {
 				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-					
-					document.getElementById('promptselector').innerHTML = this.responseText;
+					document.getElementById('promptselector').innerHTML=this.responseText;
 				}
 			}
-			xhr.send("mode=3" + "&datafile=" + encodeURIComponent(datafile));
+			var datafile = "contenttoolspromptdata.php";
+			xhr.send("datafile="+datafile+"&mode=3");	
+			
 		});
-		//xhr.send("mode=3");
 
 		$(document).ready(function(){
 			$('.button').on('click', function(){
@@ -529,7 +473,6 @@
 			$('#apibutton').on('click', function() {
 				$('#api-key-modal').addClass('is-active');
 			});
-
 
 			$('#savekeybutton').on('click', function() {
 				let apiKey = $('#apikeystorage-modal').val();

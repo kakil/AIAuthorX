@@ -66,6 +66,12 @@ require_once("user/protect.php");
                 <span class="menu-item-label">Marketing Prompts</span>
               </a>
             </li>
+			<li>
+              <a href="contenttoolsprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="menu-item-label">Content Tools Prompts</span>
+              </a>
+            </li>
             <li>
               <a href="login.php" class="has-icon">
                 <span class="icon"><i class="mdi mdi-login"></i></span>
