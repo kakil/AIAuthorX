@@ -63,3 +63,20 @@ $('#savekeybutton').on('click', function () {
   modal.removeClass('is-active');
   $('html').removeClass('is-clipped');
 });
+
+
+//Highlight text in brackets
+$(window).on('load', function() {
+  highlightTextInBrackets();
+});
+
+function highlightTextInBrackets() {
+  const textElements = document.querySelectorAll('.innerprompt');
+  
+  textElements.forEach((el) => {
+    const innerHTML = el.innerHTML;
+    const regex = /\[([^\]]+)\]/g;
+    const newInnerHTML = innerHTML.replace(regex, '<span class="highlight">$1</span>');
+    el.innerHTML = newInnerHTML;
+  });
+}

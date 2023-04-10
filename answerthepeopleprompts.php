@@ -231,110 +231,36 @@ require_once("user/protect.php");
 			
 		}
 
-		//Highlight text in brackets
-		function highlightTextInBrackets() {
-			
-			$('.innerprompt').each(function() {
-				const $this = $(this);
-				const html = $this.html();
-				const regex = /\[(.*?)\]/g;
-				const newHtml = html.replace(regex, '<span class="highlight">$&</span>');
-				$this.html(newHtml);
-			});
-			
-		}
-
-		$(document).ready(function() {
-			highlightTextInBrackets();
-
-		});
-
-
-		//text animation
-		!function (e, t) {
-		"object" == typeof exports && "undefined" != typeof module ? module.exports = t() :
-		"function" == typeof define && define.amd ? define(t) :
-		(e = "undefined" != typeof globalThis ? globalThis : e || self).tint = t()
-		}(this, (function () {
-		"use strict";
-		return function (e, {
-			items: t = [],
-			typeSpeed: n = 100,
-			deleteSpeed: o = 50,
-			delayBetweenItems: i = 2e3,
-			loop: r = !0,
-			startDelay: s = 0,
-			startsAtIndex: l = 0,
-			cursor: d = !0,
-			cursorChar: c = "|",
-			cursorCharBlinkSpeed: u = 500,
-			cursorCharBlinkTransitionSpeed: a = .15,
-			startOnView: f = !0,
-			startOnViewOffset: p = 0,
-			callback: cb
-		} = {}) {
-			if (!t.length) throw new Error("tint: No items option was provided");
-			let m, y, w, g, h = !1, T = l, C = t[T], b = e.getBoundingClientRect();
-			const v = document.createElement("span");
-			function x(s) {
-			const l = s.length, d = t[T % l];
-			if (h ? (m = o, C = d.substring(0, C.length - 1)) : C = d.substring(0, C.length + 1), e.textContent = `${C}`,
-				!r && C === s[l - 1]) return enableselect(), clearTimeout(w), clearTimeout(y), void clearInterval(g);
-			h || C !== d ? h && "" === C && (h = !1, T++, m = n) : (h = !0, m = i),
-				w = setTimeout((function () { x(t) }), m);
-			if (!r && T === t.length - 1 && cb) { cb(); }
-			}
-			v.textContent = c, d && (e.insertAdjacentElement("afterend", v),
-			v.style.transition = `opacity ${a}s`,
-			g = setInterval((() => { v.style.opacity = "0" === v.style.opacity ? "1" : "0" }), u)),
-			e.textContent = t[0], !f || b.bottom <= window.innerHeight && b.top >= 0 ?
-			y = setTimeout((function () { x(t) }), s - i) :
-			window.addEventListener("scroll", (function n() {
-				b = e.getBoundingClientRect(),
-				b.bottom <= window.innerHeight - p && b.top >= 0 + p &&
-				(y = setTimeout((function () { x(t) }), s - i), window.removeEventListener("scroll", n))
-			}), !1)
-		}
-		}));
-
-		
-		
+		!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e="undefined"!=typeof globalThis?globalThis:e||self).tint=t()}(this,(function(){"use strict";return function(e,{items:t=[],typeSpeed:n=100,deleteSpeed:o=50,delayBetweenItems:i=2e3,loop:r=!0,startDelay:s=0,startsAtIndex:l=0,cursor:d=!0,cursorChar:c="|",cursorCharBlinkSpeed:u=500,cursorCharBlinkTransitionSpeed:a=.15,startOnView:f=!0,startOnViewOffset:p=0}={}){if(!t.length)throw new Error("tint: No items option was provided");let m,y,w,g,h=!1,T=l,C=t[T],b=e.getBoundingClientRect();const v=document.createElement("span");function x(s){const l=s.length,d=t[T%l];if(h?(m=o,C=d.substring(0,C.length-1)):C=d.substring(0,C.length+1),e.textContent=`${C}`,!r&&C===s[l-1])return enableselect(),clearTimeout(w),clearTimeout(y),void clearInterval(g);h||C!==d?h&&""===C&&(h=!1,T++,m=n):(h=!0,m=i),w=setTimeout((function(){x(t)}),m)}v.textContent=c,d&&(e.insertAdjacentElement("afterend",v),v.style.transition=`opacity ${a}s`,g=setInterval((()=>{v.style.opacity="0"===v.style.opacity?"1":"0"}),u)),e.textContent=t[0],!f||b.bottom<=window.innerHeight&&b.top>=0?y=setTimeout((function(){x(t)}),s-i):window.addEventListener("scroll",(function n(){b=e.getBoundingClientRect(),b.bottom<=window.innerHeight-p&&b.top>=0+p&&(y=setTimeout((function(){x(t)}),s-i),window.removeEventListener("scroll",n))}),!1)}}));				
 					
 		document.getElementById('promptselector').addEventListener('change', function() {
-		var promptindex=document.getElementById('promptselector').value;
+			var promptindex=document.getElementById('promptselector').value;
+			
+			if (promptindex==-1){
 
-		if (promptindex == -1) {
-			return;
-		} else {
-			var promptindex = document.getElementById('promptselector').value;
-			disableselect();
-			var data = {"prompt": promptindex};
-			var xhr = new XMLHttpRequest();
-			xhr.open("POST", 'promptrequest.php', true);
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-			xhr.onreadystatechange = function() {
-			if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-				const typ = document.querySelector("#innerprompt");
-				tint(typ, {
-					items: ['Thinking...', this.responseText],
-					typeSpeed: 0,
-					delayBetweenItems: 600,
-					loop: false,
-					cursorChar: "",
-					callback: function() {
-						setTimeout(function() {
-							highlightTextInBrackets();
-						}, 1000); 
+				return;
+			} else {
+				var promptindex=document.getElementById('promptselector').value;
+				disableselect();
+				var data = {"prompt": promptindex};
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", 'promptrequest.php', true);
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");xhr.onreadystatechange = function() {
+					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+						const typ = document.querySelector("#innerprompt");
+						tint(typ, {
+							items: ['Thinking...', this.responseText],
+							typeSpeed:0,
+							delayBetweenItems:600,
+							loop:false,
+							cursorChar:""
+						});
+						
 					}
-					
-				});
+				}
+				var datafile = "contenttoolspromptdata.php";
+				xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
 			}
-			}
-
-			var datafile = "contenttoolspromptdata.php";
-			xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
-		}
 		});
 
 		document.addEventListener('click', function (event) {
@@ -559,8 +485,6 @@ require_once("user/protect.php");
 				$('.loader-wrapper').hide();
 			}
 		});
-
-		
 
 	</script>
 	</body>
