@@ -28,12 +28,14 @@ if ($_POST['mode']==3){
 }
 if (!isset($_POST['promptindex']) || !isset($_POST['mode'])){echo("ERROR"); exit();}
 $promptindex=$_POST['promptindex'];
+$prompt=$_POST['prompt'];
 $prompt_name = $promptn[$promptindex];
 $prompt_data = $promptd[$promptindex];
 
 if ($_POST['mode']==1){
     echo ($prompt_data);
 } else if ($_POST['mode']==2){
+    //echo ($prompt_data);
     $curl = curl_init();
     curl_setopt_array($curl, array(
       CURLOPT_URL => 'https://api.openai.com/v1/chat/completions',
@@ -44,7 +46,7 @@ if ($_POST['mode']==1){
       CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => 'POST',
-      CURLOPT_POSTFIELDS =>'{"model":"gpt-3.5-turbo","messages": [{"role": "user", "content": "'.$prompt_data.'"}],"temperature":1,"max_tokens":2566}',
+      CURLOPT_POSTFIELDS =>'{"model":"gpt-3.5-turbo","messages": [{"role": "user", "content": "'.$prompt.'"}],"temperature":1,"max_tokens":2566}',
       CURLOPT_HTTPHEADER => array(
         'Authorization: Bearer '.$apikey,
         'Content-Type: application/json'

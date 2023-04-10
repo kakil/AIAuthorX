@@ -1,6 +1,6 @@
 <?php
-require_once("config.php");
-require_once("user/protect.php");
+	require_once("config.php");
+	require_once("user/protect.php");
 ?>
 
 <!doctype HTML>
@@ -24,9 +24,12 @@ require_once("user/protect.php");
     <div id="app">
       <nav id="navbar-main" class="navbar is-fixed-top is-dark">
         <div class="navbar-brand">
-          <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
-            <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
-          </a>
+         	 <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+            	<span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
+          	</a>
+		  	<div class="navbar-item has-text-centered">
+            	<h1>Awesome Prompts</h1>
+        	</div>
         </div>
         <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
 		<div class="navbar-end is-flex justify-content-center">
@@ -52,9 +55,15 @@ require_once("user/protect.php");
           <p class="menu-label">Admin</p>
           <ul class="menu-list">
             <li>
-              <a href="admin.php" class="has-icon is-active">
-                <span class="icon has-update-mark"><i class="mdi mdi-account-multiple"></i></span>
+              <a href="awesomeprompts.php" class="has-icon is-active">
+                <span class="icon has-update-mark"><i class="mdi mdi-lightbulb-on"></i></span>
                 <span class="menu-item-label">Awesome Prompts</span>
+              </a>
+            </li>
+			<li>
+              <a href="marketingprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="menu-item-label">Marketing Prompts</span>
               </a>
             </li>
             <li>
@@ -439,7 +448,7 @@ require_once("user/protect.php");
 					}
 					//xhr.send("promptindex=" + encodeURIComponent(prompt) + "&mode=2");
 					var dataFile = 'promptdata.php';
-					xhr.send("promptindex=" + promptindex + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
+					xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
 				}
 			}
 		},false);
@@ -512,8 +521,21 @@ require_once("user/protect.php");
 			});
 
 			$('#apibutton').on('click', function() {
-				$('#api-key-modal').addClass('is-active');
+				$.ajax({
+					type: 'POST',
+					url: 'check_login.php',
+					success: function(response) {
+						if (response === 'logged_in') {
+							//User is logged in,
+							$('#api-key-modal').addClass('is-active');
+						} else {
+							//User is not logged in, redirect to login page
+							window.location.href = 'login.php';
+						}
+					}
+				});
 			});
+
 
 			$('#savekeybutton').on('click', function() {
 				let apiKey = $('#apikeystorage-modal').val();

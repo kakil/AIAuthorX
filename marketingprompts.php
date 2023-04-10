@@ -24,9 +24,12 @@ require_once("user/protect.php");
     <div id="app">
       <nav id="navbar-main" class="navbar is-fixed-top is-dark">
         <div class="navbar-brand">
-          <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
-            <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
-          </a>
+          	<a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+            	<span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
+          	</a>
+		  	<div class="navbar-item has-text-centered">
+            	<h1>Marketing Prompts</h1>
+        	</div>
         </div>
         <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
 		<div class="navbar-end is-flex justify-content-center">
@@ -52,9 +55,15 @@ require_once("user/protect.php");
           <p class="menu-label">Admin</p>
           <ul class="menu-list">
             <li>
-              <a href="admin.php" class="has-icon is-active">
-                <span class="icon has-update-mark"><i class="mdi mdi-account-multiple"></i></span>
+              <a href="awesomeprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-lightbulb-on"></i></span>
                 <span class="menu-item-label">Awesome Prompts</span>
+              </a>
+            </li>
+			<li>
+              <a href="marketingprompts.php" class="has-icon is-active">
+                <span class="icon has-update-mark"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="menu-item-label">Marketing Prompts</span>
               </a>
             </li>
             <li>
@@ -119,7 +128,7 @@ require_once("user/protect.php");
 						</div>
 						<div class="prompt-display-section mt-3">
 							<div id="promptdata" class="content" >
-								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">I want you to act as an academician. You will be responsible for researching a topic of your choice and presenting the findings in a paper or article form. Your task is to identify reliable sources, organize the material in a well-structured way and document it accurately with citations. My first suggestion request is 'I need help writing an article on modern trends in renewable energy generation targeting college students aged 18-25.'</div>
+								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">Generate a list of keywords for a new product launch, including long-tail and high-performing keywords.'</div>
 							</div>
 							<div id="copy-prompt-message" class="copy-prompt-message has-text-success has-text-weight-bold has-text-centered mb-3"></div>
 							<div class="buttons">
@@ -229,7 +238,7 @@ require_once("user/protect.php");
 				disableselect();
 				var data = {"prompt": promptindex};
 				var xhr = new XMLHttpRequest();
-				xhr.open("POST", 'prompts.php', true);
+				xhr.open("POST", 'promptrequest.php', true);
 				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");xhr.onreadystatechange = function() {
 					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 						const typ = document.querySelector("#innerprompt");
@@ -243,8 +252,8 @@ require_once("user/protect.php");
 						
 					}
 				}
-				
-				xhr.send("promptindex="+promptindex+"&mode=1");
+				var datafile = "marketingpromptdata.php";
+				xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
 			}
 		});
 
@@ -369,7 +378,7 @@ require_once("user/protect.php");
 				disableselect();
 
 				var xhr = new XMLHttpRequest();
-				xhr.open("POST", 'prompts.php', true);
+				xhr.open("POST", 'promptrequest.php', true);
 				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				xhr.onreadystatechange = function () {
 					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
@@ -384,8 +393,9 @@ require_once("user/protect.php");
 						enableselect();
 					}
 				}
+				var dataFile = "marketingpromptdata.php"
 				prompt = prompt.replace(/"/gi, "'");
-				xhr.send("promptindex=" + encodeURIComponent(prompt) + "&mode=2");
+				xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
 			}
 			}
 		},false);
@@ -394,13 +404,14 @@ require_once("user/protect.php");
 			var mode=localStorage.getItem("promptmodeZNWEBCH29T");
 
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", 'prompts.php', true);
+			xhr.open("POST", 'promptrequest.php', true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");xhr.onreadystatechange = function() {
 				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 					document.getElementById('promptselector').innerHTML=this.responseText;
 				}
 			}
-			xhr.send("mode=3");	
+			var datafile = "marketingpromptdata.php";
+			xhr.send("datafile="+datafile+"&mode=3");	
 			
 		});
 
