@@ -521,19 +521,7 @@
 			});
 
 			$('#apibutton').on('click', function() {
-				$.ajax({
-					type: 'POST',
-					url: 'check_login.php',
-					success: function(response) {
-						if (response === 'logged_in') {
-							//User is logged in,
-							$('#api-key-modal').addClass('is-active');
-						} else {
-							//User is not logged in, redirect to login page
-							window.location.href = 'login.php';
-						}
-					}
-				});
+				$('#api-key-modal').addClass('is-active');
 			});
 
 
