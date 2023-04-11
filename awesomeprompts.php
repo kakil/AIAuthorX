@@ -68,26 +68,26 @@
             </li>
 			<li>
               <a href="contenttoolsprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="icon"><i class="mdi mdi-pencil"></i></span>
                 <span class="menu-item-label">Content Tools</span>
               </a>
             </li>
 			<li>
               <a href="answerthepeopleprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="icon"><i class="mdi mdi-comment-question-outline"></i></span>
                 <span class="menu-item-label">Answer The People</span>
               </a>
             </li>
 			<li>
-              <a href="imagegenerationprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
-                <span class="menu-item-label">Images</span>
+              <a href="funprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-image"></i></span>
+                <span class="menu-item-label">Fun</span>
               </a>
             </li>
             <li>
-              <a href="login.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-login"></i></span>
-                <span class="menu-item-label">User Login</span>
+              <a href="imagegenerationprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="menu-item-label">Images</span>
               </a>
             </li>
           </ul>
@@ -146,7 +146,7 @@
 						</div>
 						<div class="prompt-display-section mt-3">
 							<div id="promptdata" class="content" >
-								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">I want you to act as an academician. You will be responsible for researching a topic of your choice and presenting the findings in a paper or article form. Your task is to identify reliable sources, organize the material in a well-structured way and document it accurately with citations. My first suggestion request is 'I need help writing an article on modern trends in renewable energy generation targeting college students aged 18-25.'</div>
+								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">I want you to act as an academician. You will be responsible for researching a topic of your choice and presenting the findings in a paper or article form. Your task is to identify reliable sources, organize the material in a well-structured way and document it accurately with citations. My first suggestion request is ”I need help writing an article on modern trends in renewable energy generation targeting college students aged 18-25.”</div>
 							</div>
 							<div id="copy-prompt-message" class="copy-prompt-message has-text-success has-text-weight-bold has-text-centered mb-3"></div>
 							<div class="buttons">
@@ -243,21 +243,32 @@
 			
 		}
 
-		//Highlight text in brackets
-		function highlightTextInBrackets() {
-			console.log('Called from inside highlightTextInBrackets');
+		//Highlight text in Quotes
+		function highlightTextInQuotes() {
+			console.log('Called from inside highlightTextInQuotes');
 			$('.innerprompt').each(function() {
 				const $this = $(this);
 				const html = $this.html();
-				const regex = /\[(.*?)\]/g;
+				const regex = /”(.*?)”/g;
 				const newHtml = html.replace(regex, '<span class="highlight">$&</span>');
 				$this.html(newHtml);
 			});
+		}
 
+		//Highlight text in Quotes and Brackets
+		function highlightTextInQuotesAndBrackets() {
+			console.log('Called from inside highlightTextInQuotesAndBrackets');
+			$('.innerprompt').each(function() {
+				const $this = $(this);
+				const html = $this.html();
+				const regex = /”(.*?)”|\[(.*?)\]/g;
+				const newHtml = html.replace(regex, '<span class="highlight">$&</span>');
+				$this.html(newHtml);
+			});
 		}
 
 		$(document).ready(function() {
-			highlightTextInBrackets();
+			highlightTextInQuotesAndBrackets();
 
 		});
 
@@ -337,7 +348,7 @@
 						callback: function() {
 							setTimeout(function() {
 								console.log('Called from tint');
-								highlightTextInBrackets();
+								highlightTextInQuotesAndBrackets();
 							}, 1000); 
 						}
 						

@@ -28,7 +28,7 @@ require_once("user/protect.php");
             	<span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
           	</a>
 		  	<div class="navbar-item has-text-centered">
-            	<h1>Content Tools Prompts</h1>
+            	<h1>Fun Prompts</h1>
         	</div>
         </div>
         <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
@@ -67,8 +67,8 @@ require_once("user/protect.php");
               </a>
             </li>
 			<li>
-              <a href="contenttoolsprompts.php" class="has-icon is-active">
-                <span class="icon has-update-mark"><i class="mdi mdi-pencil"></i></span>
+              <a href="contenttoolsprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-pencil"></i></span>
                 <span class="menu-item-label">Content Tools</span>
               </a>
             </li>
@@ -79,12 +79,12 @@ require_once("user/protect.php");
               </a>
             </li>
 			<li>
-              <a href="funprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-creation"></i></span>
+              <a href="funprompts.php" class="has-icon is-active">
+                <span class="icon has-update-mark"><i class="mdi mdi-creation"></i></span>
                 <span class="menu-item-label">Fun</span>
               </a>
             </li>
-			<li>
+            <li>
               <a href="imagegenerationprompts.php" class="has-icon">
                 <span class="icon"><i class="mdi mdi-image"></i></span>
                 <span class="menu-item-label">Images</span>
@@ -146,7 +146,7 @@ require_once("user/protect.php");
 						</div>
 						<div class="prompt-display-section mt-3">
 							<div id="promptdata" class="content" >
-								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">Please write a structured markdown blog post in a press release style like an experienced news reporter in English for the Keyword [topic] . The article should include Creative Title, SEO meta description, Introduction, headings, sub headings, bullet points or Numbered list if needed, frequently asked questions and conclusion. The post should not be less than 1200 words. Do not change the original keyword while writing the Title. Use the keyword at least 2-3 times in the text body.</div>
+								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the adverb "how" and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Also provide search volume and SEO difficulty.</div>
 							</div>
 							<div id="copy-prompt-message" class="copy-prompt-message has-text-success has-text-weight-bold has-text-centered mb-3"></div>
 							<div class="buttons">
@@ -344,7 +344,7 @@ require_once("user/protect.php");
 			}
 			}
 
-			var datafile = "contenttoolspromptdata.php";
+			var datafile = "answerthepeoplepromptdata.php";
 			xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
 		}
 		});
@@ -485,7 +485,7 @@ require_once("user/protect.php");
 						enableselect();
 					}
 				}
-				var dataFile = "contenttoolspromptdata.php"
+				var dataFile = "answerthepeoplepromptdata.php"
 				prompt = prompt.replace(/"/gi, "'");
 				xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
 			}
@@ -502,7 +502,7 @@ require_once("user/protect.php");
 					document.getElementById('promptselector').innerHTML=this.responseText;
 				}
 			}
-			var datafile = "contenttoolspromptdata.php";
+			var datafile = "answerthepeoplepromptdata.php";
 			xhr.send("datafile="+datafile+"&mode=3");	
 			
 		});

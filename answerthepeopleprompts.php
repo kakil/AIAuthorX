@@ -68,26 +68,26 @@ require_once("user/protect.php");
             </li>
 			<li>
               <a href="contenttoolsprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="icon"><i class="mdi mdi-pencil"></i></span>
                 <span class="menu-item-label">Content Tools</span>
               </a>
             </li>
 			<li>
               <a href="answerthepeopleprompts.php" class="has-icon is-active">
-                <span class="icon has-update-mark"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="icon has-update-mark"><i class="mdi mdi-comment-question-outline"></i></span>
                 <span class="menu-item-label">Answer The People</span>
               </a>
             </li>
 			<li>
-              <a href="imagegenerationprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
-                <span class="menu-item-label">Images</span>
+              <a href="funprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-creation"></i></span>
+                <span class="menu-item-label">Fun</span>
               </a>
             </li>
             <li>
-              <a href="login.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-login"></i></span>
-                <span class="menu-item-label">User Login</span>
+              <a href="imagegenerationprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-image"></i></span>
+                <span class="menu-item-label">Images</span>
               </a>
             </li>
           </ul>
