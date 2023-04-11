@@ -52,24 +52,30 @@ require_once("user/protect.php");
           </div>
         </div>
         <div class="menu is-menu-main">
-          <p class="menu-label">Admin</p>
+          <p class="menu-label">PROMPTS</p>
           <ul class="menu-list">
             <li>
               <a href="awesomeprompts.php" class="has-icon">
                 <span class="icon"><i class="mdi mdi-lightbulb-on"></i></span>
-                <span class="menu-item-label">Awesome Prompts</span>
+                <span class="menu-item-label">Awesome</span>
               </a>
             </li>
 			<li>
               <a href="marketingprompts.php" class="has-icon">
                 <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
-                <span class="menu-item-label">Marketing Prompts</span>
+                <span class="menu-item-label">Marketing</span>
               </a>
             </li>
 			<li>
               <a href="contenttoolsprompts.php" class="has-icon is-active">
                 <span class="icon has-update-mark"><i class="mdi mdi-bullhorn"></i></span>
-                <span class="menu-item-label">Content Tools Prompts</span>
+                <span class="menu-item-label">Content Tools</span>
+              </a>
+            </li>
+			<li>
+              <a href="answerthepeopleprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="menu-item-label">Answer The People</span>
               </a>
             </li>
             <li>

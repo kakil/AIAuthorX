@@ -52,24 +52,30 @@
           </div>
         </div>
         <div class="menu is-menu-main">
-          <p class="menu-label">Admin</p>
+          <p class="menu-label">PROMPTS</p>
           <ul class="menu-list">
             <li>
               <a href="awesomeprompts.php" class="has-icon is-active">
                 <span class="icon has-update-mark"><i class="mdi mdi-lightbulb-on"></i></span>
-                <span class="menu-item-label">Awesome Prompts</span>
+                <span class="menu-item-label">Awesome</span>
               </a>
             </li>
 			<li>
               <a href="marketingprompts.php" class="has-icon">
                 <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
-                <span class="menu-item-label">Marketing Prompts</span>
+                <span class="menu-item-label">Marketing</span>
               </a>
             </li>
 			<li>
               <a href="contenttoolsprompts.php" class="has-icon">
                 <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
-                <span class="menu-item-label">Content Tools Prompts</span>
+                <span class="menu-item-label">Content Tools</span>
+              </a>
+            </li>
+			<li>
+              <a href="answerthepeopleprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="menu-item-label">Answer The People</span>
               </a>
             </li>
             <li>
@@ -231,9 +237,31 @@
 			
 		}
 
+		//Highlight text in brackets
+		function highlightTextInBrackets() {
+			console.log('Called from inside highlightTextInBrackets');
+			$('.innerprompt').each(function() {
+				const $this = $(this);
+				const html = $this.html();
+				const regex = /\[(.*?)\]/g;
+				const newHtml = html.replace(regex, '<span class="highlight">$&</span>');
+				$this.html(newHtml);
+			});
+
+		}
+
+		$(document).ready(function() {
+			highlightTextInBrackets();
+
+		});
+
+
+
 		//Text animation function
 		!function (e, t) {
-		"object" == typeof exports && "undefined" != typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define(t) : (e = "undefined" != typeof globalThis ? globalThis : e || self).tint = t()
+		"object" == typeof exports && "undefined" != typeof module ? module.exports = t() :
+		"function" == typeof define && define.amd ? define(t) :
+		(e = "undefined" != typeof globalThis ? globalThis : e || self).tint = t()
 		}(this, (function () {
 		"use strict";
 		return function (e, {
@@ -249,65 +277,70 @@
 			cursorCharBlinkSpeed: u = 500,
 			cursorCharBlinkTransitionSpeed: a = .15,
 			startOnView: f = !0,
-			startOnViewOffset: p = 0
+			startOnViewOffset: p = 0,
+			callback: cb
 		} = {}) {
 			if (!t.length) throw new Error("tint: No items option was provided");
-			let m, y, w, g, h = !1,
-			T = l,
-			C = t[T],
-			b = e.getBoundingClientRect();
+			let m, y, w, g, h = !1, T = l, C = t[T], b = e.getBoundingClientRect();
 			const v = document.createElement("span");
-
 			function x(s) {
-			const l = s.length,
-				d = t[T % l];
-			if (h ? (m = o, C = d.substring(0, C.length - 1)) : C = d.substring(0, C.length + 1), e.textContent = `${C}`, !r && C === s[l - 1]) return enableselect(), clearTimeout(w), clearTimeout(y), void clearInterval(g);
-			h || C !== d ? h && "" === C && (h = !1, T++, m = n) : (h = !0, m = i), w = setTimeout((function () {
-				x(t)
-			}), m)
+			const l = s.length, d = t[T % l];
+			if (h ? (m = o, C = d.substring(0, C.length - 1)) : C = d.substring(0, C.length + 1), e.textContent = `${C}`,
+				!r && C === s[l - 1]) return enableselect(), clearTimeout(w), clearTimeout(y), void clearInterval(g);
+			h || C !== d ? h && "" === C && (h = !1, T++, m = n) : (h = !0, m = i),
+				w = setTimeout((function () { x(t) }), m);
+			if (!r && T === t.length - 1 && cb) { cb(); }
 			}
-			v.textContent = c, d && (e.insertAdjacentElement("afterend", v), v.style.transition = `opacity ${a}s`, g = setInterval((() => {
-			v.style.opacity = "0" === v.style.opacity ? "1" : "0"
-			}), u)), e.textContent = t[0], !f || b.bottom <= window.innerHeight && b.top >= 0 ? y = setTimeout((function () {
-			x(t)
-			}), s - i) : window.addEventListener("scroll", (function n() {
-			b = e.getBoundingClientRect(), b.bottom <= window.innerHeight - p && b.top >= 0 + p && (y = setTimeout((function () {
-				x(t)
-			}), s - i), window.removeEventListener("scroll", n))
+			v.textContent = c, d && (e.insertAdjacentElement("afterend", v),
+			v.style.transition = `opacity ${a}s`,
+			g = setInterval((() => { v.style.opacity = "0" === v.style.opacity ? "1" : "0" }), u)),
+			e.textContent = t[0], !f || b.bottom <= window.innerHeight && b.top >= 0 ?
+			y = setTimeout((function () { x(t) }), s - i) :
+			window.addEventListener("scroll", (function n() {
+				b = e.getBoundingClientRect(),
+				b.bottom <= window.innerHeight - p && b.top >= 0 + p &&
+				(y = setTimeout((function () { x(t) }), s - i), window.removeEventListener("scroll", n))
 			}), !1)
 		}
 		}));
 		//end text animation function	
 
+
 		document.getElementById('promptselector').addEventListener('change', function() {
 			var promptindex=document.getElementById('promptselector').value;
-			
-			if (promptindex==-1){
 
+			if (promptindex == -1) {
 				return;
 			} else {
-				var promptindex=document.getElementById('promptselector').value;
+				var promptindex = document.getElementById('promptselector').value;
 				disableselect();
 				var data = {"prompt": promptindex};
 				var xhr = new XMLHttpRequest();
 				xhr.open("POST", 'promptrequest.php', true);
 				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
 				xhr.onreadystatechange = function() {
-					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-						const typ = document.querySelector("#innerprompt");
-						tint(typ, {
-							items: ['Thinking...', this.responseText],
-							typeSpeed:0,
-							delayBetweenItems:600,
-							loop:false,
-							cursorChar:""
-						});
+				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+					const typ = document.querySelector("#innerprompt");
+					tint(typ, {
+						items: ['Thinking...', this.responseText],
+						typeSpeed: 0,
+						delayBetweenItems: 600,
+						loop: false,
+						cursorChar: "",
+						callback: function() {
+							setTimeout(function() {
+								console.log('Called from tint');
+								highlightTextInBrackets();
+							}, 1000); 
+						}
 						
-					}
+					});
 				}
-				
-				var dataFile = 'promptdata.php'
-				xhr.send("promptindex=" + promptindex + "&mode=1" + "&datafile=" + encodeURIComponent(dataFile));
+				}
+
+				var datafile = "promptdata.php";
+				xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
 			}
 		});
 

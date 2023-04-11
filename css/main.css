@@ -11,6 +11,7 @@
 .highlight {
   color: #ff3860;
   font-weight: bold;
+  font-style: italic;
 }
 
 .loader {
