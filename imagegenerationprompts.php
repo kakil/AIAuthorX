@@ -28,7 +28,7 @@ require_once("user/protect.php");
             	<span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
           	</a>
 		  	<div class="navbar-item has-text-centered">
-            	<h1>Answer The People Prompts</h1>
+            	<h1>Image Generation Prompts</h1>
         	</div>
         </div>
         <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
@@ -73,14 +73,14 @@ require_once("user/protect.php");
               </a>
             </li>
 			<li>
-              <a href="answerthepeopleprompts.php" class="has-icon is-active">
-                <span class="icon has-update-mark"><i class="mdi mdi-bullhorn"></i></span>
+              <a href="answerthepeopleprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
                 <span class="menu-item-label">Answer The People</span>
               </a>
             </li>
 			<li>
-              <a href="imagegenerationprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+              <a href="imagegenerationprompts.php" class="has-icon is-active">
+                <span class="icon has-update-mark"><i class="mdi mdi-bullhorn"></i></span>
                 <span class="menu-item-label">Images</span>
               </a>
             </li>

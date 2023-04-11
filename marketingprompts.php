@@ -78,6 +78,12 @@ require_once("user/protect.php");
                 <span class="menu-item-label">Answer The People</span>
               </a>
             </li>
+			<li>
+              <a href="imagegenerationprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="menu-item-label">Images</span>
+              </a>
+            </li>
             <li>
               <a href="login.php" class="has-icon">
                 <span class="icon"><i class="mdi mdi-login"></i></span>
