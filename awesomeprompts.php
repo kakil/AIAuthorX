@@ -130,13 +130,13 @@
 						</div>
 						<div class="prompt-selector-section">
 							<div class="columns is-multiline">
+								<div class="column is-narrow">
+									<?php if ($masterkeymode==false && $runbutton==true) {echo('<button type="button" class="button is-small is-info jb-modal" data-target="api-key-modal" id="apibutton">API KEY</button>');} ?>
+								</div>
 								<div class="column is-full">
 									<div class="select is-9">
 										<select id="promptselector" class="promptselector" autocomplete="off"></select>
 									</div>
-								</div>
-								<div class="column is-narrow">
-									<?php if ($masterkeymode==false && $runbutton==true) {echo('<button type="button" class="button is-small is-info jb-modal" data-target="api-key-modal" id="apibutton">API KEY</button>');} ?>
 								</div>
 							</div>
 							
