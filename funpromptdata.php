@@ -1,77 +1,11 @@
 <?php
-$promptnames="How Questions
-Who Questions
-What Questions
-When Questions
-Where Questions
-Why Questions
-Which Questions
-Will Questions
-Can Questions
-Are Questions
-”A” Keywords
-”B” Keywords
-”C” Keywords
-”D” Keywords
-”E” Keywords
-”F” Keywords
-”G” Keywords
-”H” Keywords
-”I” Keywords
-”J” Keywords
-”K” Keywords
-”L” Keywords
-”M” Keywords
-”N” Keywords
-”O” Keywords
-”P” Keywords
-”Q” Keywords
-”R” Keywords
-”S” Keywords
-”T” Keywords
-”U” Keywords
-”V” Keywords
-”W” Keywords
-”X” Keywords
-”Y” Keywords
-”Z” Keywords
+$promptnames="Astrology Reading
+Inspirational Quotes
+Quiz
 ";
 
-$promptdata="I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the adverb ”how” and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Also provide search volume and SEO difficulty
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the pronoun ”who” and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Also provide search volume and SEO difficulty
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the pronoun ”what” and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Do not use the following words: how, who, when, where, why, which, will, can. Also provide search volume and SEO difficulty
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the adverb ”when” and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Do not use the following words: how, who, what, where, why, which, will, can. Also provide search volume and SEO difficulty
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the adverb ”where” and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Do not use the following words: how, who, what, when, why, which, will, can. Also provide search volume and SEO difficulty
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the adverb ”why” and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Do not use the following words: how, who, what, when, where, which, will, can. Also provide search volume and SEO difficulty
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the pronoun ”which” and use the following keyword phrase:[keyword]. The phrase [keyword] must appear in each keyword. Do not use the following words: how, who, what, when, where, why, will, can. Also provide search volume and SEO difficulty
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the verb ”will” and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Do not use the following words: how, who, what, when, where, why, which, can. Also provide search volume and SEO difficulty
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the verb ”can” and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Do not use the following words: how, who, what, when, where, why, which, will. Also provide search volume and SEO difficulty
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the verb ”are” and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Do not use the following words: how, who, what, when, where, why, which, will, can. Also provide search volume and SEO difficulty
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter “A”
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”B” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”C” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”D” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”E” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”F” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”G” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”H” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”I” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”J” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”K” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”L” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”M” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”N” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”O” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”P” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”Q” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”R” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”S” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”T” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”U” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”V” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”W” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”X” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”Y” 
-I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of keywords phrases that start with the phrase [keyword] and the next word starts with the letter ”Z” 
+$promptdata="I want you to act as an astrologer. You will learn about the zodiac signs and their meanings, understand planetary positions and how they affect human lives, be able to interpret horoscopes accurately, and share your insights with those seeking guidance or advice. My request is: I need help providing an in-depth reading. I am interested in [topic] based on my birth chart. I was born on [date of birth] at [time of birth] in [place of birth]
+Give me 50 short inspirational quotes about [topic], mix the quotes up with metaphors, straight up advice, wrong ideas to avoid, and encouragement. Start each quote with a different word. Do not self-reference. Refrain from starting with 'you' or 'like'. Avoid repetition and keep the quotes fresh and activating.
+I want you to create an pub quiz that speaks and writes fluent [English]. Pretend that you are an expert and have the most accurate and most detailed information about [topic] available. Write a full quiz in fluent [English]. I will give you the target keyword [topic]. From this, create a quiz on [topic]. Create a 3 round quiz that has 10 questions per round. Each question must have a right answer. Each question must have the answer provided for them.
 "
 ?>

@@ -146,7 +146,7 @@ require_once("user/protect.php");
 						</div>
 						<div class="prompt-display-section mt-3">
 							<div id="promptdata" class="content" >
-								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">I want you to act as a very proficient SEO and most powerful SEO Audit and Keyword Explorer tools that speak and write so well in English.  I want you to create a list of question keywords that use or imply the adverb "how" and use the following keyword phrase: [keyword]. The phrase [keyword] must appear in each keyword. Also provide search volume and SEO difficulty.</div>
+								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">I want you to act as an astrologer. You will learn about the zodiac signs and their meanings, understand planetary positions and how they affect human lives, be able to interpret horoscopes accurately, and share your insights with those seeking guidance or advice. My request is: I need help providing an in-depth reading. I am interested in [topic] based on my birth chart. I was born on [date of birth] at [time of birth] in [place of birth]</div>
 							</div>
 							<div id="copy-prompt-message" class="copy-prompt-message has-text-success has-text-weight-bold has-text-centered mb-3"></div>
 							<div class="buttons">
@@ -344,7 +344,7 @@ require_once("user/protect.php");
 			}
 			}
 
-			var datafile = "answerthepeoplepromptdata.php";
+			var datafile = "funpromptdata.php";
 			xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
 		}
 		});
@@ -485,7 +485,7 @@ require_once("user/protect.php");
 						enableselect();
 					}
 				}
-				var dataFile = "answerthepeoplepromptdata.php"
+				var dataFile = "funpromptdata.php"
 				prompt = prompt.replace(/"/gi, "'");
 				xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
 			}
@@ -502,7 +502,7 @@ require_once("user/protect.php");
 					document.getElementById('promptselector').innerHTML=this.responseText;
 				}
 			}
-			var datafile = "answerthepeoplepromptdata.php";
+			var datafile = "funpromptdata.php";
 			xhr.send("datafile="+datafile+"&mode=3");	
 			
 		});
