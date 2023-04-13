@@ -28,7 +28,7 @@ require_once("user/protect.php");
             	<span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
           	</a>
 		  	<div class="navbar-item has-text-centered">
-            	<h1>Image Generation Prompts</h1>
+            	<h1>Photography Prompts</h1>
         	</div>
         </div>
         <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
@@ -88,18 +88,18 @@ require_once("user/protect.php");
 		  <p class="menu-label">IMAGE PROMPTS</p>
           <ul class="menu-list">
 		  	<li>
-              <a href="imagegenerationprompts.php" class="has-icon is-active">
-                <span class="icon has-update-mark"><i class="mdi mdi-image"></i></span>
+              <a href="imagegenerationprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-image"></i></span>
                 <span class="menu-item-label">Vibes</span>
               </a>
             </li>
 			<li>
-              <a href="photographyprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-image"></i></span>
+              <a href="photographyprompts.php" class="has-icon is-active">
+                <span class="icon has-update-mark"><i class="mdi mdi-image"></i></span>
                 <span class="menu-item-label">Photography</span>
               </a>
             </li>
-		  </ul>			
+		  </ul>
           <p class="menu-label">About</p>
           <ul class="menu-list">
             <li>
@@ -155,7 +155,7 @@ require_once("user/protect.php");
 						</div>
 						<div class="prompt-display-section mt-3">
 							<div id="promptdata" class="content" >
-								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">[Subject/Details: gas station], neon, pink, blue, geometric, futuristic, 80s</div>
+								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">[Subject/Details: butterfly], extreme close-up, film still</div>
 							</div>
 							<div id="copy-prompt-message" class="copy-prompt-message has-text-success has-text-weight-bold has-text-centered mb-3"></div>
 							<div class="buttons">
@@ -353,7 +353,7 @@ require_once("user/protect.php");
 			}
 			}
 
-			var datafile = "imagegenerationpromptdata.php";
+			var datafile = "photographypromptdata.php";
 			xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
 		}
 		});
@@ -544,7 +544,7 @@ require_once("user/protect.php");
 						enableselect();
 					}
 				}
-				var dataFile = "imagegenerationpromptdata.php"
+				var dataFile = "photographypromptdata.php"
 				prompt = prompt.replace(/"/gi, "'");
 				xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
 			}//
@@ -561,7 +561,7 @@ require_once("user/protect.php");
 					document.getElementById('promptselector').innerHTML=this.responseText;
 				}
 			}
-			var datafile = "imagegenerationpromptdata.php";
+			var datafile = "photographypromptdata.php";
 			xhr.send("datafile="+datafile+"&mode=3");	
 			
 		});

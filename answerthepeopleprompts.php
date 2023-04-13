@@ -84,13 +84,22 @@ require_once("user/protect.php");
                 <span class="menu-item-label">Fun</span>
               </a>
             </li>
-            <li>
+          </ul>
+		  <p class="menu-label">IMAGE PROMPTS</p>
+          <ul class="menu-list">
+		  	<li>
               <a href="imagegenerationprompts.php" class="has-icon">
                 <span class="icon"><i class="mdi mdi-image"></i></span>
-                <span class="menu-item-label">Images</span>
+                <span class="menu-item-label">Vibes</span>
               </a>
             </li>
-          </ul>
+			<li>
+              <a href="photographyprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-image"></i></span>
+                <span class="menu-item-label">Photography</span>
+              </a>
+            </li>
+		  </ul>
           <p class="menu-label">About</p>
           <ul class="menu-list">
             <li>
