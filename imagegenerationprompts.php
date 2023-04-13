@@ -12,7 +12,7 @@ require_once("user/protect.php");
     <title><?php echo($sitename); ?></title>
     <!-- Bulma is included -->
     <link rel="stylesheet" href="css/main.min.css">
-
+	
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css"> 
@@ -322,7 +322,7 @@ require_once("user/protect.php");
 			disableselect();
 			var data = {"prompt": promptindex};
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", 'promptrequest.php', true);
+			xhr.open("POST", 'imagepromptrequest.php', true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 			xhr.onreadystatechange = function() {
@@ -344,7 +344,7 @@ require_once("user/protect.php");
 			}
 			}
 
-			var datafile = "answerthepeoplepromptdata.php";
+			var datafile = "imagegenerationpromptdata.php";
 			xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
 		}
 		});
@@ -470,25 +470,75 @@ require_once("user/protect.php");
 				disableselect();
 
 				var xhr = new XMLHttpRequest();
-				xhr.open("POST", 'promptrequest.php', true);
+				xhr.open("POST", 'imagepromptrequest.php', true);
 				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				xhr.onreadystatechange = function () {
 					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 						const typ = document.querySelector("#innerprompt");
-						const airesp = JSON.parse(this.responseText);
-						const content = airesp.choices[0].message.content;
+						console.log("Image Response: " + this.response);
+						const data = JSON.parse(this.response);
+						const firstImage = data[0].url;
+						const secondImage = data[1].url;
+						const thirdImage = data[2].url;
+						const title1 = document.getElementById('promptselector').selectedOptions[0].text + "_1";
+						const title2 = document.getElementById('promptselector').selectedOptions[0].text + "_2";
+						const title3 = document.getElementById('promptselector').selectedOptions[0].text + "_3";
 
-						var modalContent = '<div class="innerresponse" id="responsedata">' + content + '</div><div style="margin:0 auto; text-align:center; padding-top:15px;"><button type="button" class="custom-button" id="responsebutton">COPY & CLOSE</button></div>';
+						var modalContent = '<div class="innerresponse" id="responsedata">';
+
+						modalContent += '<div class="columns">';
+
+						// First Image
+						modalContent += '<div class="column">';
+						modalContent += '<div class="card"><div class="card-content">';
+						modalContent += '<p class="title">' + title1 + '</p>';
+						modalContent += '<figure class="image is-512x512">';
+						modalContent += '<img id="card-image" src="' + firstImage + '">';
+						modalContent += '</figure>';
+						modalContent += '<br><div class="field is-grouped is-grouped-centered">';
+						modalContent += '<div class="control">';
+						modalContent += '<a class="button is-primary is-outlined" download href="' + firstImage + '" download="' + title1 + '" target="_blank">Save Image 1</a>';
+						modalContent += '</div>';
+						modalContent += '</div></div></div>';
+
+						// Second Image
+						modalContent += '<div class="column">';
+						modalContent += '<div class="card"><div class="card-content">';
+						modalContent += '<p class="title">' + title2 + '</p>';
+						modalContent += '<figure class="image is-512x512">';
+						modalContent += '<img src="' + secondImage + '">';
+						modalContent += '</figure>';
+						modalContent += '<br><div class="field is-grouped is-grouped-centered">';
+						modalContent += '<div class="control">';
+						modalContent += '<a class="button is-primary is-outlined" download href="' + secondImage + '" download="' + title2 + '" target="_blank">Save Image 2</a>';
+						modalContent += '</div>';
+						modalContent += '</div></div></div>';
+
+						// Third Image
+						modalContent += '<div class="column">';
+						modalContent += '<div class="card"><div class="card-content">';
+						modalContent += '<p class="title">' + title3 + '</p>';
+						modalContent += '<figure class="image is-512x512">';
+						modalContent += '<img src="' + thirdImage + '">';
+						modalContent += '</figure>';
+						modalContent += '<br><div class="field is-grouped is-grouped-centered">';
+						modalContent += '<div class="control">';
+						modalContent += '<a class="button is-primary is-outlined" download href="' + thirdImage + '" download="' + title3 + '" target="_blank">Save Image 3</a>';
+						modalContent += '</div>';
+						modalContent += '</div></div></div>';
+
+						modalContent += '</div></div>';
+
 						loaderWrapper.classList.remove('is-active');
-						showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
+						showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, modalContent);
 
 						enableselect();
 					}
 				}
-				var dataFile = "answerthepeoplepromptdata.php"
+				var dataFile = "imagegenerationpromptdata.php"
 				prompt = prompt.replace(/"/gi, "'");
 				xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
-			}
+			}//
 			}
 		},false);
 
@@ -496,13 +546,13 @@ require_once("user/protect.php");
 			var mode=localStorage.getItem("promptmodeZNWEBCH29T");
 
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", 'promptrequest.php', true);
+			xhr.open("POST", 'imagepromptrequest.php', true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");xhr.onreadystatechange = function() {
 				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 					document.getElementById('promptselector').innerHTML=this.responseText;
 				}
 			}
-			var datafile = "answerthepeoplepromptdata.php";
+			var datafile = "imagegenerationpromptdata.php";
 			xhr.send("datafile="+datafile+"&mode=3");	
 			
 		});
@@ -520,15 +570,16 @@ require_once("user/protect.php");
   			jQuery('.loader-wrapper').css('display', 'none');
 			var modal = document.createElement('div');
 			modal.className = 'modal is-active';
+			modal.id = 'imageModal';
 			modal.innerHTML = `
-				<div class="modal-background jb-modal-close"></div>
+				<div class="modal-background"></div>
 				<div class="modal-card">
 				<header class="modal-card-head">
 					<p class="modal-card-title">${title}</p>
 					<button class="delete jb-modal-close" aria-label="close"></button>
 				</header>
 				<section class="modal-card-body">
-					<textarea class="textarea" rows="15" id="responsedata">${content}</textarea>
+					${content}
 					<div id="copy-message" class="copy-message has-text-success has-text-weight-bold has-text-centered"></div>
 				</section>
 				<footer class="modal-card-foot">
@@ -570,10 +621,19 @@ require_once("user/protect.php");
 			function hideLoader() {
 				$('.loader-wrapper').hide();
 			}
+
+			$(document).on('click', '.save-button', function(e) {
+				const imageSrc = $(this).closest('.card').find('figure.image img').attr('src');
+				const imageName = $(this).closest('.card-content').find('.title').text().trim() + '.png';
+				const downloadLink = document.createElement('a');
+				downloadLink.href = imageSrc;
+				downloadLink.download = imageName;
+				downloadLink.click();
+			});
+
+
 		});
-
 		
-
 	</script>
 	</body>
 </html>
