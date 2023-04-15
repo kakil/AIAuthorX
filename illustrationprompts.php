@@ -12,7 +12,7 @@ require_once("user/protect.php");
     <title><?php echo($sitename); ?></title>
     <!-- Bulma is included -->
     <link rel="stylesheet" href="css/main.min.css">
-
+	
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css"> 
@@ -28,7 +28,7 @@ require_once("user/protect.php");
             	<span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
           	</a>
 		  	<div class="navbar-item has-text-centered">
-            	<h1>Content Tools Prompts</h1>
+            	<h1>Illustration Prompts</h1>
         	</div>
         </div>
         <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
@@ -52,7 +52,7 @@ require_once("user/protect.php");
           </div>
         </div>
         <div class="menu is-menu-main">
-          <p class="menu-label">PROMPTS</p>
+          <p class="menu-label">TEXT PROMPTS</p>
           <ul class="menu-list">
             <li>
               <a href="awesomeprompts.php" class="has-icon">
@@ -67,8 +67,8 @@ require_once("user/protect.php");
               </a>
             </li>
 			<li>
-              <a href="contenttoolsprompts.php" class="has-icon is-active">
-                <span class="icon has-update-mark"><i class="mdi mdi-pencil"></i></span>
+              <a href="contenttoolsprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-pencil"></i></span>
                 <span class="menu-item-label">Content Tools</span>
               </a>
             </li>
@@ -112,8 +112,8 @@ require_once("user/protect.php");
               </a>
             </li>
 			<li>
-              <a href="illustrationprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-marker"></i></span>
+              <a href="illustrationprompts.php" class="has-icon is-active">
+                <span class="icon has-update-mark"><i class="mdi mdi-marker"></i></span>
                 <span class="menu-item-label">Illustration</span>
               </a>
             </li>
@@ -173,7 +173,7 @@ require_once("user/protect.php");
 						</div>
 						<div class="prompt-display-section mt-3">
 							<div id="promptdata" class="content" >
-								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">Please write a structured markdown blog post in a press release style like an experienced news reporter in English for the Keyword [topic] . The article should include Creative Title, SEO meta description, Introduction, headings, sub headings, bullet points or Numbered list if needed, frequently asked questions and conclusion. The post should not be less than 1200 words. Do not change the original keyword while writing the Title. Use the keyword at least 2-3 times in the text body.</div>
+								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">[Subject/Details: Man petting a dog] Stencil, street art, Banksy drawing</div>
 							</div>
 							<div id="copy-prompt-message" class="copy-prompt-message has-text-success has-text-weight-bold has-text-centered mb-3"></div>
 							<div class="buttons">
@@ -349,7 +349,7 @@ require_once("user/protect.php");
 			disableselect();
 			var data = {"prompt": promptindex};
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", 'promptrequest.php', true);
+			xhr.open("POST", 'imagepromptrequest.php', true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 			xhr.onreadystatechange = function() {
@@ -371,7 +371,7 @@ require_once("user/protect.php");
 			}
 			}
 
-			var datafile = "contenttoolspromptdata.php";
+			var datafile = "illustrationpromptdata.php";
 			xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
 		}
 		});
@@ -497,25 +497,82 @@ require_once("user/protect.php");
 				disableselect();
 
 				var xhr = new XMLHttpRequest();
-				xhr.open("POST", 'promptrequest.php', true);
+				xhr.open("POST", 'imagepromptrequest.php', true);
 				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				xhr.onreadystatechange = function () {
 					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 						const typ = document.querySelector("#innerprompt");
-						const airesp = JSON.parse(this.responseText);
-						const content = airesp.choices[0].message.content;
+						console.log("Image Response: " + this.response);
+						const data = JSON.parse(this.response);
 
-						var modalContent = '<div class="innerresponse" id="responsedata">' + content + '</div><div style="margin:0 auto; text-align:center; padding-top:15px;"><button type="button" class="custom-button" id="responsebutton">COPY & CLOSE</button></div>';
-						loaderWrapper.classList.remove('is-active');
-						showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
+						if (data !== null) {
+							const firstImage = data[0].url;
+							const secondImage = data[1].url;
+							const thirdImage = data[2].url;
+							const title1 = document.getElementById('promptselector').selectedOptions[0].text + "_1";
+							const title2 = document.getElementById('promptselector').selectedOptions[0].text + "_2";
+							const title3 = document.getElementById('promptselector').selectedOptions[0].text + "_3";
 
-						enableselect();
+							var modalContent = '<div class="innerresponse" id="responsedata">';
+
+							modalContent += '<div class="columns">';
+
+							// First Image
+							modalContent += '<div class="column">';
+							modalContent += '<div class="card"><div class="card-content">';
+							modalContent += '<p class="title">' + title1 + '</p>';
+							modalContent += '<figure class="image is-512x512">';
+							modalContent += '<img id="card-image" src="' + firstImage + '">';
+							modalContent += '</figure>';
+							modalContent += '<br><div class="field is-grouped is-grouped-centered">';
+							modalContent += '<div class="control">';
+							modalContent += '<a class="button is-primary is-outlined" download href="' + firstImage + '" download="' + title1 + '" target="_blank">Save Image 1</a>';
+							modalContent += '</div>';
+							modalContent += '</div></div></div>';
+
+							// Second Image
+							modalContent += '<div class="column">';
+							modalContent += '<div class="card"><div class="card-content">';
+							modalContent += '<p class="title">' + title2 + '</p>';
+							modalContent += '<figure class="image is-512x512">';
+							modalContent += '<img src="' + secondImage + '">';
+							modalContent += '</figure>';
+							modalContent += '<br><div class="field is-grouped is-grouped-centered">';
+							modalContent += '<div class="control">';
+							modalContent += '<a class="button is-primary is-outlined" download href="' + secondImage + '" download="' + title2 + '" target="_blank">Save Image 2</a>';
+							modalContent += '</div>';
+							modalContent += '</div></div></div>';
+
+							// Third Image
+							modalContent += '<div class="column">';
+							modalContent += '<div class="card"><div class="card-content">';
+							modalContent += '<p class="title">' + title3 + '</p>';
+							modalContent += '<figure class="image is-512x512">';
+							modalContent += '<img src="' + thirdImage + '">';
+							modalContent += '</figure>';
+							modalContent += '<br><div class="field is-grouped is-grouped-centered">';
+							modalContent += '<div class="control">';
+							modalContent += '<a class="button is-primary is-outlined" download href="' + thirdImage + '" download="' + title3 + '" target="_blank">Save Image 3</a>';
+							modalContent += '</div>';
+							modalContent += '</div></div></div>';
+
+							modalContent += '</div></div>';
+
+							loaderWrapper.classList.remove('is-active');
+							showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, modalContent);
+
+							enableselect();
+						} else {
+							showErrorModal();
+							enableselect();
+						}
+						
 					}
 				}
-				var dataFile = "contenttoolspromptdata.php"
+				var dataFile = "illustrationpromptdata.php"
 				prompt = prompt.replace(/"/gi, "'");
 				xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
-			}
+			}//
 			}
 		},false);
 
@@ -523,13 +580,13 @@ require_once("user/protect.php");
 			var mode=localStorage.getItem("promptmodeZNWEBCH29T");
 
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", 'promptrequest.php', true);
+			xhr.open("POST", 'imagepromptrequest.php', true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");xhr.onreadystatechange = function() {
 				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 					document.getElementById('promptselector').innerHTML=this.responseText;
 				}
 			}
-			var datafile = "contenttoolspromptdata.php";
+			var datafile = "illustrationpromptdata.php";
 			xhr.send("datafile="+datafile+"&mode=3");	
 			
 		});
@@ -547,19 +604,19 @@ require_once("user/protect.php");
   			jQuery('.loader-wrapper').css('display', 'none');
 			var modal = document.createElement('div');
 			modal.className = 'modal is-active';
+			modal.id = 'imageModal';
 			modal.innerHTML = `
-				<div class="modal-background jb-modal-close"></div>
+				<div class="modal-background"></div>
 				<div class="modal-card">
 				<header class="modal-card-head">
 					<p class="modal-card-title">${title}</p>
 					<button class="delete jb-modal-close" aria-label="close"></button>
 				</header>
 				<section class="modal-card-body">
-					<textarea class="textarea" rows="15" id="responsedata">${content}</textarea>
+					${content}
 					<div id="copy-message" class="copy-message has-text-success has-text-weight-bold has-text-centered"></div>
 				</section>
 				<footer class="modal-card-foot">
-					<button class="button is-success" id="responsebutton">Copy</button>
 					<button class="button jb-modal-close is-danger">Close</button>
 				</footer>
 				</div>
@@ -576,6 +633,47 @@ require_once("user/protect.php");
 				});
 			})	
 		}
+
+
+		function showErrorModal() {
+			// Hide the loader when the modal is created
+  			jQuery('.loader-wrapper').css('display', 'none');
+			var modal = document.createElement('div');
+			modal.className = 'modal is-active';
+			modal.id = 'imageModal';
+			modal.innerHTML = `
+				<div class="modal-background"></div>
+				<div class="modal-card">
+				<header class="modal-card-head">
+					<p class="modal-card-title">Error Executing Prompt</p>
+					<button class="delete jb-modal-close" aria-label="close"></button>
+				</header>
+				<section class="modal-card-body">
+				<p class="has-text-danger has-text-weight-bold">
+				The OpenAI is unable to execute your query. 
+				</p>
+				<p class="has-text-danger has-text-weight-bold">
+				Please edit your prompt and try again.
+				</p>
+				</section>
+				<footer class="modal-card-foot">
+					<button class="button jb-modal-close is-danger">Close</button>
+				</footer>
+				</div>
+				<button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+			`;
+
+			document.body.appendChild(modal);
+
+			Array.from(modal.getElementsByClassName('jb-modal-close')).forEach(function (el) {
+				el.addEventListener('click', function (e) {
+					e.currentTarget.closest('.modal').classList.remove('is-active');
+					document.documentElement.classList.remove('is-clipped');
+					document.body.removeChild(modal);
+				});
+			})	
+		}
+
 
 		$(document).ready(function() {
 			$('.jb-modal-close').on('click', function() {
@@ -597,10 +695,19 @@ require_once("user/protect.php");
 			function hideLoader() {
 				$('.loader-wrapper').hide();
 			}
+
+			$(document).on('click', '.save-button', function(e) {
+				const imageSrc = $(this).closest('.card').find('figure.image img').attr('src');
+				const imageName = $(this).closest('.card-content').find('.title').text().trim() + '.png';
+				const downloadLink = document.createElement('a');
+				downloadLink.href = imageSrc;
+				downloadLink.download = imageName;
+				downloadLink.click();
+			});
+
+
 		});
-
 		
-
 	</script>
 	</body>
 </html>

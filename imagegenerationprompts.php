@@ -89,17 +89,35 @@ require_once("user/protect.php");
           <ul class="menu-list">
 		  	<li>
               <a href="imagegenerationprompts.php" class="has-icon is-active">
-                <span class="icon has-update-mark"><i class="mdi mdi-image"></i></span>
+                <span class="icon has-update-mark"><i class="mdi mdi-emoticon-cool"></i></span>
                 <span class="menu-item-label">Vibes</span>
               </a>
             </li>
 			<li>
               <a href="photographyprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-image"></i></span>
+                <span class="icon"><i class="mdi mdi-camera"></i></span>
                 <span class="menu-item-label">Photography</span>
               </a>
             </li>
-		  </ul>			
+			<li>
+              <a href="lightingprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-spotlight-beam"></i></span>
+                <span class="menu-item-label">Lighting</span>
+              </a>
+            </li>
+			<li>
+              <a href="filmprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-filmstrip"></i></span>
+                <span class="menu-item-label">Film</span>
+              </a>
+            </li>
+			<li>
+              <a href="illustrationprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-marker"></i></span>
+                <span class="menu-item-label">Illustration</span>
+              </a>
+            </li>
+		  </ul>		
           <p class="menu-label">About</p>
           <ul class="menu-list">
             <li>
@@ -485,63 +503,72 @@ require_once("user/protect.php");
 					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 						const typ = document.querySelector("#innerprompt");
 						console.log("Image Response: " + this.response);
+
 						const data = JSON.parse(this.response);
-						const firstImage = data[0].url;
-						const secondImage = data[1].url;
-						const thirdImage = data[2].url;
-						const title1 = document.getElementById('promptselector').selectedOptions[0].text + "_1";
-						const title2 = document.getElementById('promptselector').selectedOptions[0].text + "_2";
-						const title3 = document.getElementById('promptselector').selectedOptions[0].text + "_3";
 
-						var modalContent = '<div class="innerresponse" id="responsedata">';
+						if (data !== null) {
+							const data = JSON.parse(this.response);
+							const firstImage = data[0].url;
+							const secondImage = data[1].url;
+							const thirdImage = data[2].url;
+							const title1 = document.getElementById('promptselector').selectedOptions[0].text + "_1";
+							const title2 = document.getElementById('promptselector').selectedOptions[0].text + "_2";
+							const title3 = document.getElementById('promptselector').selectedOptions[0].text + "_3";
 
-						modalContent += '<div class="columns">';
+							var modalContent = '<div class="innerresponse" id="responsedata">';
 
-						// First Image
-						modalContent += '<div class="column">';
-						modalContent += '<div class="card"><div class="card-content">';
-						modalContent += '<p class="title">' + title1 + '</p>';
-						modalContent += '<figure class="image is-512x512">';
-						modalContent += '<img id="card-image" src="' + firstImage + '">';
-						modalContent += '</figure>';
-						modalContent += '<br><div class="field is-grouped is-grouped-centered">';
-						modalContent += '<div class="control">';
-						modalContent += '<a class="button is-primary is-outlined" download href="' + firstImage + '" download="' + title1 + '" target="_blank">Save Image 1</a>';
-						modalContent += '</div>';
-						modalContent += '</div></div></div>';
+							modalContent += '<div class="columns">';
 
-						// Second Image
-						modalContent += '<div class="column">';
-						modalContent += '<div class="card"><div class="card-content">';
-						modalContent += '<p class="title">' + title2 + '</p>';
-						modalContent += '<figure class="image is-512x512">';
-						modalContent += '<img src="' + secondImage + '">';
-						modalContent += '</figure>';
-						modalContent += '<br><div class="field is-grouped is-grouped-centered">';
-						modalContent += '<div class="control">';
-						modalContent += '<a class="button is-primary is-outlined" download href="' + secondImage + '" download="' + title2 + '" target="_blank">Save Image 2</a>';
-						modalContent += '</div>';
-						modalContent += '</div></div></div>';
+							// First Image
+							modalContent += '<div class="column">';
+							modalContent += '<div class="card"><div class="card-content">';
+							modalContent += '<p class="title">' + title1 + '</p>';
+							modalContent += '<figure class="image is-512x512">';
+							modalContent += '<img id="card-image" src="' + firstImage + '">';
+							modalContent += '</figure>';
+							modalContent += '<br><div class="field is-grouped is-grouped-centered">';
+							modalContent += '<div class="control">';
+							modalContent += '<a class="button is-primary is-outlined" download href="' + firstImage + '" download="' + title1 + '" target="_blank">Save Image 1</a>';
+							modalContent += '</div>';
+							modalContent += '</div></div></div>';
 
-						// Third Image
-						modalContent += '<div class="column">';
-						modalContent += '<div class="card"><div class="card-content">';
-						modalContent += '<p class="title">' + title3 + '</p>';
-						modalContent += '<figure class="image is-512x512">';
-						modalContent += '<img src="' + thirdImage + '">';
-						modalContent += '</figure>';
-						modalContent += '<br><div class="field is-grouped is-grouped-centered">';
-						modalContent += '<div class="control">';
-						modalContent += '<a class="button is-primary is-outlined" download href="' + thirdImage + '" download="' + title3 + '" target="_blank">Save Image 3</a>';
-						modalContent += '</div>';
-						modalContent += '</div></div></div>';
+							// Second Image
+							modalContent += '<div class="column">';
+							modalContent += '<div class="card"><div class="card-content">';
+							modalContent += '<p class="title">' + title2 + '</p>';
+							modalContent += '<figure class="image is-512x512">';
+							modalContent += '<img src="' + secondImage + '">';
+							modalContent += '</figure>';
+							modalContent += '<br><div class="field is-grouped is-grouped-centered">';
+							modalContent += '<div class="control">';
+							modalContent += '<a class="button is-primary is-outlined" download href="' + secondImage + '" download="' + title2 + '" target="_blank">Save Image 2</a>';
+							modalContent += '</div>';
+							modalContent += '</div></div></div>';
 
-						modalContent += '</div></div>';
+							// Third Image
+							modalContent += '<div class="column">';
+							modalContent += '<div class="card"><div class="card-content">';
+							modalContent += '<p class="title">' + title3 + '</p>';
+							modalContent += '<figure class="image is-512x512">';
+							modalContent += '<img src="' + thirdImage + '">';
+							modalContent += '</figure>';
+							modalContent += '<br><div class="field is-grouped is-grouped-centered">';
+							modalContent += '<div class="control">';
+							modalContent += '<a class="button is-primary is-outlined" download href="' + thirdImage + '" download="' + title3 + '" target="_blank">Save Image 3</a>';
+							modalContent += '</div>';
+							modalContent += '</div></div></div>';
 
-						loaderWrapper.classList.remove('is-active');
-						showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, modalContent);
+							modalContent += '</div></div>';
 
-						enableselect();
+							loaderWrapper.classList.remove('is-active');
+							showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, modalContent);
+
+							enableselect();
+						} else {
+							showErrorModal();
+							enableselect();
+						}
+						
 					}
 				}
 				var dataFile = "imagegenerationpromptdata.php"
@@ -592,7 +619,45 @@ require_once("user/protect.php");
 					<div id="copy-message" class="copy-message has-text-success has-text-weight-bold has-text-centered"></div>
 				</section>
 				<footer class="modal-card-foot">
-					<button class="button is-success" id="responsebutton">Copy</button>
+					<button class="button jb-modal-close is-danger">Close</button>
+				</footer>
+				</div>
+				<button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+			`;
+
+			document.body.appendChild(modal);
+
+			Array.from(modal.getElementsByClassName('jb-modal-close')).forEach(function (el) {
+				el.addEventListener('click', function (e) {
+					e.currentTarget.closest('.modal').classList.remove('is-active');
+					document.documentElement.classList.remove('is-clipped');
+					document.body.removeChild(modal);
+				});
+			})	
+		}
+
+		function showErrorModal() {
+			// Hide the loader when the modal is created
+  			jQuery('.loader-wrapper').css('display', 'none');
+			var modal = document.createElement('div');
+			modal.className = 'modal is-active';
+			modal.id = 'imageModal';
+			modal.innerHTML = `
+				<div class="modal-background"></div>
+				<div class="modal-card">
+				<header class="modal-card-head">
+					<p class="modal-card-title">Error Executing Prompt</p>
+					<button class="delete jb-modal-close" aria-label="close"></button>
+				</header>
+				<section class="modal-card-body">
+				<p class="has-text-danger has-text-weight-bold">
+				The OpenAI is unable to execute your query. 
+				</p>
+				<p class="has-text-danger has-text-weight-bold">
+				Please edit your prompt and try again.
+				</p>
+				</section>
+				<footer class="modal-card-foot">
 					<button class="button jb-modal-close is-danger">Close</button>
 				</footer>
 				</div>

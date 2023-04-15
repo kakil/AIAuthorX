@@ -89,14 +89,32 @@ require_once("user/protect.php");
           <ul class="menu-list">
 		  	<li>
               <a href="imagegenerationprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-image"></i></span>
+                <span class="icon"><i class="mdi mdi-emoticon-cool"></i></span>
                 <span class="menu-item-label">Vibes</span>
               </a>
             </li>
 			<li>
               <a href="photographyprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-image"></i></span>
+                <span class="icon"><i class="mdi mdi-camera"></i></span>
                 <span class="menu-item-label">Photography</span>
+              </a>
+            </li>
+			<li>
+              <a href="photographyprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-spotlight-beam"></i></span>
+                <span class="menu-item-label">Lighting</span>
+              </a>
+            </li>
+			<li>
+              <a href="filmprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-filmstrip"></i></span>
+                <span class="menu-item-label">Film</span>
+              </a>
+            </li>
+			<li>
+              <a href="illustrationprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-marker"></i></span>
+                <span class="menu-item-label">Illustration</span>
               </a>
             </li>
 		  </ul>
