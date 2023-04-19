@@ -158,7 +158,7 @@ if (isset($_SESSION['register'], $_SESSION['admin'], $_SESSION['login'])) {
                 <div class="field-body">
                   <div class="field">
                     <div class="field file">
-                        <a class="button is-primary">
+                        <a class="button is-primary" href="<?php echo $register; ?>">
                           <span class="icon"><i class="mdi mdi-account-circle default"></i></span>
                           <span>Create Account</span>
                         </a>

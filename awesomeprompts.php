@@ -1,6 +1,7 @@
 <?php
 	require_once("config.php");
 	require_once("user/protect.php");
+	var_dump($_SESSION["user"]);
 ?>
 
 <!doctype HTML>
@@ -228,6 +229,7 @@
 			</header>
 			<section class="modal-card-body">
 				<label for="apikeystorage-modal">Set Key:</label>
+				<p><?php echo('User API Key: ' . $_SESSION["user"]["user_apikey"]); ?></p>
 				<input type="input" id="apikeystorage-modal" class="inputbox" style="width:50%" value="<?php if ($masterkeymode==true){echo($masterapikey);}else{echo($_SESSION["user"]["user_apikey"]);} ?>" />
 			</section>
 			<footer class="modal-card-foot">
@@ -504,7 +506,7 @@
 				var promptindex = document.getElementById('promptselector').value;
 				console.log("Prompt: " + prompt);
 				console.log("API Key: " + apikey);
-				if (promptindex != -1 && apikey.length > 45) {
+				if (promptindex != -1 && apikey.length > 45 && prompt.length > 0) {
 
 					disableselect();
 
@@ -532,6 +534,12 @@
 					//xhr.send("promptindex=" + encodeURIComponent(prompt) + "&mode=2");
 					var dataFile = 'promptdata.php';
 					xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
+				} else if ( apikey.length < 45 ) {
+					showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
+					enableselect();
+				} else {
+					showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt Key.  Please enter a valid prompt.');
+					enableselect();
 				}
 			}
 		},false);
@@ -572,6 +580,41 @@
 				<div class="modal-card">
 				<header class="modal-card-head">
 					<p class="modal-card-title">${title}</p>
+					<button class="delete jb-modal-close" aria-label="close"></button>
+				</header>
+				<section class="modal-card-body">
+					<textarea class="textarea" rows="15" id="responsedata">${content}</textarea>
+					<div id="copy-message" class="copy-message has-text-success has-text-weight-bold has-text-centered"></div>
+				</section>
+				<footer class="modal-card-foot">
+					<button class="button is-success" id="responsebutton">Copy</button>
+					<button class="button jb-modal-close is-danger">Close</button>
+				</footer>
+				</div>
+				<button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+			`;
+
+			document.body.appendChild(modal);
+
+			Array.from(modal.getElementsByClassName('jb-modal-close')).forEach(function (el) {
+				el.addEventListener('click', function (e) {
+					e.currentTarget.closest('.modal').classList.remove('is-active');
+					document.documentElement.classList.remove('is-clipped');
+					document.body.removeChild(modal);
+				});
+			})	
+		}
+
+		function showPromptAPIKeyErrorModal(title, content,) {
+			// Hide the loader when the modal is created
+  			jQuery('.loader-wrapper').css('display', 'none');
+			var modal = document.createElement('div');
+			modal.className = 'modal is-active';
+			modal.innerHTML = `
+				<div class="modal-background jb-modal-close"></div>
+				<div class="modal-card">
+				<header class="modal-card-head">
+					<p class="modal-card-title">API Key Error</p>
 					<button class="delete jb-modal-close" aria-label="close"></button>
 				</header>
 				<section class="modal-card-body">

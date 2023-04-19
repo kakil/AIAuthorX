@@ -9,6 +9,7 @@ if (isset($_POST['apikey']) && trim($_POST['apikey'])!=""){
 	$apikey=$_POST['apikey'];
 	if (checkKey($apikey)==true){
 		$USR->saveapi($apikey,$_SESSION["user"]["user_id"]);
+		$_SESSION["user"]["user_apikey"] = $apikey;
 		echo("saved");
 	} else {
 		echo("invalid");
