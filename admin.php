@@ -123,6 +123,12 @@ function replaceKeys($oldKey, $newKey, array $input) {
               </a>
             </li>
             <li>
+              <a href="register.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-account-edit"></i></span>
+                <span class="menu-item-label">Create User Account</span>
+              </a>
+            </li>
+            <li>
               <a href="login.php" class="has-icon">
                 <span class="icon"><i class="mdi mdi-login"></i></span>
                 <span class="menu-item-label">User Login</span>
@@ -422,13 +428,13 @@ function ban(id, banmode) {
 }
 
 const results = <?php echo json_encode($results); ?>;
-const perPage = 2;
+const perPage = 10;
 const totalItems = results.length;
 const totalPages = Math.ceil(totalItems / perPage);
 
 //banned users
 const bannedUsers = results.filter(row => row.Status === "BAN");
-const bannedPerPage = 2;
+const bannedPerPage = 10;
 const totalBannedItems = bannedUsers.length;
 const totalBannedPages = Math.ceil(totalBannedItems / bannedPerPage);
 
