@@ -1,7 +1,6 @@
 <?php
 	require_once("config.php");
 	require_once("user/protect.php");
-	var_dump($_SESSION["user"]);
 ?>
 
 <!doctype HTML>
@@ -229,7 +228,6 @@
 			</header>
 			<section class="modal-card-body">
 				<label for="apikeystorage-modal">Set Key:</label>
-				<p><?php echo('User API Key: ' . $_SESSION["user"]["user_apikey"]); ?></p>
 				<input type="input" id="apikeystorage-modal" class="inputbox" style="width:50%" value="<?php if ($masterkeymode==true){echo($masterapikey);}else{echo($_SESSION["user"]["user_apikey"]);} ?>" />
 			</section>
 			<footer class="modal-card-foot">
@@ -538,7 +536,7 @@
 					showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
 					enableselect();
 				} else {
-					showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt Key.  Please enter a valid prompt.');
+					showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
 					enableselect();
 				}
 			}
@@ -614,15 +612,15 @@
 				<div class="modal-background jb-modal-close"></div>
 				<div class="modal-card">
 				<header class="modal-card-head">
-					<p class="modal-card-title">API Key Error</p>
+					<p class="modal-card-title">${title}</p>
 					<button class="delete jb-modal-close" aria-label="close"></button>
 				</header>
 				<section class="modal-card-body">
-					<textarea class="textarea" rows="15" id="responsedata">${content}</textarea>
-					<div id="copy-message" class="copy-message has-text-success has-text-weight-bold has-text-centered"></div>
+					<p class="has-text-danger has-text-weight-bold">
+					${content}
+					</p>
 				</section>
 				<footer class="modal-card-foot">
-					<button class="button is-success" id="responsebutton">Copy</button>
 					<button class="button jb-modal-close is-danger">Close</button>
 				</footer>
 				</div>
