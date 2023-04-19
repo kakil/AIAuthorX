@@ -492,7 +492,7 @@ require_once("user/protect.php");
 			var promptindex = document.getElementById('promptselector').value;
 			console.log("Prompt: " + prompt);
 			console.log("API Key: " + apikey);
-			if (promptindex != -1 && apikey.length > 45) {
+			if (promptindex != -1 && apikey.length > 45 && prompt.length > 0) {
 
 				disableselect();
 
@@ -515,7 +515,14 @@ require_once("user/protect.php");
 				var dataFile = "contenttoolspromptdata.php"
 				prompt = prompt.replace(/"/gi, "'");
 				xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
-			}
+			} else if ( apikey.length < 45 ) {
+ 				showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
+ 				enableselect();
+ 			} else {
+ 				showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
+ 				enableselect();
+ 			}
+
 			}
 		},false);
 
@@ -576,6 +583,41 @@ require_once("user/protect.php");
 				});
 			})	
 		}
+
+		function showPromptAPIKeyErrorModal(title, content,) {
+  			// Hide the loader when the modal is created
+    			jQuery('.loader-wrapper').css('display', 'none');
+  			var modal = document.createElement('div');
+  			modal.className = 'modal is-active';
+  			modal.innerHTML = `
+  				<div class="modal-background jb-modal-close"></div>
+  				<div class="modal-card">
+  				<header class="modal-card-head">
+  					<p class="modal-card-title">${title}</p>
+  					<button class="delete jb-modal-close" aria-label="close"></button>
+  				</header>
+  				<section class="modal-card-body">
+ 				 	<p class="has-text-danger has-text-weight-bold">
+  					${content}
+  					</p>
+  				</section>
+  				<footer class="modal-card-foot">
+  					<button class="button jb-modal-close is-danger">Close</button>
+  				</footer>
+  				</div>
+  				<button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+  			`;
+
+  			document.body.appendChild(modal);
+
+  			Array.from(modal.getElementsByClassName('jb-modal-close')).forEach(function (el) {
+  				el.addEventListener('click', function (e) {
+  					e.currentTarget.closest('.modal').classList.remove('is-active');
+  					document.documentElement.classList.remove('is-clipped');
+  					document.body.removeChild(modal);
+  				});
+  			})	
+  		}
 
 		$(document).ready(function() {
 			$('.jb-modal-close').on('click', function() {
