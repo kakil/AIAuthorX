@@ -8,7 +8,31 @@ $logoutredirect='login.php';
 $adminuser='admin';
 $adminpassword='WMT2fjq3pax-yde-xge';
 $footer=<<<EOTFOOTER
-<br><br><br><hr><div style="color:#777; font:size:14px; display:block; float:left;">(C)2023 My Prompt SaaS - For terms click <a href="terms.php" target="_BLANK">HERE</a></div><div style="color:#777; float:right">Click <a href="https://supportlink.com">HERE</a> for support</div><br><hr>
+<footer class="footer">
+                              <div class="container-fluid">
+                                <div class="level">
+                                  <div class="level-left">
+                                    <div class="level-item">
+                                      © 2023, yourWebsite.com
+                                    </div>
+                                    <div class="level-item">
+                                      <a href="https://toolkitsforsuccess.com" style="height: 20px">
+                                        <img src="https://img.shields.io/badge/release-v1.0.0-lightgrey">
+                                      </a>
+                                    </div>
+                                  </div>
+                                  <div class="level-right">
+                                    <div class="level-item">
+                                      <div class="logo">
+                                        <p class="supportLink has-text-weight-bold has-text-link">
+                                          <a href="https://yourSupportLink.com">CLICK HERE</a>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </footer>
 EOTFOOTER;
 
 define('USER_DB_HOST', 'localhost');

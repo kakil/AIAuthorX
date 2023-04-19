@@ -65,7 +65,7 @@ $configout = <<<EOT
 \$adminuser="$adminuser";
 \$adminpassword="$adminpassword";
 \$footer=<<<EOTFOOTER
-$footer_content
+$footerhtml
 EOTFOOTER;
 
 define("USER_DB_HOST", "$user_db_host");
@@ -201,7 +201,7 @@ exit();
           </a>
         </li>
         <li>
-          <a href="https://toolkitsforsuccess.com" class="has-icon">
+          <a href="https://aiauthorx.com" class="has-icon">
             <span class="icon"><i class="mdi mdi-help-circle"></i></span>
             <span class="menu-item-label">About</span>
           </a>
@@ -384,19 +384,33 @@ exit();
                       <div class="control">
                           <textarea class="textarea" name="footerhtml">
                           <footer class="footer">
-                              <div class="content has-text-centered">
-                              <div class="columns is-vcentered">
-                                  <div class="column is-half">
-                                  <p class="is-size-7 has-text-grey">(C)2023 Your Software Name - For terms click <a href="terms.php" target="_BLANK">HERE</a></p>
+                            <div class="container-fluid">
+                              <div class="level">
+                                <div class="level-left">
+                                  <div class="level-item">
+                                    © 2023, YourWebsiteHERE.com
                                   </div>
-                                  <div class="column is-half">
-                                  <p class="is-size-7 has-text-grey is-pulled-right">Click <a href="https://supportlink.com">HERE</a> for support</p>
+                                  <div class="level-item">
+                                    <a href="https://toolkitsforsuccess.com" style="height: 20px">
+                                      <img src="https://img.shields.io/badge/release-v1.0.0-lightgrey">
+                                    </a>
                                   </div>
+                                </div>
+                                <div class="level-right">
+                                  <div class="level-item">
+                                    <div>
+                                     For Support Help - 
+                                      <p class="supportInfo has-text-weight-bold has-text-link">
+                                        <a href="https://YourSupportLinkHERE.com">CLICK HERE</a>
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-                              </div>
+                            </div>
                           </footer>
                           </textarea>
-                          <p class="help">(HTML for your footer - feel free to modify the example below)</p>
+                          <p class="help has-text-info is-italic">(HTML for your footer - edit the footer with your website or company name and support links)</p>
                       </div>
                       </div>
                   </div>

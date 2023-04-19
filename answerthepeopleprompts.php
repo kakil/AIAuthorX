@@ -193,30 +193,8 @@ require_once("user/protect.php");
 				</div> <!-- Columns END -->
 			</div> <!-- Container END -->
 		</section>
-      
-      <footer class="footer">
-        <div class="container-fluid">
-          <div class="level">
-            <div class="level-left">
-              <div class="level-item">
-                © 2023, ToolkitsForSuccess.com
-              </div>
-              <div class="level-item">
-                <a href="https://toolkitsforsuccess.com" style="height: 20px">
-                  <img src="https://img.shields.io/badge/release-v1.0.0-lightgrey">
-                </a>
-              </div>
-            </div>
-            <div class="level-right">
-              <div class="level-item">
-                <div class="logo">
-                  <a href="https://toolkitsforsuccess.com"><img src="img/ToolkitsForSuccess_logo.png" alt="ToolkitsForSuccess.com"></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+		<!-- Footer -->
+		<?php echo($footer); ?>
 
     <!-- Modal View -->
 	<div id="api-key-modal" class="modal">
