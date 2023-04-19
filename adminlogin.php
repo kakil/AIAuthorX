@@ -59,7 +59,7 @@ if (isset($_SESSION["adminuser"])) {
             <div class="column is-4">
               <form id="login" method="post">
                 <figure class="image has-text-centered">
-                  <img src="img/logo_light.png" style="max-width: 100%; height: auto;">
+                  <img src="img/logo.png" style="max-width: 100%; height: auto;">
                 </figure>
 
                 <h2 class="title is-4 has-text-centered">ADMIN LOGIN</h2>
