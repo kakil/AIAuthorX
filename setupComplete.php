@@ -61,40 +61,29 @@ if (isset($_SESSION['register'], $_SESSION['admin'], $_SESSION['login'])) {
   </nav>
   <aside class="aside is-placed-left is-expanded">
     <div class="aside-tools">
-      <div class="aside-tools-label">
-        <a class="navbar-item" href="https://toolkitsforsuccess.com">
-            <img src="img/logo.png" alt="Toolkits For Success: Content that starts Conversations that puts Cash in your pocket." width="200" height="30">
-        </a>
+      <div class="aside-tools-label mt-2">
+        <img src="img/logo.png" alt="Toolkits For Success: Content that starts Conversations that puts Cash in your pocket." width="200" height="30">
       </div>
     </div>
     <div class="menu is-menu-main">
-      <p class="menu-label">General</p>
+      <p class="menu-label">Admin</p>
       <ul class="menu-list">
         <li>
-          <a href="index.html" class="has-icon">
-            <span class="icon"><i class="mdi mdi-desktop-mac"></i></span>
-            <span class="menu-item-label">Dashboard</span>
-          </a>
-        </li>
-      </ul>
-      <p class="menu-label">Examples</p>
-      <ul class="menu-list">
-        <li>
-          <a href="tables.html" class="has-icon">
-            <span class="icon has-update-mark"><i class="mdi mdi-table"></i></span>
-            <span class="menu-item-label">Tables</span>
+          <a href="admin.php" class="has-icon">
+            <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+            <span class="menu-item-label">User Admin</span>
           </a>
         </li>
         <li>
-          <a href="setup.php" class="has-icon">
-            <span class="icon"><i class="mdi mdi-view-list"></i></span>
-            <span class="menu-item-label">Setup</span>
+          <a href="register.php" class="has-icon">
+            <span class="icon"><i class="mdi mdi-account-edit"></i></span>
+            <span class="menu-item-label">Create User Account</span>
           </a>
         </li>
         <li>
-          <a href="profile.html" class="is-active has-icon">
-            <span class="icon"><i class="mdi mdi-account-circle"></i></span>
-            <span class="menu-item-label">Setup Complete</span>
+          <a href="login.php" class="has-icon">
+            <span class="icon"><i class="mdi mdi-login"></i></span>
+            <span class="menu-item-label">User Login</span>
           </a>
         </li>
       </ul>
@@ -102,7 +91,7 @@ if (isset($_SESSION['register'], $_SESSION['admin'], $_SESSION['login'])) {
       <ul class="menu-list">
         <li>
           <a href="https://toolkitsforsuccess.com" target="_blank" class="has-icon">
-            <span class="icon"><i class="mdi mdi-github-circle"></i></span>
+            <span class="icon"><i class="mdi mdi-web"></i></span>
             <span class="menu-item-label">Toolkits For Success</span>
           </a>
         </li>
@@ -110,6 +99,13 @@ if (isset($_SESSION['register'], $_SESSION['admin'], $_SESSION['login'])) {
           <a href="https://toolkitsforsuccess.com" class="has-icon">
             <span class="icon"><i class="mdi mdi-help-circle"></i></span>
             <span class="menu-item-label">About</span>
+          </a>
+        </li>
+        <hr>
+        <li>
+          <a href="adminlogout.php" class="has-icon">
+            <span class="icon"><i class="mdi mdi-logout"></i></span>
+            <span class="menu-item-label">Logout Admin</span>
           </a>
         </li>
       </ul>
@@ -187,7 +183,7 @@ if (isset($_SESSION['register'], $_SESSION['admin'], $_SESSION['login'])) {
                 <div class="field-body">
                   <div class="field">
                     <div class="field file">
-                      <a class="button is-primary">
+                      <a class="button is-primary" href="<?php echo $login; ?>">
                         <span class="icon"><i class="mdi mdi-login default"></i></span>
                         <span>Login</span>
                       </a>
@@ -218,7 +214,7 @@ if (isset($_SESSION['register'], $_SESSION['admin'], $_SESSION['login'])) {
                 <div class="field-body">
                   <div class="field">
                     <div class="field file">
-                      <a class="button is-primary">
+                      <a class="button is-primary" href="<?php echo $admin; ?>">
                         <span class="icon"><i class="mdi mdi-login default"></i></span>
                         <span>Login</span>
                       </a>
