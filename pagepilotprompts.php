@@ -1,6 +1,6 @@
 <?php
-	require_once("config.php");
-	require_once("user/protect.php");
+require_once("config.php");
+require_once("user/protect.php");
 ?>
 
 <!doctype HTML>
@@ -24,11 +24,11 @@
     <div id="app">
       <nav id="navbar-main" class="navbar is-fixed-top is-dark">
         <div class="navbar-brand">
-         	 <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+          	<a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
             	<span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
           	</a>
 		  	<div class="navbar-item has-text-centered">
-            	<h1>Awesome Prompts</h1>
+            	<h1>Fun Prompts</h1>
         	</div>
         </div>
         <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
@@ -55,8 +55,8 @@
           <p class="menu-label">PROMPTS</p>
           <ul class="menu-list">
             <li>
-              <a href="awesomeprompts.php" class="has-icon is-active">
-                <span class="icon has-update-mark"><i class="mdi mdi-lightbulb-on"></i></span>
+              <a href="awesomeprompts.php" class="has-icon">
+                <span class="icon"><i class="mdi mdi-lightbulb-on"></i></span>
                 <span class="menu-item-label">Awesome</span>
               </a>
             </li>
@@ -80,13 +80,13 @@
             </li>
 			<li>
               <a href="funprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-image"></i></span>
+                <span class="icon"><i class="mdi mdi-creation"></i></span>
                 <span class="menu-item-label">Fun</span>
               </a>
             </li>
 			<li>
-              <a href="pagepilotprompts.php" class="has-icon">
-                <span class="icon"><i class="mdi mdi-book-open-variant"></i></span>
+              <a href="pagepilotprompts.php" class="has-icon is-active">
+                <span class="icon has-update-mark"><i class="mdi mdi-book-open-variant"></i></span>
                 <span class="menu-item-label">PagePilot</span>
               </a>
             </li>
@@ -166,28 +166,39 @@
 								<div class="column is-narrow">
 									<?php if ($masterkeymode==false && $runbutton==true) {echo('<button type="button" class="button is-small is-info jb-modal" data-target="api-key-modal" id="apibutton">API KEY</button>');} ?>
 								</div>
-								<div class="column is-full">
-									<div class="select is-9">
-										<select id="promptselector" class="promptselector" autocomplete="off"></select>
-									</div>
-								</div>
 							</div>
-							
 						</div>
 						<div>
 							<input type="input" style="display:none;" id="apikeystorage" value="<?php if ($masterkeymode==true){echo($masterapikey);}else{echo($_SESSION["user"]["user_apikey"]);} ?>" />
 						</div>
-						<div class="prompt-display-section mt-3">
-							<div id="promptdata" class="content" >
-								<div contentEditable="true" id="innerprompt" class="innerprompt" style="border: 1px solid #b5b5b5; padding: 1rem;">I want you to act as an academician. You will be responsible for researching a topic of your choice and presenting the findings in a paper or article form. Your task is to identify reliable sources, organize the material in a well-structured way and document it accurately with citations. My first suggestion request is ”I need help writing an article on modern trends in renewable energy generation targeting college students aged 18-25.”</div>
+						<!-- eBook Topic -->
+						<div class="field">
+							<div class="field-label is-normal">
+								<label class="label" style="text-align:left;">eBook Topic:</label>
 							</div>
-							<div id="copy-prompt-message" class="copy-prompt-message has-text-success has-text-weight-bold has-text-centered mb-3"></div>
-							<div class="buttons">
-								<button type="button" class="button is-primary" id="copybutton">COPY PROMPT</button>
-								<?php if ($runbutton==true){echo('<button type="button" class="button is-success" id="runbutton">RUN PROMPT</button>');}  ?>
+							<div class="field-body">
+								<div class="field">
+									<p class="control is-normal has-icons-left">
+										<input class="input" type="text" name="ebook_topic" value="" placeholder="How to make money online" required>
+										<span class="icon is-small is-left"><i class="mdi mdi-lead-pencil"></i></span>
+									</p>
+								</div>
 							</div>
 						</div>
-						
+						<!-- Submit eBook Topic -->
+						<div class="buttons">
+							<?php if ($runbutton==true){echo('<button type="button" class="button is-success" id="runbutton">Create Book Outline</button>');}  ?>
+						</div>
+						<section class="bookOutlineSection">
+							<h4 class="subtitle">Book Outline</h4>
+							<textarea class="textarea" rows="15" id="responsedata">${bookOutline}</textarea>
+						</section>
+						<section class="bookChapterOne">
+						<div class="buttons">
+								<button type="button" class="button is-primary" id="copybutton">Write Chapter One</button>
+								<textarea class="textarea" rows="15" id="responsedata">${chapterOne}</textarea>
+							</div>
+						</section>	
 					</div>  <!-- Box END -->
 					<article class="message is-dark" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);">
 						<div class="message-body">
@@ -256,38 +267,26 @@
 			
 		}
 
-		//Highlight text in Quotes
-		function highlightTextInQuotes() {
-			console.log('Called from inside highlightTextInQuotes');
+		//Highlight text in brackets
+		function highlightTextInBrackets() {
+			
 			$('.innerprompt').each(function() {
 				const $this = $(this);
 				const html = $this.html();
-				const regex = /”(.*?)”/g;
+				const regex = /\[(.*?)\]/g;
 				const newHtml = html.replace(regex, '<span class="highlight">$&</span>');
 				$this.html(newHtml);
 			});
-		}
-
-		//Highlight text in Quotes and Brackets
-		function highlightTextInQuotesAndBrackets() {
-			console.log('Called from inside highlightTextInQuotesAndBrackets');
-			$('.innerprompt').each(function() {
-				const $this = $(this);
-				const html = $this.html();
-				const regex = /”(.*?)”|\[(.*?)\]/g;
-				const newHtml = html.replace(regex, '<span class="highlight">$&</span>');
-				$this.html(newHtml);
-			});
+			
 		}
 
 		$(document).ready(function() {
-			highlightTextInQuotesAndBrackets();
+			highlightTextInBrackets();
 
 		});
 
 
-
-		//Text animation function
+		//text animation
 		!function (e, t) {
 		"object" == typeof exports && "undefined" != typeof module ? module.exports = t() :
 		"function" == typeof define && define.amd ? define(t) :
@@ -333,45 +332,45 @@
 			}), !1)
 		}
 		}));
-		//end text animation function	
 
-
+		
+		
+					
 		document.getElementById('promptselector').addEventListener('change', function() {
-			var promptindex=document.getElementById('promptselector').value;
+		var promptindex=document.getElementById('promptselector').value;
 
-			if (promptindex == -1) {
-				return;
-			} else {
-				var promptindex = document.getElementById('promptselector').value;
-				disableselect();
-				var data = {"prompt": promptindex};
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST", 'promptrequest.php', true);
-				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		if (promptindex == -1) {
+			return;
+		} else {
+			var promptindex = document.getElementById('promptselector').value;
+			disableselect();
+			var data = {"prompt": promptindex};
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", 'promptrequest.php', true);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-				xhr.onreadystatechange = function() {
-				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-					const typ = document.querySelector("#innerprompt");
-					tint(typ, {
-						items: ['Thinking...', this.responseText],
-						typeSpeed: 0,
-						delayBetweenItems: 600,
-						loop: false,
-						cursorChar: "",
-						callback: function() {
-							setTimeout(function() {
-								console.log('Called from tint');
-								highlightTextInQuotesAndBrackets();
-							}, 1000); 
-						}
-						
-					});
-				}
-				}
-
-				var datafile = "promptdata.php";
-				xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
+			xhr.onreadystatechange = function() {
+			if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+				const typ = document.querySelector("#innerprompt");
+				tint(typ, {
+					items: ['Thinking...', this.responseText],
+					typeSpeed: 0,
+					delayBetweenItems: 600,
+					loop: false,
+					cursorChar: "",
+					callback: function() {
+						setTimeout(function() {
+							highlightTextInBrackets();
+						}, 1000); 
+					}
+					
+				});
 			}
+			}
+
+			var datafile = "funpromptdata.php";
+			xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
+		}
 		});
 
 		document.addEventListener('click', function (event) {
@@ -478,73 +477,65 @@
 
 
 			if (event.target.matches('#runbutton')) {
-				console.log("Run Prompt Button Pressed");
-				var apikey = document.getElementById('apikeystorage-modal').value;
-				var runButton = document.getElementById('runbutton');
+			console.log("Run Prompt Button Pressed");
+			var apikey = document.getElementById('apikeystorage-modal').value;
+			var runButton = document.getElementById('runbutton');
 
-				// Show the loader
-				var loaderWrapper = document.querySelector('.loader-wrapper');
-				loaderWrapper.classList.add('is-active');
+			// Show the loader
+			var loaderWrapper = document.querySelector('.loader-wrapper');
+      		loaderWrapper.classList.add('is-active');
 
-				var prompt = document.getElementById('innerprompt').textContent;
-				var promptindex = document.getElementById('promptselector').value;
-				console.log("Prompt: " + prompt);
-				console.log("API Key: " + apikey);
-				if (promptindex != -1 && apikey.length > 45 && prompt.length > 0) {
+			var prompt = document.getElementById('innerprompt').textContent;
+			var promptindex = document.getElementById('promptselector').value;
+			console.log("Prompt: " + prompt);
+			console.log("API Key: " + apikey);
+			if (promptindex != -1 && apikey.length > 45 && prompt.length > 0) {
 
-					disableselect();
+				disableselect();
 
-					var xhr = new XMLHttpRequest();
-					xhr.open("POST", 'promptrequest.php', true);
-					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-					xhr.onreadystatechange = function () {
-						if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-							const typ = document.querySelector("#innerprompt");
-							//console.log("Response: " + this.responseText);
-							const airesp = JSON.parse(this.responseText);
-							const content = airesp.choices[0].message.content;
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", 'promptrequest.php', true);
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.onreadystatechange = function () {
+					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+						const typ = document.querySelector("#innerprompt");
+						const airesp = JSON.parse(this.responseText);
+						const content = airesp.choices[0].message.content;
 
-							var modalContent = '<div class="innerresponse" id="responsedata">' + content + '</div><div style="margin:0 auto; text-align:center; padding-top:15px;"><button type="button" class="custom-button" id="responsebutton">COPY & CLOSE</button></div>';
-							loaderWrapper.classList.remove('is-active');
-							showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
+						var modalContent = '<div class="innerresponse" id="responsedata">' + content + '</div><div style="margin:0 auto; text-align:center; padding-top:15px;"><button type="button" class="custom-button" id="responsebutton">COPY & CLOSE</button></div>';
+						loaderWrapper.classList.remove('is-active');
+						showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
 
-							enableselect();
-						}
+						enableselect();
 					}
-					console.log('Prompt value:', prompt);
-					if (typeof prompt === 'string') {
-						prompt = prompt.replace(/"/gi, "'");
-					}
-					//xhr.send("promptindex=" + encodeURIComponent(prompt) + "&mode=2");
-					var dataFile = 'promptdata.php';
-					xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
-				} else if ( apikey.length < 45 ) {
-					showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
-					enableselect();
-				} else {
-					showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
-					enableselect();
 				}
+				var dataFile = "funpromptdata.php"
+				prompt = prompt.replace(/"/gi, "'");
+				xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
+			}else if ( apikey.length < 45 ) {
+ 				showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
+ 				enableselect();
+ 			} else {
+ 				showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
+ 				enableselect();
+ 			}
 			}
 		},false);
 
 		document.addEventListener("DOMContentLoaded", function() {
-			var mode = localStorage.getItem("promptmodeZNWEBCH29T");
-
-			var datafile = "promptdata.php"; // Set the datafile variable to the desired file name
+			var mode=localStorage.getItem("promptmodeZNWEBCH29T");
 
 			var xhr = new XMLHttpRequest();
 			xhr.open("POST", 'promptrequest.php', true);
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.onreadystatechange = function() {
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");xhr.onreadystatechange = function() {
 				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-					
-					document.getElementById('promptselector').innerHTML = this.responseText;
+					document.getElementById('promptselector').innerHTML=this.responseText;
 				}
 			}
-			xhr.send("mode=3" + "&datafile=" + encodeURIComponent(datafile));
+			var datafile = "funpromptdata.php";
+			xhr.send("datafile="+datafile+"&mode=3");	
+			
 		});
-		//xhr.send("mode=3");
 
 		$(document).ready(function(){
 			$('.button').on('click', function(){
@@ -590,39 +581,39 @@
 		}
 
 		function showPromptAPIKeyErrorModal(title, content,) {
-			// Hide the loader when the modal is created
-  			jQuery('.loader-wrapper').css('display', 'none');
-			var modal = document.createElement('div');
-			modal.className = 'modal is-active';
-			modal.innerHTML = `
-				<div class="modal-background jb-modal-close"></div>
-				<div class="modal-card">
-				<header class="modal-card-head">
-					<p class="modal-card-title">${title}</p>
-					<button class="delete jb-modal-close" aria-label="close"></button>
-				</header>
-				<section class="modal-card-body">
-					<p class="has-text-danger has-text-weight-bold">
-					${content}
-					</p>
-				</section>
-				<footer class="modal-card-foot">
-					<button class="button jb-modal-close is-danger">Close</button>
-				</footer>
-				</div>
-				<button class="modal-close is-large jb-modal-close" aria-label="close"></button>
-			`;
+  			// Hide the loader when the modal is created
+    			jQuery('.loader-wrapper').css('display', 'none');
+  			var modal = document.createElement('div');
+  			modal.className = 'modal is-active';
+  			modal.innerHTML = `
+  				<div class="modal-background jb-modal-close"></div>
+  				<div class="modal-card">
+  				<header class="modal-card-head">
+  					<p class="modal-card-title">${title}</p>
+  					<button class="delete jb-modal-close" aria-label="close"></button>
+  				</header>
+  				<section class="modal-card-body">
+ 				 	<p class="has-text-danger has-text-weight-bold">
+  					${content}
+  					</p>
+  				</section>
+  				<footer class="modal-card-foot">
+  					<button class="button jb-modal-close is-danger">Close</button>
+  				</footer>
+  				</div>
+  				<button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+  			`;
 
-			document.body.appendChild(modal);
+  			document.body.appendChild(modal);
 
-			Array.from(modal.getElementsByClassName('jb-modal-close')).forEach(function (el) {
-				el.addEventListener('click', function (e) {
-					e.currentTarget.closest('.modal').classList.remove('is-active');
-					document.documentElement.classList.remove('is-clipped');
-					document.body.removeChild(modal);
-				});
-			})	
-		}
+  			Array.from(modal.getElementsByClassName('jb-modal-close')).forEach(function (el) {
+  				el.addEventListener('click', function (e) {
+  					e.currentTarget.closest('.modal').classList.remove('is-active');
+  					document.documentElement.classList.remove('is-clipped');
+  					document.body.removeChild(modal);
+  				});
+  			})	
+  		}
 
 		$(document).ready(function() {
 			$('.jb-modal-close').on('click', function() {
@@ -633,7 +624,6 @@
 			$('#apibutton').on('click', function() {
 				$('#api-key-modal').addClass('is-active');
 			});
-
 
 			$('#savekeybutton').on('click', function() {
 				let apiKey = $('#apikeystorage-modal').val();
@@ -646,6 +636,8 @@
 				$('.loader-wrapper').hide();
 			}
 		});
+
+		
 
 	</script>
 	</body>
