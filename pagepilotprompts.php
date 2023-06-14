@@ -278,9 +278,9 @@ require_once("user/protect.php");
 		// Old javascript code
 					
 		function enableselect(){
-			document.getElementById('promptselector').disabled=false; 
-			document.getElementById('copybutton').disabled=false;
-			document.getElementById('runbutton').disabled=false; 
+			//document.getElementById('promptselector').disabled=false; 
+			//document.getElementById('copybutton').disabled=false;
+			//document.getElementById('runbutton').disabled=false; 
 			var apielement =  document.getElementById('apibutton');
 			if (typeof(apielement) != 'undefined' && apielement != null)
 			{
@@ -291,9 +291,9 @@ require_once("user/protect.php");
 		}
 
 		function disableselect(){
-			document.getElementById('promptselector').disabled=true;
-			document.getElementById('copybutton').disabled=true;
-			document.getElementById('runbutton').disabled=true;
+			//document.getElementById('promptselector').disabled=true;
+			//document.getElementById('copybutton').disabled=true;
+			//document.getElementById('runbutton').disabled=true;
 			var apielement =  document.getElementById('apibutton');
 			if (typeof(apielement) != 'undefined' && apielement != null)
 			{
@@ -392,19 +392,19 @@ require_once("user/protect.php");
 				});
 			}		
 			
-			if (event.target.matches('#copybutton')) { 
-				jQuery('.loader-wrapper').css('display', 'none');
-				if (!navigator.clipboard) {return;} 
-				navigator.clipboard.writeText(document.getElementById('innerprompt').innerText).then(() => {
-					var copyMessage = document.getElementById('copy-prompt-message');
-					copyMessage.innerText = 'Copied to clipboard!';
+			// if (event.target.matches('#copybutton')) { 
+			// 	jQuery('.loader-wrapper').css('display', 'none');
+			// 	if (!navigator.clipboard) {return;} 
+			// 	navigator.clipboard.writeText(document.getElementById('innerprompt').innerText).then(() => {
+			// 		var copyMessage = document.getElementById('copy-prompt-message');
+			// 		copyMessage.innerText = 'Copied to clipboard!';
 
-					// Optionally, hide the message after a few seconds
-					setTimeout(() => {
-						copyMessage.innerText = '';
-					}, 3000);
-				});
-			}
+			// 		// Optionally, hide the message after a few seconds
+			// 		setTimeout(() => {
+			// 			copyMessage.innerText = '';
+			// 		}, 3000);
+			// 	});
+			// }
 
 
 			// New PagePilot Code
@@ -413,15 +413,18 @@ require_once("user/protect.php");
 				console.log("Book Topic Button Pressed");
 				var apikey = document.getElementById('apikeystorage-modal').value;
 				var bookTopicButton = document.getElementById('bookTopicInput');
-				var ebookTopic = document.getElementById('ebookTopic');
+				var ebookTopic = document.getElementById('ebookTopic').value;
 
 				//Show the loader
 				var loaderWrapper = document.querySelector('.loader-wrapper');
 				loaderWrapper.classList.add('is-active');
 
 				console.log('Book Topic: ', ebookTopic);
+				console.log('API key: ', apikey);
 
 				if(ebookTopic.length > 0 && apikey.length > 45) {
+
+					console.log("Making OpenAI API Request");
 
 					var xhr = new XMLHttpRequest();
 					xhr.open("POST", 'pagepilotprompts.php', true);
@@ -454,7 +457,7 @@ require_once("user/protect.php");
 			if (event.target.matches('#runbutton')) {
 				console.log("Run Prompt Button Pressed");
 				var apikey = document.getElementById('apikeystorage-modal').value;
-				var runButton = document.getElementById('runbutton');
+				//var runButton = document.getElementById('runbutton');
 				var ebookTopic = document.getElementById('ebookTopic');
 
 				// Show the loader
@@ -462,7 +465,7 @@ require_once("user/protect.php");
 				loaderWrapper.classList.add('is-active');
 
 				var prompt = document.getElementById('innerprompt').textContent;
-				var promptindex = document.getElementById('promptselector').value;
+				//var promptindex = document.getElementById('promptselector').value;
 				console.log("Prompt: " + prompt);
 				console.log("API Key: " + apikey);
 				if (promptindex != -1 && apikey.length > 45 && prompt.length > 0) {
@@ -480,7 +483,7 @@ require_once("user/protect.php");
 
 							var modalContent = '<div class="innerresponse" id="responsedata">' + content + '</div><div style="margin:0 auto; text-align:center; padding-top:15px;"><button type="button" class="custom-button" id="responsebutton">COPY & CLOSE</button></div>';
 							loaderWrapper.classList.remove('is-active');
-							showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
+							//showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
 
 							enableselect();
 						}
@@ -505,7 +508,7 @@ require_once("user/protect.php");
 			xhr.open("POST", 'promptrequest.php', true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");xhr.onreadystatechange = function() {
 				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-					document.getElementById('promptselector').innerHTML=this.responseText;
+					//document.getElementById('promptselector').innerHTML=this.responseText;
 				}
 			}
 			var datafile = "funpromptdata.php";
