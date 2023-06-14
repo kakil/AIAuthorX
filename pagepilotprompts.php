@@ -171,34 +171,45 @@ require_once("user/protect.php");
 						<div>
 							<input type="input" style="display:none;" id="apikeystorage" value="<?php if ($masterkeymode==true){echo($masterapikey);}else{echo($_SESSION["user"]["user_apikey"]);} ?>" />
 						</div>
-						<!-- eBook Topic -->
-						<div class="field">
-							<div class="field-label is-normal">
-								<label class="label" style="text-align:left;">eBook Topic:</label>
-							</div>
-							<div class="field-body">
-								<div class="field">
-									<p class="control is-normal has-icons-left">
-										<input class="input" type="text" name="ebook_topic" value="" placeholder="How to make money online" required>
-										<span class="icon is-small is-left"><i class="mdi mdi-lead-pencil"></i></span>
-									</p>
+						<form class="box">
+							<!-- eBook Topic -->
+							<div class="field">
+								<div class="field-label is-normal">
+									<label class="label" style="text-align:left;">eBook Topic:</label>
+								</div>
+								<div class="field-body">
+									<div class="field">
+										<p class="control is-normal has-icons-left">
+											<input class="input" type="text" id="ebookTopic" name="bookTopicInput" value="" placeholder="How to make money online" required>
+											<span class="icon is-small is-left"><i class="mdi mdi-lead-pencil"></i></span>
+										</p>
+									</div>
 								</div>
 							</div>
-						</div>
-						<!-- Submit eBook Topic -->
-						<div class="buttons">
-							<?php if ($runbutton==true){echo('<button type="button" class="button is-success" id="runbutton">Create Book Outline</button>');}  ?>
-						</div>
-						<section class="bookOutlineSection">
-							<h4 class="subtitle">Book Outline</h4>
-							<textarea class="textarea" rows="15" id="responsedata">${bookOutline}</textarea>
-						</section>
-						<section class="bookChapterOne">
-						<div class="buttons">
-								<button type="button" class="button is-primary" id="copybutton">Write Chapter One</button>
-								<textarea class="textarea" rows="15" id="responsedata">${chapterOne}</textarea>
+							<!-- Submit eBook Topic -->
+							<div class="buttons">
+								<button type="button" class="button is-success" id="bookTopicInput" onclick="submitBookTopic()">Create Book Outline</button>
 							</div>
-						</section>	
+							<section>
+								<label class="label">Book Titles:</label>
+    							<ul id="bookTitles"></ul>
+							</section>
+							<section class="bookOutlineSection">
+								<label class="label">Book Outline</label>
+								<textarea class="textarea" rows="15" id="bookOutline"></textarea>
+							</section>
+							<section class="bookChapterOne py-6">
+								<div class="buttons">
+									<button type="button" class="button is-primary" id="chapterOneButton" onclick="displayChapterOutput(1)">Write Chapter One</button>
+								</div>
+								<div>
+									<label class="label">Chapter One</label>
+								</div>
+								<div>
+								<textarea class="textarea" rows="15" id="chapter1Output"></textarea>
+								</div>
+							</section>	
+						</form>
 					</div>  <!-- Box END -->
 					<article class="message is-dark" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);">
 						<div class="message-body">
@@ -241,6 +252,30 @@ require_once("user/protect.php");
     <!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
 	<script>
+
+		function submitBookTopic() {
+			let bookTopic = document.getElementById("bookTopicInput").value;
+			// Perform any necessary validation or preprocessing
+
+			// Replace the code below with your logic to fetch book titles and outline from the API
+			let bookTitles = ["Title 1", "Title 2", "Title 3"];
+			let bookOutline = "Sample book outline";
+
+			displayBookData(bookTitles, bookOutline);
+		}
+
+		function displayBookData(titles, outline) {
+			document.getElementById("bookTitles").innerHTML = titles.map(title => `<li>${title}</li>`).join("");
+			document.getElementById("bookOutline").value = outline;
+		}
+
+		function displayChapterOutput(chapter) {
+			// Replace the code below with your logic to generate chapter output
+			let chapterOutput = "Output for Chapter " + chapter;
+			document.getElementById(`chapter${chapter}Output`).value = chapterOutput;
+		}
+
+		// Old javascript code
 					
 		function enableselect(){
 			document.getElementById('promptselector').disabled=false; 
@@ -266,114 +301,10 @@ require_once("user/protect.php");
 			}	
 			
 		}
-
-		//Highlight text in brackets
-		function highlightTextInBrackets() {
-			
-			$('.innerprompt').each(function() {
-				const $this = $(this);
-				const html = $this.html();
-				const regex = /\[(.*?)\]/g;
-				const newHtml = html.replace(regex, '<span class="highlight">$&</span>');
-				$this.html(newHtml);
-			});
-			
-		}
-
-		$(document).ready(function() {
-			highlightTextInBrackets();
-
-		});
-
-
-		//text animation
-		!function (e, t) {
-		"object" == typeof exports && "undefined" != typeof module ? module.exports = t() :
-		"function" == typeof define && define.amd ? define(t) :
-		(e = "undefined" != typeof globalThis ? globalThis : e || self).tint = t()
-		}(this, (function () {
-		"use strict";
-		return function (e, {
-			items: t = [],
-			typeSpeed: n = 100,
-			deleteSpeed: o = 50,
-			delayBetweenItems: i = 2e3,
-			loop: r = !0,
-			startDelay: s = 0,
-			startsAtIndex: l = 0,
-			cursor: d = !0,
-			cursorChar: c = "|",
-			cursorCharBlinkSpeed: u = 500,
-			cursorCharBlinkTransitionSpeed: a = .15,
-			startOnView: f = !0,
-			startOnViewOffset: p = 0,
-			callback: cb
-		} = {}) {
-			if (!t.length) throw new Error("tint: No items option was provided");
-			let m, y, w, g, h = !1, T = l, C = t[T], b = e.getBoundingClientRect();
-			const v = document.createElement("span");
-			function x(s) {
-			const l = s.length, d = t[T % l];
-			if (h ? (m = o, C = d.substring(0, C.length - 1)) : C = d.substring(0, C.length + 1), e.textContent = `${C}`,
-				!r && C === s[l - 1]) return enableselect(), clearTimeout(w), clearTimeout(y), void clearInterval(g);
-			h || C !== d ? h && "" === C && (h = !1, T++, m = n) : (h = !0, m = i),
-				w = setTimeout((function () { x(t) }), m);
-			if (!r && T === t.length - 1 && cb) { cb(); }
-			}
-			v.textContent = c, d && (e.insertAdjacentElement("afterend", v),
-			v.style.transition = `opacity ${a}s`,
-			g = setInterval((() => { v.style.opacity = "0" === v.style.opacity ? "1" : "0" }), u)),
-			e.textContent = t[0], !f || b.bottom <= window.innerHeight && b.top >= 0 ?
-			y = setTimeout((function () { x(t) }), s - i) :
-			window.addEventListener("scroll", (function n() {
-				b = e.getBoundingClientRect(),
-				b.bottom <= window.innerHeight - p && b.top >= 0 + p &&
-				(y = setTimeout((function () { x(t) }), s - i), window.removeEventListener("scroll", n))
-			}), !1)
-		}
-		}));
-
 		
-		
-					
-		document.getElementById('promptselector').addEventListener('change', function() {
-		var promptindex=document.getElementById('promptselector').value;
-
-		if (promptindex == -1) {
-			return;
-		} else {
-			var promptindex = document.getElementById('promptselector').value;
-			disableselect();
-			var data = {"prompt": promptindex};
-			var xhr = new XMLHttpRequest();
-			xhr.open("POST", 'promptrequest.php', true);
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-			xhr.onreadystatechange = function() {
-			if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-				const typ = document.querySelector("#innerprompt");
-				tint(typ, {
-					items: ['Thinking...', this.responseText],
-					typeSpeed: 0,
-					delayBetweenItems: 600,
-					loop: false,
-					cursorChar: "",
-					callback: function() {
-						setTimeout(function() {
-							highlightTextInBrackets();
-						}, 1000); 
-					}
-					
-				});
-			}
-			}
-
-			var datafile = "funpromptdata.php";
-			xhr.send("datafile="+datafile+"&promptindex="+promptindex+"&mode=1");
-		}
-		});
 
 		document.addEventListener('click', function (event) {
+
 
 			if (event.target.matches('#savekeybutton')) {
 					var proposedkey=document.getElementById('apikeystorage-modal').value;
@@ -476,49 +407,94 @@ require_once("user/protect.php");
 			}
 
 
-			if (event.target.matches('#runbutton')) {
-			console.log("Run Prompt Button Pressed");
-			var apikey = document.getElementById('apikeystorage-modal').value;
-			var runButton = document.getElementById('runbutton');
+			// New PagePilot Code
+			if(event.target.matches('#bookTopicInput')) {
 
-			// Show the loader
-			var loaderWrapper = document.querySelector('.loader-wrapper');
-      		loaderWrapper.classList.add('is-active');
+				console.log("Book Topic Button Pressed");
+				var apikey = document.getElementById('apikeystorage-modal').value;
+				var bookTopicButton = document.getElementById('bookTopicInput');
+				var ebookTopic = document.getElementById('ebookTopic');
 
-			var prompt = document.getElementById('innerprompt').textContent;
-			var promptindex = document.getElementById('promptselector').value;
-			console.log("Prompt: " + prompt);
-			console.log("API Key: " + apikey);
-			if (promptindex != -1 && apikey.length > 45 && prompt.length > 0) {
+				//Show the loader
+				var loaderWrapper = document.querySelector('.loader-wrapper');
+				loaderWrapper.classList.add('is-active');
 
-				disableselect();
+				console.log('Book Topic: ', ebookTopic);
 
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST", 'promptrequest.php', true);
-				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xhr.onreadystatechange = function () {
-					if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-						const typ = document.querySelector("#innerprompt");
-						const airesp = JSON.parse(this.responseText);
-						const content = airesp.choices[0].message.content;
+				if(ebookTopic.length > 0 && apikey.length > 45) {
 
-						var modalContent = '<div class="innerresponse" id="responsedata">' + content + '</div><div style="margin:0 auto; text-align:center; padding-top:15px;"><button type="button" class="custom-button" id="responsebutton">COPY & CLOSE</button></div>';
-						loaderWrapper.classList.remove('is-active');
-						showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
+					var xhr = new XMLHttpRequest();
+					xhr.open("POST", 'pagepilotprompts.php', true);
+					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+					xhr.onreadystatechange = function() {
+						if ( this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+							const typ = document.querySelector("");
+							const airesponse = JSON.parse(this.responseText);
 
-						enableselect();
+							// This needs to be udated to return an array of book titles
+							const bookTitles = airesponse.choices[0].message.content;
+
+							// This needs to be updated to return the book outline content
+							const bookOutline = airesponse.choices[0].message.content;
+						}
 					}
+
+					
+				} else if ( apikey.length < 45 ) {
+					showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
+					enableselect();
+				} else {
+					showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
+					enableselect();
 				}
-				var dataFile = "funpromptdata.php"
-				prompt = prompt.replace(/"/gi, "'");
-				xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
-			}else if ( apikey.length < 45 ) {
- 				showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
- 				enableselect();
- 			} else {
- 				showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
- 				enableselect();
- 			}
+			}
+
+
+			// Old code
+			if (event.target.matches('#runbutton')) {
+				console.log("Run Prompt Button Pressed");
+				var apikey = document.getElementById('apikeystorage-modal').value;
+				var runButton = document.getElementById('runbutton');
+				var ebookTopic = document.getElementById('ebookTopic');
+
+				// Show the loader
+				var loaderWrapper = document.querySelector('.loader-wrapper');
+				loaderWrapper.classList.add('is-active');
+
+				var prompt = document.getElementById('innerprompt').textContent;
+				var promptindex = document.getElementById('promptselector').value;
+				console.log("Prompt: " + prompt);
+				console.log("API Key: " + apikey);
+				if (promptindex != -1 && apikey.length > 45 && prompt.length > 0) {
+
+					disableselect();
+
+					var xhr = new XMLHttpRequest();
+					xhr.open("POST", 'promptrequest.php', true);
+					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+					xhr.onreadystatechange = function () {
+						if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+							const typ = document.querySelector("#innerprompt");
+							const airesp = JSON.parse(this.responseText);
+							const content = airesp.choices[0].message.content;
+
+							var modalContent = '<div class="innerresponse" id="responsedata">' + content + '</div><div style="margin:0 auto; text-align:center; padding-top:15px;"><button type="button" class="custom-button" id="responsebutton">COPY & CLOSE</button></div>';
+							loaderWrapper.classList.remove('is-active');
+							showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
+
+							enableselect();
+						}
+					}
+					var dataFile = "funpromptdata.php"
+					prompt = prompt.replace(/"/gi, "'");
+					xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
+				}else if ( apikey.length < 45 ) {
+					showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
+					enableselect();
+				} else {
+					showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
+					enableselect();
+				}
 			}
 		},false);
 

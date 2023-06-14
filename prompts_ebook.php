@@ -1,63 +1,99 @@
 <?php
+
 header('Access-Control-Allow-Origin: same-origin');
 session_start();
 require_once("user/protect.php");
 require_once("config.php");
-if ($masterkeymode==true){$apikey=$masterapikey;}else{$apikey=$_SESSION["user"]["user_apikey"];}
 
-require("promptdata.php");
-
-$promptn = str_getcsv($promptnames, "\n");
-$promptd = str_getcsv($promptdata, "\n");
-$totalprompts=count($promptn);
-if ($_POST['mode']==3){
-	$i=0;
-	$promptoutput="";
-	foreach ($promptn as $promptname) {
-		$promptoutput.="<option value=".$i.">".$promptname."</option>";
-		$i++;
-	}
-	echo ($promptoutput);
-	exit();
+if ($masterkeymode==true){
+	$apikey=$masterapikey;
+} else {
+	$apikey=$_SESSION["user"]["user_apikey"];
 }
-if (!isset($_POST['promptindex']) || !isset($_POST['mode'])){echo("ERROR"); exit();}
-$promptindex=$_POST['promptindex'];
-if ($_POST['mode']==1){
-	echo ($promptd[$promptindex]);
-} else if ($_POST['mode']==2){
-	$curl = curl_init();
-	curl_setopt_array($curl, array(
-	  CURLOPT_URL => 'https://api.openai.com/v1/chat/completions',
-	  CURLOPT_RETURNTRANSFER => true,
-	  CURLOPT_ENCODING => '',
-	  CURLOPT_MAXREDIRS => 10,
-	  CURLOPT_TIMEOUT => 0,
-	  CURLOPT_FOLLOWLOCATION => true,
-	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	  CURLOPT_CUSTOMREQUEST => 'POST',
-	  CURLOPT_POSTFIELDS =>'{
-		"model":"gpt-3.5-turbo",
-		"messages": [
-			{
-				"role": "system", 
-				"content": "You are an expert digital marketer and copywriter"
-			},
-			{
-				"role": "user", 
-				"content": "Write an ebook outline about the following topic: "' . $topic . '". The content should be formatted in SEO-friendly HTML, limited to the following HTML tags: p, h1, h2, h3, h4, h5, h6, strong, li, ol, ul, i."
+
+
+// Retrieve the Book Topic value from the user input
+$bookTopic = $_POST['bookTopic'];
+
+// Function to interact with the OpenAI API and retrieve the response
+function getOpenAIResponse($message) {
+
+    $apiKey = $apikey; // Replace with your actual OpenAI API key
+
+    $data = array(
+        'messages' => array(
+            array('role' => 'system', 'content' => 'You are an expert digital marketer and copywriter'),
+            array('role' => 'user', 'content' => $message)
+        )
+    );
+
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.openai.com/v1/chat/completions',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $apiKey
+        )
+    ));
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    if ($response !== false) {
+        $responseData = json_decode($response, true);
+        return $responseData['choices'][0]['message']['content'];
+    }
+
+    return '';
+}
+
+// Check if the request is from the submit button
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bookTopic'])) {
+        // Generate the book titles and book outline using the OpenAI API
+		$bookTopic = $_POST['bookTopic'];
+
+		// Function to interact with the OpenAI API and retrieve the response
+		function getOpenAIResponse($message) {
+			$apiKey = 'YOUR_API_KEY'; // Replace with your actual OpenAI API key
+	
+			$data = array(
+				'messages' => array(
+					array('role' => 'system', 'content' => 'You are an expert digital marketer and copywriter'),
+					array('role' => 'user', 'content' => $message)
+				)
+			);
+	
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => 'https://api.openai.com/v1/chat/completions',
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_POST => true,
+				CURLOPT_POSTFIELDS => json_encode($data),
+				CURLOPT_HTTPHEADER => array(
+					'Content-Type: application/json',
+					'Authorization' => 'Bearer ' . $apiKey
+				)
+			));
+	
+			$response = curl_exec($curl);
+			curl_close($curl);
+	
+			if ($response !== false) {
+				$responseData = json_decode($response, true);
+				return $responseData['choices'][0]['message']['content'];
 			}
-		],
-		"temperature":1,
-		"max_tokens":2566
-	}',
-	  CURLOPT_HTTPHEADER => array(
-		'Authorization: Bearer '.$apikey,
-		'Content-Type: application/json'
-	  ),
-	));
-	$response = curl_exec($curl);
-	curl_close($curl);
-	echo $response;
-} 
-exit();
+	
+			return '';
+		}
+	
+		// Generate the book titles and book outline using the OpenAI API
+		$bookTitles = getOpenAIResponse("Write an ebook outline about the following topic: $bookTopic. The ebook should have 10 sections. The content should be formatted in SEO-friendly HTML, limited to the following HTML tags: p, h1, h2, h3, h4, h5, h6, strong, li, ol, ul, i.");
+	
+		// Display the book titles and book outline
+		echo json_encode(array('bookTitles' => $bookTitles));
+	}
 ?>
+	
