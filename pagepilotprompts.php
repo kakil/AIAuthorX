@@ -427,11 +427,13 @@ require_once("user/protect.php");
 					console.log("Making OpenAI API Request");
 
 					var xhr = new XMLHttpRequest();
-					xhr.open("POST", 'pagepilotprompts.php', true);
+					xhr.open("POST", 'promptsebook.php', true);
 					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 					xhr.onreadystatechange = function() {
 						if ( this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-							const typ = document.querySelector("");
+							//const typ = document.querySelector("");
+
+							console.log('Response: ', JSON.parse(this.responseText));
 							const airesponse = JSON.parse(this.responseText);
 
 							// This needs to be udated to return an array of book titles
@@ -441,6 +443,8 @@ require_once("user/protect.php");
 							const bookOutline = airesponse.choices[0].message.content;
 						}
 					}
+
+					xhr.send("bookTopic=" + ebookTopic)
 
 					
 				} else if ( apikey.length < 45 ) {
