@@ -154,7 +154,7 @@ require_once("user/protect.php");
 				<div class="column is-6-desktop is-8-tablet is-12-mobile">
 					<div class="box">
 					<div class="loader-wrapper" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: rgba(255, 255, 255, 0.5); display: none; justify-content: center; align-items: center; z-index: 1;">
-					<div class="loader is-loading" style="height: 80px; width: 80px;"></div>
+						<div class="loader is-loading" style="height: 80px; width: 80px;"></div>
 					</div>
 						<div class="logo-section has-text-centered">
 							<figure class="image mb-5 has-text-centered is-inline-flex">
@@ -419,6 +419,7 @@ require_once("user/protect.php");
 
 				//Show the loader
 				var loaderWrapper = document.querySelector('.loader-wrapper');
+				var loader = document.querySelector('.loader');
 				loaderWrapper.classList.add('is-active');
 
 				console.log('Book Topic: ', ebookTopic);
@@ -435,9 +436,6 @@ require_once("user/protect.php");
 						if ( this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 							//const typ = document.querySelector("");
 
-							var loaderWrapper = document.querySelector('.loader-wrapper');
-							loaderWrapper.classList.remove('is-active');
-
 							console.log('Response: ', JSON.parse(this.responseText));
 							const airesponse = JSON.parse(this.responseText);
 
@@ -452,6 +450,10 @@ require_once("user/protect.php");
 
 							// This needs to be updated to return the book outline content
 							//const bookOutline = airesponse.choices[0].message.content;
+
+							// Hide the loader-wrapper and loader by setting their display property to "none"
+							loaderWrapper.style.display = 'none';
+							loader.style.display = 'none';
 						}
 					}
 
@@ -465,6 +467,7 @@ require_once("user/protect.php");
 					showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
 					enableselect();
 				}
+
 			}
 
 
