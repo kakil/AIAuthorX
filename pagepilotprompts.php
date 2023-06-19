@@ -192,7 +192,9 @@ require_once("user/protect.php");
 							</div>
 							<section>
 								<label class="label">Book Titles:</label>
-    							<ul id="bookTitles"></ul>
+    							<div id="bookTitleContent">
+								<!-- <textarea class="textarea" rows="15" id="bookTitlesOutput"></textarea> -->
+								</div>
 							</section>
 							<section class="bookOutlineSection">
 								<label class="label">Book Outline</label>
@@ -258,14 +260,14 @@ require_once("user/protect.php");
 			// Perform any necessary validation or preprocessing
 
 			// Replace the code below with your logic to fetch book titles and outline from the API
-			let bookTitles = ["Title 1", "Title 2", "Title 3"];
-			let bookOutline = "Sample book outline";
+			//let bookTitles = ["Title 1", "Title 2", "Title 3"];
+			//let bookOutline = "Sample book outline";
 
-			displayBookData(bookTitles, bookOutline);
+			//displayBookData(bookTitles, bookOutline);
 		}
 
 		function displayBookData(titles, outline) {
-			document.getElementById("bookTitles").innerHTML = titles.map(title => `<li>${title}</li>`).join("");
+			document.getElementById("bookTitleContent").innerHTML = titles.map(title => `<li>${title}</li>`).join("");
 			document.getElementById("bookOutline").value = outline;
 		}
 
@@ -433,14 +435,23 @@ require_once("user/protect.php");
 						if ( this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 							//const typ = document.querySelector("");
 
+							var loaderWrapper = document.querySelector('.loader-wrapper');
+							loaderWrapper.classList.remove('is-active');
+
 							console.log('Response: ', JSON.parse(this.responseText));
 							const airesponse = JSON.parse(this.responseText);
 
 							// This needs to be udated to return an array of book titles
-							const bookTitles = airesponse.choices[0].message.content;
+							const bookTitles = airesponse.bookTitles;
+							console.log('BookTitles: ', airesponse.bookTitles);
+							// Get the textarea element by its id
+							const bookTitleText = document.getElementById('bookTitleContent');
+
+							// Set the value of the textarea to the bookTitles
+							bookTitleText.innerHTML = bookTitles;
 
 							// This needs to be updated to return the book outline content
-							const bookOutline = airesponse.choices[0].message.content;
+							//const bookOutline = airesponse.choices[0].message.content;
 						}
 					}
 

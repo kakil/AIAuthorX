@@ -8,6 +8,16 @@
   }
 }
 
+div#bookTitleContent h1 {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+div#bookTitleContent li::after {
+  content: "\A";
+  white-space: pre;
+}
+
 .highlight {
   color: #ff3860;
   font-weight: bold;
@@ -3646,8 +3656,9 @@ a.box:active {
 }
 
 .content li + li {
-  margin-top: 0.25em;
+  margin-top: .25em;
 }
+
 .content p:not(:last-child),
 .content dl:not(:last-child),
 .content ol:not(:last-child),
@@ -3657,6 +3668,23 @@ a.box:active {
 .content table:not(:last-child) {
   margin-bottom: 1em;
 }
+
+.content p {
+  margin-bottom: 2rem;
+}
+
+.bookTitles p {
+  margin-bottom: 2rem;
+}
+
+.bookTitles li + li {
+  margin-bottom: 2rem;
+}
+
+.bookTitles <h2> + <p> {
+  margin-bottom: 2rem;
+}
+
 .content h1,
 .content h2,
 .content h3,
