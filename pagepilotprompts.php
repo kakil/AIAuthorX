@@ -156,6 +156,9 @@ require_once("user/protect.php");
 					<div class="loader-wrapper" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: rgba(255, 255, 255, 0.5); display: none; justify-content: center; align-items: center; z-index: 1;">
 						<div class="loader is-loading" style="height: 80px; width: 80px;"></div>
 					</div>
+					<div class="loader-text-wrapper" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: rgba(255, 255, 255, 0.5); display: none; justify-content: center; align-items: center; z-index: 1;">
+						<p class="loader-text">Loading...</p>
+					</div>
 						<div class="logo-section has-text-centered">
 							<figure class="image mb-5 has-text-centered is-inline-flex">
 								<img class="logo-image" src="<?php echo($logo); ?>">
@@ -190,16 +193,14 @@ require_once("user/protect.php");
 							<div class="buttons">
 								<button type="button" class="button is-success" id="bookTopicInput" onclick="submitBookTopic()">Create Book Outline</button>
 							</div>
-							<section>
-								<label class="label">Book Titles:</label>
-    							<div id="bookTitleContent">
-								<!-- <textarea class="textarea" rows="15" id="bookTitlesOutput"></textarea> -->
-								</div>
+							<section class="sectionWithBorder">
+								<label class="label">Book Titles:</label>	
 							</section>
-							<section class="bookOutlineSection">
+							<div class="contentWrapper" id="bookTitleContent"></div>
+							<section class="sectionWithBorder">
 								<label class="label">Book Outline</label>
-								<textarea class="textarea" rows="15" id="bookOutline"></textarea>
 							</section>
+							<div class="contentWrapper" id="bookOutlineContent"></div>
 							<section class="bookChapterOne py-6">
 								<div class="buttons">
 									<button type="button" class="button is-primary" id="chapterOneButton" onclick="displayChapterOutput(1)">Write Chapter One</button>
@@ -416,6 +417,7 @@ require_once("user/protect.php");
 				var apikey = document.getElementById('apikeystorage-modal').value;
 				var bookTopicButton = document.getElementById('bookTopicInput');
 				var ebookTopic = document.getElementById('ebookTopic').value;
+				var bookTitleText;
 
 				//Show the loader
 				var loaderWrapper = document.querySelector('.loader-wrapper');
@@ -443,10 +445,11 @@ require_once("user/protect.php");
 							const bookTitles = airesponse.bookTitles;
 							console.log('BookTitles: ', airesponse.bookTitles);
 							// Get the textarea element by its id
-							const bookTitleText = document.getElementById('bookTitleContent');
+							bookTitleText = document.getElementById('bookTitleContent');
 
 							// Set the value of the textarea to the bookTitles
-							bookTitleText.innerHTML = bookTitles;
+							//bookTitleText.innerHTML = bookTitles;
+							bookTitleText.insertAdjacentHTML('beforeend', bookTitles);
 
 							// This needs to be updated to return the book outline content
 							//const bookOutline = airesponse.choices[0].message.content;
@@ -454,6 +457,8 @@ require_once("user/protect.php");
 							// Hide the loader-wrapper and loader by setting their display property to "none"
 							loaderWrapper.style.display = 'none';
 							loader.style.display = 'none';
+
+							showBookOutline(ebookTopic, bookTitles);
 						}
 					}
 
@@ -468,12 +473,16 @@ require_once("user/protect.php");
 					enableselect();
 				}
 
+				console.log("Checking Book Titles After: ", bookTitleText);
+
+				
+
 			}
 
 
 			// Old code
 			if (event.target.matches('#runbutton')) {
-				console.log("Run Prompt Button Pressed");
+				//console.log("Run Prompt Button Pressed");
 				var apikey = document.getElementById('apikeystorage-modal').value;
 				//var runButton = document.getElementById('runbutton');
 				var ebookTopic = document.getElementById('ebookTopic');
@@ -484,8 +493,8 @@ require_once("user/protect.php");
 
 				var prompt = document.getElementById('innerprompt').textContent;
 				//var promptindex = document.getElementById('promptselector').value;
-				console.log("Prompt: " + prompt);
-				console.log("API Key: " + apikey);
+				//console.log("Prompt: " + prompt);
+				//console.log("API Key: " + apikey);
 				if (promptindex != -1 && apikey.length > 45 && prompt.length > 0) {
 
 					disableselect();
@@ -539,6 +548,56 @@ require_once("user/protect.php");
 				$('.loader-wrapper').css('display', 'flex');
 			})
 		})
+
+
+		function showBookOutline(bookTopic, bookTitles) {
+			if (bookTitles.length > 1) {
+				//console.log("ShowBookOutline -> bookTopic: " + bookTopic + "  bookTitle: " + bookTitles);
+				// Get the loader-wrapper element
+				const loaderTextWrapper = document.querySelector('.loader-text-wrapper');
+
+				// Show the loader-wrapper by setting its display property to "flex"
+				loaderTextWrapper.style.display = 'flex';
+
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", 'promptsbookoutline.php', true);
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.onreadystatechange = function () {
+					if (this.readyState === XMLHttpRequest.DONE) {
+						if (this.status === 200) {
+							try {
+								console.log("STATUS = 200");
+								console.log('Response: ', this.responseText);
+								const airesponse = JSON.parse(this.responseText);
+								const bookOutline = airesponse.bookOutline;
+								//console.log('BookOutline: ', airesponse.bookOutline);
+
+								// Get the textarea element by its id
+								bookOutlineText = document.getElementById('bookOutlineContent');
+
+								// Set the value of the textarea to the bookOutline
+								bookOutlineText.innerHTML = bookOutline;
+
+								// Hide the loader-wrapper and loader by setting their display property to "none"
+								loaderTextWrapper.style.display = 'none';
+							} catch (error) {
+								console.error('Error parsing JSON response:', error);
+							}
+						} else {
+							console.error('Error:', this.status);
+						}
+					}
+				};
+
+				// Create a data string with the bookTopic and bookTitles parameters
+				const data = "bookTopic=" + encodeURIComponent(bookTopic) + "&bookTitles=" + encodeURIComponent(bookTitles);
+
+				// Send the POST request with the data
+				xhr.send(data);
+			}
+		}
+
+
 
 
 

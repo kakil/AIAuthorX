@@ -8,15 +8,6 @@
   }
 }
 
-div#bookTitleContent h1 {
-  font-weight: bold;
-  font-size: 1.25rem;
-}
-
-div#bookTitleContent li::after {
-  content: "\A";
-  white-space: pre;
-}
 
 .highlight {
   color: #ff3860;
@@ -70,6 +61,87 @@ div#bookTitleContent li::after {
   .page-container {
 	display: flex;
   }
+
+  /* LOADER TEXT CUSTOM STYLES */
+  @keyframes loader-animation {
+    0% { content: "Loading."; }
+    25% { content: "Loading.."; }
+    50% { content: "Loading..."; }
+    75% { content: "Loading...."; }
+    100% { content: "Loading....."; }
+  }
+  
+  .loader-text::after {
+    content: "Loading...";
+    animation: loader-animation 1s linear infinite;
+  }
+
+
+  /* BOOKTITLE CUSTOM STYLES */
+  div#bookTitleContent h1 {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+  
+  div#bookTitleContent li::after {
+    content: "\A";
+    white-space: pre;
+  }
+
+
+  /* BOOK OUTLINE CUSTOM STYLES */
+  div#bookTitleContent h1 {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+
+  div#bookOutlineContent h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  div#bookOutlineContent li::after {
+    content: "\A";
+    white-space: pre;
+  }
+
+  div#bookOutlineContent p::after {
+    content: "\A\A"; /* Use "\A\A" to create an empty line */
+    white-space: pre;
+  }
+
+  #bookOutlineContent p::before {
+    content: "\A"; 
+    white-space: pre; /* Preserve white space */
+  }
+
+  
+  /* SECTION BORDER STYLES */
+.sectionWithBorder label {
+  font-size: 1.5rem;
+  background-color: lightgray;
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.sectionWithBorder .contentWrapper {
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+
+.sectionWithBorder .contentWrapper ol, li {
+  padding: 20px;
+  margin-bottom: 10px;
+  margin-left: 1em;
+  list-style-position: inside;
+}
+
+.sectionWithBorder ol {
+  padding-left: 0.5em;
+}
+
   
 
   /* SIDEBAR MENU CUSTOM STYLES */

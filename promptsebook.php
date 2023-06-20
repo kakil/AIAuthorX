@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bookTopic'])) {
 	
 
 	// Generate the book titles and book outline using the OpenAI API
-	$bookTitlesMessage = "Write three book titles about the following topic:" .$bookTopic. "The titles should be formatted in SEO-friendly HTML as an ordered list, limited to the following HTML tags: p,h2, strong, li, ol, i, br. Place a <br> tag after <li></li> tag.  Only output the titles.";
+	$bookTitlesMessage = "Write three book titles about the following topic:" .$bookTopic. "The titles should be formatted in SEO-friendly HTML as an ordered list, limited to the following HTML tags: p, h2, strong, li, ol, i, br. Only output the titles.";
 	$bookTitles = getAIResponse( $bookTitlesMessage);
 	$bookOutline = getAIResponse("Write an ebook outline about the following topic: $bookTopic. The ebook should have 10 sections. The content should be formatted in SEO-friendly HTML, limited to the following HTML tags: p, h1, h2, h3, h4, h5, h6, strong, li, ol, i.");
 	$chapterOne = "";
