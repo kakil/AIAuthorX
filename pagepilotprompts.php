@@ -193,25 +193,110 @@ require_once("user/protect.php");
 							<div class="buttons">
 								<button type="button" class="button is-success" id="bookTopicInput" onclick="submitBookTopic()">Create Book Outline</button>
 							</div>
+
+							<!-- Book Titles -->
 							<section class="sectionWithBorder">
 								<label class="label">Book Titles:</label>	
 							</section>
-							<div class="contentWrapper" id="bookTitleContent"></div>
+							<div class="contentWrapper content" id="bookTitleContent"></div>
+
+							<!-- Book Outline -->
 							<section class="sectionWithBorder">
 								<label class="label">Book Outline</label>
 							</section>
-							<div class="contentWrapper" id="bookOutlineContent"></div>
-							<section class="bookChapterOne py-6">
-								<div class="buttons">
-									<button type="button" class="button is-primary" id="chapterOneButton" onclick="displayChapterOutput(1)">Write Chapter One</button>
-								</div>
-								<div>
-									<label class="label">Chapter One</label>
-								</div>
-								<div>
-								<textarea class="textarea" rows="15" id="chapter1Output"></textarea>
-								</div>
-							</section>	
+							<div class="contentWrapper content" id="bookOutlineContent"></div>
+
+							<!-- CHAPTER ONE -->
+							<section class="sectionWithBorder">
+								<label class="label">Chapter One</label>
+							</section>
+							<div class="buttons">
+								<button type="button" class="button is-primary" id="chapterOneButton" onclick="displayChapterOutput(1)">Write Chapter One</button>
+							</div>
+							<div class="contentWrapper content" id="chapterOneContent"></div>
+
+							<!-- CHAPTER TWO -->
+							<section class="sectionWithBorder">
+								<label class="label">Chapter Two</label>
+							</section>
+							<div class="buttons">
+								<button type="button" class="button is-primary" id="chapterTwoButton" onclick="displayChapterOutput(2)">Write Chapter Two</button>
+							</div>
+							<div class="contentWrapper content" id="chapterTwoContent"></div>
+							
+							<!-- CHAPTER THREE -->
+
+							<section class="sectionWithBorder">
+								<label class="label">Chapter THREE</label>
+							</section>
+							<div class="buttons">
+								<button type="button" class="button is-primary" id="chapterThreeButton" onclick="displayChapterOutput(3)">Write Chapter Three</button>
+							</div>
+							<div class="contentWrapper content" id="chapterThreeContent"></div>
+
+							<!-- CHAPTER FOUR -->
+							<section class="sectionWithBorder">
+								<label class="label">Chapter Four</label>
+							</section>
+							<div class="buttons">
+								<button type="button" class="button is-primary" id="chapterFourButton" onclick="displayChapterOutput(4)">Write Chapter Four</button>
+							</div>
+							<div class="contentWrapper content" id="chapterFourContent"></div>
+
+							<!-- CHAPTER FIVE -->
+							<section class="sectionWithBorder">
+								<label class="label">Chapter Five</label>
+							</section>
+							<div class="buttons">
+								<button type="button" class="button is-primary" id="chapterFiveButton" onclick="displayChapterOutput(5)">Write Chapter Five</button>
+							</div>
+							<div class="contentWrapper content" id="chapterFiveContent"></div>
+
+							<!-- CHAPTER SIX -->
+							<section class="sectionWithBorder">
+								<label class="label">Chapter Six</label>
+							</section>
+							<div class="buttons">
+								<button type="button" class="button is-primary" id="chapterSixButton" onclick="displayChapterOutput(6)">Write Chapter Six</button>
+							</div>
+							<div class="contentWrapper content" id="chapterSixContent"></div>
+
+							<!-- CHAPTER SEVEN -->
+							<section class="sectionWithBorder">
+								<label class="label">Chapter Seven</label>
+							</section>
+							<div class="buttons">
+								<button type="button" class="button is-primary" id="chapterSevenButton" onclick="displayChapterOutput(7)">Write Chapter Seven</button>
+							</div>
+							<div class="contentWrapper content" id="chapterSevenContent"></div>
+
+							<!-- CHAPTER EIGHT -->
+							<section class="sectionWithBorder">
+								<label class="label">Chapter Eight</label>
+							</section>
+							<div class="buttons">
+								<button type="button" class="button is-primary" id="chapterEightButton" onclick="displayChapterOutput(8)">Write Chapter Eight</button>
+							</div>
+							<div class="contentWrapper content" id="chapterEightContent"></div>
+
+							<!-- CHAPTER NINE -->
+							<section class="sectionWithBorder">
+								<label class="label">Chapter Nine</label>
+							</section>
+							<div class="buttons">
+								<button type="button" class="button is-primary" id="chapterNineButton" onclick="displayChapterOutput(9)">Write Chapter Nine</button>
+							</div>
+							<div class="contentWrapper content" id="chapterNineContent"></div>
+
+							<!-- CHAPTER TEN -->
+							<section class="sectionWithBorder">
+								<label class="label">Chapter Ten</label>
+							</section>
+							<div class="buttons">
+								<button type="button" class="button is-primary" id="chapterTenButton" onclick="displayChapterOutput(10)">Write Chapter Ten</button>
+							</div>
+							<div class="contentWrapper content" id="chapterTenContent"></div>
+
 						</form>
 					</div>  <!-- Box END -->
 					<article class="message is-dark" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);">
@@ -446,9 +531,7 @@ require_once("user/protect.php");
 							console.log('BookTitles: ', airesponse.bookTitles);
 							// Get the textarea element by its id
 							bookTitleText = document.getElementById('bookTitleContent');
-
-							// Set the value of the textarea to the bookTitles
-							//bookTitleText.innerHTML = bookTitles;
+							var modifiedBookTitles = bookTitles.replace
 							bookTitleText.insertAdjacentHTML('beforeend', bookTitles);
 
 							// This needs to be updated to return the book outline content
@@ -480,53 +563,110 @@ require_once("user/protect.php");
 			}
 
 
-			// Old code
-			if (event.target.matches('#runbutton')) {
-				//console.log("Run Prompt Button Pressed");
-				var apikey = document.getElementById('apikeystorage-modal').value;
-				//var runButton = document.getElementById('runbutton');
-				var ebookTopic = document.getElementById('ebookTopic');
+		},false);
 
-				// Show the loader
-				var loaderWrapper = document.querySelector('.loader-wrapper');
-				loaderWrapper.classList.add('is-active');
 
-				var prompt = document.getElementById('innerprompt').textContent;
-				//var promptindex = document.getElementById('promptselector').value;
-				//console.log("Prompt: " + prompt);
-				//console.log("API Key: " + apikey);
-				if (promptindex != -1 && apikey.length > 45 && prompt.length > 0) {
+		//Write Chapters 
+		function displayChapterOutput(chapter) {
+			console.log("Write Chapter " + chapter + " Button Pressed");
+			var apikey = document.getElementById('apikeystorage-modal').value;
+			var ebookTopic = document.getElementById('ebookTopic').value;
+			var bookOutlineContent = document.getElementById('bookOutlineContent').textContent;
+			console.log('Book Outline Content:  ', bookOutlineContent);
 
-					disableselect();
+			// Show the loader
+			var loaderWrapper = document.querySelector('.loader-wrapper');
+			var loader = document.querySelector('.loader');
+			loaderWrapper.classList.add('is-active');
 
-					var xhr = new XMLHttpRequest();
-					xhr.open("POST", 'promptrequest.php', true);
-					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-					xhr.onreadystatechange = function () {
-						if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-							const typ = document.querySelector("#innerprompt");
-							const airesp = JSON.parse(this.responseText);
-							const content = airesp.choices[0].message.content;
+			if (bookOutlineContent.length > 10 && ebookTopic.length > 3 && apikey.length > 45) {
+				console.log("Making OpenAI API Request");
 
-							var modalContent = '<div class="innerresponse" id="responsedata">' + content + '</div><div style="margin:0 auto; text-align:center; padding-top:15px;"><button type="button" class="custom-button" id="responsebutton">COPY & CLOSE</button></div>';
-							loaderWrapper.classList.remove('is-active');
-							//showModal('AI Response for ' + document.getElementById('promptselector').selectedOptions[0].text, content);
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", 'promptsebookchapter.php', true);
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.onreadystatechange = function() {
+				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+					console.log('Response: ', JSON.parse(this.responseText));
+					const airesponse = JSON.parse(this.responseText);
+					const bookChapter = airesponse.bookChapter;
+					console.log('Chapter: ', bookChapter);
 
-							enableselect();
-						}
+
+					switch (chapter) {
+						case 1:
+							var chapterOneContent = document.getElementById('chapterOneContent');
+							chapterOneContent.innerHTML = bookChapter;
+							break;
+						case 2:
+							var chapterTwoContent = document.getElementById('chapterTwoContent');
+							var modifiedBookChapter = bookChapter.replace(/<h1>/g, '<h1 class="is-large">');
+							chapterTwoContent.insertAdjacentHTML('beforeend', modifiedBookChapter);
+							//chapterTwoContent.innerHTML = bookChapter;
+							break;
+						case 3:
+							var chapterThreeContent = document.getElementById('chapterThreeContent');
+							chapterThreeContent.innerHTML = bookChapter;
+							break;
+						case 4:
+							var chapterFourContent = document.getElementById('chapterFourContent');
+							chapterFourContent.innerHTML = bookChapter;
+							break;
+						case 5:
+							var chapterFiveContent = document.getElementById('chapterFiveContent');
+							chapterFiveContent.innerHTML = bookChapter;
+							break;
+						case 6:
+							var chapterSixContent = document.getElementById('chapterSixContent');
+							chapterSixContent.innerHTML = bookChapter;
+							break;
+						case 7:
+							var chapterSevenContent = document.getElementById('chapterSevenContent');
+							chapterSevenContent.innerHTML = bookChapter;
+							break;
+						case 8:
+							var chapterEightContent = document.getElementById('chapterEightContent');
+							chapterEightContent.innerHTML = bookChapter;
+							break;
+						case 9:
+							var chapterNineContent = document.getElementById('chapterNineContent');
+							chapterNineContent.innerHTML = bookChapter;
+							break;
+						case 10:
+							var chapterTenContent = document.getElementById('chapterTenContent');
+							chapterTenContent.innerHTML = bookChapter;
+							break;
+						default:
+							// Code to execute if chapter number doesn't match any case
+							break;
 					}
-					var dataFile = "funpromptdata.php"
-					prompt = prompt.replace(/"/gi, "'");
-					xhr.send("promptindex=" + promptindex + "&prompt=" + prompt + "&mode=2" + "&datafile=" + encodeURIComponent(dataFile));
-				}else if ( apikey.length < 45 ) {
-					showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
-					enableselect();
-				} else {
-					showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
-					enableselect();
+
+
+					// Hide the loader-wrapper and loader by setting their display property to "none"
+					loaderWrapper.style.display = 'none';
+					loader.style.display = 'none';
 				}
 			}
-		},false);
+
+				const data = "chapter=" + encodeURIComponent(chapter) + "&ebookTopic=" + encodeURIComponent(ebookTopic) + "&bookOutlineText=" + encodeURIComponent(bookOutlineContent);
+				console.log('Data: ', data);
+				xhr.send(data);
+
+			} else if (apikey.length < 45) {
+				showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
+				enableselect();
+			} else if (bookOutlineText.length < 1) {
+				showPromptAPIKeyErrorModal('Book Outline Error', 'No Book Outline.  Please enter an eBook Topic to generate an outline.');
+				enableselect();
+			} else if (ebookTopic.length < 1) {
+				showPromptAPIKeyErrorModal('eBook Topic Error', 'No eBook Topic entered.  Please enter an eBook Topic, and generate titles and outline.');
+			} else {
+				showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
+				enableselect();
+			}
+
+		}
+
 
 		document.addEventListener("DOMContentLoaded", function() {
 			var mode=localStorage.getItem("promptmodeZNWEBCH29T");

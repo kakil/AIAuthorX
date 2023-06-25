@@ -14,20 +14,20 @@ if ($masterkeymode==true){
 
 
 // Retrieve the Book Topic value from the user input
-$bookTopic = $_POST['bookTopic'];
+$ebookTopic = $_POST['ebookTopic'];
+$chapter = $_POST['chapter'];
+$bookOutline = $_POST['bookOutlineText'];
+
+
 //print "Book Topic1: " . $bookTopic;
 
 
-// Check if the request is from the submit button
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bookTopic'])) {
+// Check if the request is from the chapter button
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['chapter'])) {
 
 	
-
-	// Generate the book titles and book outline using the OpenAI API
-	$bookTopic = $_POST['bookTopic'];
-
 	// Function to interact with the OpenAI API and retrieve the response
-	function getAIResponse($message) {
+	function getAIResponse($message, $bookOutline) {
 		global $apikey;
 		//print('  API Key  ' . $apikey . ' ... ');
 	
@@ -36,7 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bookTopic'])) {
 			'messages' => array(
 				array('role' => 'system', 'content' => 'You are an expert digital marketer and copywriter'),
 				array('role' => 'user', 'content' => $message),
-				array('role' => 'system', 'content' => 'Please generate the content with the specified HTML tags. Do not use Markup.  Use HTML only. No additional comments.')
+				array('role' => 'assistant', 'content' => $bookOutline),
+				array('role' => 'system', 'content' => 'Please generate the content with the specified HTML tags. Do not use Markup.  Use HTML only. Do not provide any content to prefix the chapter. No additonal comments.')
 			)
 		);
 
@@ -68,15 +69,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bookTopic'])) {
 	}
 	
 
-	// Generate the book titles and book outline using the OpenAI API
-	$bookOutlineMessage = "Write an ebook outline about the following topic: " . $bookTopic. ".  The ebook should have 10 chapters. The content should be formatted in SEO-friendly HTML, limited to the following HTML tags: p, h1, h2, h3, h4, h5, h6, strong, li, ol, i, br.";
+	// Generate the book chapters using the OpenAI API
+	$bookChapterMessage = "Write Chapter ". $chapter . " from the outline.  The content should be formatted in SEO-friendly HTML, limited to the following HTML tags: p, h1, h2, h3, h4, h5, h6, strong, li, ol, i, br.";
 	//echo ($bookOutlineMessage);
-	$bookOutline = getAIResponse($bookOutlineMessage);
-	
-	
+	$bookChapter = getAIResponse($bookChapterMessage, $bookOutline);
 
 	// Display the book titles and book outline
-	echo json_encode(array('bookOutline' => $bookOutline));
+	echo json_encode(array('bookChapter' => $bookChapter));
 }
 ?>
 	

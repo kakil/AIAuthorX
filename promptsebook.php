@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bookTopic'])) {
 			'messages' => array(
 				array('role' => 'system', 'content' => 'You are an expert digital marketer and copywriter'),
 				array('role' => 'user', 'content' => $message),
-				array('role' => 'system', 'content' => 'Please generate the content with the specified HTML tags.')
+				array('role' => 'system', 'content' => 'Please generate the content with the specified HTML tags. No additional comments.')
 			)
 		);
 	
@@ -101,9 +101,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bookTopic'])) {
 	
 
 	// Generate the book titles and book outline using the OpenAI API
-	$bookTitlesMessage = "Write three book titles about the following topic:" .$bookTopic. "The titles should be formatted in SEO-friendly HTML as an ordered list, limited to the following HTML tags: p, h2, strong, li, ol, i, br. Only output the titles.";
+	$bookTitlesMessage = "Write three book titles about the following topic:" .$bookTopic. "The titles should be formatted in SEO-friendly HTML as an ordered list, limited to the following HTML tags: p, h4, strong, li, ol, i, br. Only output the titles.";
 	$bookTitles = getAIResponse( $bookTitlesMessage);
-	$bookOutline = getAIResponse("Write an ebook outline about the following topic: $bookTopic. The ebook should have 10 sections. The content should be formatted in SEO-friendly HTML, limited to the following HTML tags: p, h1, h2, h3, h4, h5, h6, strong, li, ol, i.");
+	$bookOutline = getAIResponse("Write an ebook outline about the following topic: $bookTopic. The ebook should have 10 chapters. The content should be formatted in SEO-friendly HTML, limited to the following HTML tags: p, h1, h2, h3, h4, h5, h6, strong, li, ol, i.");
 	$chapterOne = "";
 
 	// Display the book titles and book outline

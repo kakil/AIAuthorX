@@ -131,11 +131,12 @@
   margin-left: 20px;
 }
 
-.sectionWithBorder .contentWrapper ol, li {
+.sectionWithBorder .contentWrapper li {
   padding: 20px;
   margin-bottom: 10px;
   margin-left: 1em;
   list-style-position: inside;
+  display: block;
 }
 
 .sectionWithBorder ol {
