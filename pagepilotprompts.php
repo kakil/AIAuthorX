@@ -191,109 +191,109 @@ require_once("user/protect.php");
 							</div>
 							<!-- Submit eBook Topic -->
 							<div class="buttons">
-								<button type="button" class="button is-success" id="bookTopicInput" onclick="submitBookTopic()">Create Book Outline</button>
+								<button type="button" class="button is-success" id="bookTopicInputButton" onclick="submitBookTopic()">Create Book Outline</button>
 							</div>
 
 							<!-- Book Titles -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="bookTitlesSection" style="display: none;">
 								<label class="label">Book Titles:</label>	
 							</section>
 							<div class="contentWrapper content" id="bookTitleContent"></div>
 
 							<!-- Book Outline -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="bookOutlineSection" style="display: none;">
 								<label class="label">Book Outline</label>
 							</section>
 							<div class="contentWrapper content" id="bookOutlineContent"></div>
 
 							<!-- CHAPTER ONE -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="chapter1Section" style="display: none;">
 								<label class="label">Chapter One</label>
 							</section>
 							<div class="buttons">
-								<button type="button" class="button is-primary" id="chapterOneButton" onclick="displayChapterOutput(1)">Write Chapter One</button>
+								<button type="button" class="button is-primary" id="chapter1Button"  style="display: none;" onclick="displayChapterOutput(1)">Write Chapter One</button>
 							</div>
 							<div class="contentWrapper content" id="chapterOneContent"></div>
 
 							<!-- CHAPTER TWO -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="chapter2Section" style="display: none;">
 								<label class="label">Chapter Two</label>
 							</section>
 							<div class="buttons">
-								<button type="button" class="button is-primary" id="chapterTwoButton" onclick="displayChapterOutput(2)">Write Chapter Two</button>
+								<button type="button" class="button is-primary" id="chapter2Button" style="display: none;" onclick="displayChapterOutput(2)">Write Chapter Two</button>
 							</div>
 							<div class="contentWrapper content" id="chapterTwoContent"></div>
 							
 							<!-- CHAPTER THREE -->
 
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="chapter3Section" style="display: none;">
 								<label class="label">Chapter THREE</label>
 							</section>
 							<div class="buttons">
-								<button type="button" class="button is-primary" id="chapterThreeButton" onclick="displayChapterOutput(3)">Write Chapter Three</button>
+								<button type="button" class="button is-primary" id="chapter3Button" style="display: none;" onclick="displayChapterOutput(3)">Write Chapter Three</button>
 							</div>
 							<div class="contentWrapper content" id="chapterThreeContent"></div>
 
 							<!-- CHAPTER FOUR -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="chapter4Section" style="display: none;">
 								<label class="label">Chapter Four</label>
 							</section>
 							<div class="buttons">
-								<button type="button" class="button is-primary" id="chapterFourButton" onclick="displayChapterOutput(4)">Write Chapter Four</button>
+								<button type="button" class="button is-primary" id="chapter4Button" style="display: none;" onclick="displayChapterOutput(4)">Write Chapter Four</button>
 							</div>
 							<div class="contentWrapper content" id="chapterFourContent"></div>
 
 							<!-- CHAPTER FIVE -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="chapter5Section" style="display: none;">
 								<label class="label">Chapter Five</label>
 							</section>
 							<div class="buttons">
-								<button type="button" class="button is-primary" id="chapterFiveButton" onclick="displayChapterOutput(5)">Write Chapter Five</button>
+								<button type="button" class="button is-primary" id="chapter5Button" style="display: none;" onclick="displayChapterOutput(5)">Write Chapter Five</button>
 							</div>
 							<div class="contentWrapper content" id="chapterFiveContent"></div>
 
 							<!-- CHAPTER SIX -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="chapter6Section" style="display: none;">
 								<label class="label">Chapter Six</label>
 							</section>
 							<div class="buttons">
-								<button type="button" class="button is-primary" id="chapterSixButton" onclick="displayChapterOutput(6)">Write Chapter Six</button>
+								<button type="button" class="button is-primary" id="chapter6Button" style="display: none;" onclick="displayChapterOutput(6)">Write Chapter Six</button>
 							</div>
 							<div class="contentWrapper content" id="chapterSixContent"></div>
 
 							<!-- CHAPTER SEVEN -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="chapter7Section" style="display: none;">
 								<label class="label">Chapter Seven</label>
 							</section>
 							<div class="buttons">
-								<button type="button" class="button is-primary" id="chapterSevenButton" onclick="displayChapterOutput(7)">Write Chapter Seven</button>
+								<button type="button" class="button is-primary" id="chapter7Button" style="display: none;" onclick="displayChapterOutput(7)">Write Chapter Seven</button>
 							</div>
 							<div class="contentWrapper content" id="chapterSevenContent"></div>
 
 							<!-- CHAPTER EIGHT -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="chapter8Section" style="display: none;">
 								<label class="label">Chapter Eight</label>
 							</section>
 							<div class="buttons">
-								<button type="button" class="button is-primary" id="chapterEightButton" onclick="displayChapterOutput(8)">Write Chapter Eight</button>
+								<button type="button" class="button is-primary" id="chapter8Button" style="display: none;" onclick="displayChapterOutput(8)">Write Chapter Eight</button>
 							</div>
 							<div class="contentWrapper content" id="chapterEightContent"></div>
 
 							<!-- CHAPTER NINE -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="chapter9Section" style="display: none;">
 								<label class="label">Chapter Nine</label>
 							</section>
 							<div class="buttons">
-								<button type="button" class="button is-primary" id="chapterNineButton" onclick="displayChapterOutput(9)">Write Chapter Nine</button>
+								<button type="button" class="button is-primary" id="chapter9Button" style="display: none;" onclick="displayChapterOutput(9)">Write Chapter Nine</button>
 							</div>
 							<div class="contentWrapper content" id="chapterNineContent"></div>
 
 							<!-- CHAPTER TEN -->
-							<section class="sectionWithBorder">
+							<section class="sectionWithBorder" id="chapter10Section" style="display: none;">
 								<label class="label">Chapter Ten</label>
 							</section>
 							<div class="buttons">
-								<button type="button" class="button is-primary" id="chapterTenButton" onclick="displayChapterOutput(10)">Write Chapter Ten</button>
+								<button type="button" class="button is-primary" id="chapter10Button" style="display: none;" onclick="displayChapterOutput(10)">Write Chapter Ten</button>
 							</div>
 							<div class="contentWrapper content" id="chapterTenContent"></div>
 
@@ -340,17 +340,6 @@ require_once("user/protect.php");
     <!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
 	<script>
-
-		function submitBookTopic() {
-			let bookTopic = document.getElementById("bookTopicInput").value;
-			// Perform any necessary validation or preprocessing
-
-			// Replace the code below with your logic to fetch book titles and outline from the API
-			//let bookTitles = ["Title 1", "Title 2", "Title 3"];
-			//let bookOutline = "Sample book outline";
-
-			//displayBookData(bookTitles, bookOutline);
-		}
 
 		function displayBookData(titles, outline) {
 			document.getElementById("bookTitleContent").innerHTML = titles.map(title => `<li>${title}</li>`).join("");
@@ -480,34 +469,38 @@ require_once("user/protect.php");
 				});
 			}		
 			
-			// if (event.target.matches('#copybutton')) { 
-			// 	jQuery('.loader-wrapper').css('display', 'none');
-			// 	if (!navigator.clipboard) {return;} 
-			// 	navigator.clipboard.writeText(document.getElementById('innerprompt').innerText).then(() => {
-			// 		var copyMessage = document.getElementById('copy-prompt-message');
-			// 		copyMessage.innerText = 'Copied to clipboard!';
+			if (event.target.matches('#copybutton')) { 
+				jQuery('.loader-wrapper').css('display', 'none');
+				if (!navigator.clipboard) {return;} 
+				navigator.clipboard.writeText(document.getElementById('innerprompt').innerText).then(() => {
+					var copyMessage = document.getElementById('copy-prompt-message');
+					copyMessage.innerText = 'Copied to clipboard!';
 
-			// 		// Optionally, hide the message after a few seconds
-			// 		setTimeout(() => {
-			// 			copyMessage.innerText = '';
-			// 		}, 3000);
-			// 	});
-			// }
+					// Optionally, hide the message after a few seconds
+					setTimeout(() => {
+						copyMessage.innerText = '';
+					}, 3000);
+				});
+			}
 
 
-			// New PagePilot Code
-			if(event.target.matches('#bookTopicInput')) {
+		},false);
 
-				console.log("Book Topic Button Pressed");
+
+		//Create Book Titles
+		function submitBookTopic() {
+
+			console.log("Book Topic Button Pressed");
 				var apikey = document.getElementById('apikeystorage-modal').value;
-				var bookTopicButton = document.getElementById('bookTopicInput');
+				var bookTopicButton = document.getElementById('bookTopicInputButton');
 				var ebookTopic = document.getElementById('ebookTopic').value;
 				var bookTitleText;
 
 				//Show the loader
-				var loaderWrapper = document.querySelector('.loader-wrapper');
-				var loader = document.querySelector('.loader');
-				loaderWrapper.classList.add('is-active');
+				//var loaderWrapper = document.querySelector('.loader-wrapper');
+				//var loader = document.querySelector('.loader');
+				//loaderWrapper.classList.add('is-active');
+				bookTopicButton.classList.add('is-loading');
 
 				console.log('Book Topic: ', ebookTopic);
 				console.log('API key: ', apikey);
@@ -522,6 +515,8 @@ require_once("user/protect.php");
 					xhr.onreadystatechange = function() {
 						if ( this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 							//const typ = document.querySelector("");
+							var bookTitlesSection = document.getElementById('bookTitlesSection');
+							bookTitlesSection.style.display = 'block';
 
 							console.log('Response: ', JSON.parse(this.responseText));
 							const airesponse = JSON.parse(this.responseText);
@@ -538,8 +533,8 @@ require_once("user/protect.php");
 							//const bookOutline = airesponse.choices[0].message.content;
 
 							// Hide the loader-wrapper and loader by setting their display property to "none"
-							loaderWrapper.style.display = 'none';
-							loader.style.display = 'none';
+							bookTopicButton.classList.remove('is-loading');
+							bookTopicButton.disabled = true;
 
 							showBookOutline(ebookTopic, bookTitles);
 						}
@@ -557,13 +552,7 @@ require_once("user/protect.php");
 				}
 
 				console.log("Checking Book Titles After: ", bookTitleText);
-
-				
-
-			}
-
-
-		},false);
+		}
 
 
 		//Write Chapters 
@@ -572,12 +561,12 @@ require_once("user/protect.php");
 			var apikey = document.getElementById('apikeystorage-modal').value;
 			var ebookTopic = document.getElementById('ebookTopic').value;
 			var bookOutlineContent = document.getElementById('bookOutlineContent').textContent;
+			var buttonName = "chapter"+chapter+"Button";
+			var button = document.getElementById(buttonName);
 			console.log('Book Outline Content:  ', bookOutlineContent);
 
 			// Show the loader
-			var loaderWrapper = document.querySelector('.loader-wrapper');
-			var loader = document.querySelector('.loader');
-			loaderWrapper.classList.add('is-active');
+			button.classList.add('is-loading');
 
 			if (bookOutlineContent.length > 10 && ebookTopic.length > 3 && apikey.length > 45) {
 				console.log("Making OpenAI API Request");
@@ -590,8 +579,7 @@ require_once("user/protect.php");
 					console.log('Response: ', JSON.parse(this.responseText));
 					const airesponse = JSON.parse(this.responseText);
 					const bookChapter = airesponse.bookChapter;
-					console.log('Chapter: ', bookChapter);
-
+					console.log('Chapter: ', bookChapter);	
 
 					switch (chapter) {
 						case 1:
@@ -641,10 +629,27 @@ require_once("user/protect.php");
 							break;
 					}
 
+					chapter = chapter + 1
+					
+					var sectionName = "chapter"+chapter+"Section";
+					var buttonName = "chapter"+chapter+"Button";
+
+					var chapterSection = document.getElementById(sectionName);
+					chapterSection.style.display = 'block';
+
+					var chapterButton = document.getElementById(buttonName);
+					chapterButton.style.display = 'block';
+						
 
 					// Hide the loader-wrapper and loader by setting their display property to "none"
-					loaderWrapper.style.display = 'none';
-					loader.style.display = 'none';
+					if (chapter == 11) {
+						document.getElementById('chapter10Button').classList.remove('is-loading');
+						document.getElementById('chapter10Button').disabled = true;
+					} else {
+						button.classList.remove('is-loading');
+						button.disabled = true;
+					}
+					
 				}
 			}
 
@@ -685,7 +690,7 @@ require_once("user/protect.php");
 
 		$(document).ready(function(){
 			$('.button').on('click', function(){
-				$('.loader-wrapper').css('display', 'flex');
+				//$('.loader-wrapper').css('display', 'flex');
 			})
 		})
 
@@ -708,6 +713,16 @@ require_once("user/protect.php");
 							try {
 								console.log("STATUS = 200");
 								console.log('Response: ', this.responseText);
+
+								var bookOutlineSection = document.getElementById('bookOutlineSection');
+								bookOutlineSection.style.display = 'block';
+
+								var chapter1Section = document.getElementById('chapter1Section');
+								chapter1Section.style.display = 'block';
+
+								var chapter1Button = document.getElementById('chapter1Button');
+								chapter1Button.style.display = 'block';
+							
 								const airesponse = JSON.parse(this.responseText);
 								const bookOutline = airesponse.bookOutline;
 								//console.log('BookOutline: ', airesponse.bookOutline);
@@ -720,6 +735,10 @@ require_once("user/protect.php");
 
 								// Hide the loader-wrapper and loader by setting their display property to "none"
 								loaderTextWrapper.style.display = 'none';
+
+								document.getElementById('chapter10Button').classList.remove('is-loading');
+								document.getElementById('chapter10Button').classList.add('disabled');
+
 							} catch (error) {
 								console.error('Error parsing JSON response:', error);
 							}
