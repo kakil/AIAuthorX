@@ -64,15 +64,36 @@
 
   /* LOADER TEXT CUSTOM STYLES */
   @keyframes loader-animation {
-    0% { content: "Loading."; }
-    25% { content: "Loading.."; }
-    50% { content: "Loading..."; }
-    75% { content: "Loading...."; }
-    100% { content: "Loading....."; }
+    0% { content: "L"; }
+    4% { content: "Lo"; }
+    8% { content: "Loa"; }
+    12% { content: "Load"; }
+    16% { content: "Loadi"; }
+    20% { content: "Loadin"; }
+    24% { content: "Loading"; }
+    28% { content: "Loading "; }
+    32% { content: "Loading e"; }
+    36% { content: "Loading eB"; }
+    40% { content: "Loading eBo"; }
+    44% { content: "Loading eBoo"; }
+    48% { content: "Loading eBook"; }
+    52% { content: "Loading eBook "; }
+    56% { content: "Loading eBook O"; }
+    60% { content: "Loading eBook Ou"; }
+    64% { content: "Loading eBook Out"; }
+    68% { content: "Loading eBook Outl"; }
+    72% { content: "Loading eBook Outli"; }
+    76% { content: "Loading eBook Outlin"; }
+    80% { content: "Loading eBook Outline"; }
+    84% { content: "Loading eBook Outline."; }
+    88% { content: "Loading eBook Outline.."; }
+    92% { content: "Loading eBook Outline..."; }
+    96% { content: "Loading eBook Outline...."; }
+    100% { content: "Loading eBook Outline......"; }
   }
   
   .loader-text::after {
-    content: "Loading...";
+    content: "Loading eBook Outline....";
     animation: loader-animation 1s linear infinite;
   }
 

@@ -156,8 +156,8 @@ require_once("user/protect.php");
 					<div class="loader-wrapper" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: rgba(255, 255, 255, 0.5); display: none; justify-content: center; align-items: center; z-index: 1;">
 						<div class="loader is-loading" style="height: 80px; width: 80px;"></div>
 					</div>
-					<div class="loader-text-wrapper" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: rgba(255, 255, 255, 0.5); display: none; justify-content: center; align-items: center; z-index: 1;">
-						<p class="loader-text">Loading...</p>
+					<div class="loader-text-wrapper content is-large" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: rgba(255, 255, 255, 0.8); display: none; justify-content: center; align-items: center; z-index: 1;">
+						<p class="loader-text"></p>
 					</div>
 						<div class="logo-section has-text-centered">
 							<figure class="image mb-5 has-text-centered is-inline-flex">
@@ -192,6 +192,7 @@ require_once("user/protect.php");
 							<!-- Submit eBook Topic -->
 							<div class="buttons">
 								<button type="button" class="button is-success" id="bookTopicInputButton" onclick="submitBookTopic()">Create Book Outline</button>
+								<button type="button" class="button is-danger" id="resetButton" disabled>Reset</button>
 							</div>
 
 							<!-- Book Titles -->
@@ -297,6 +298,11 @@ require_once("user/protect.php");
 							</div>
 							<div class="contentWrapper content" id="chapterTenContent"></div>
 
+							<!-- Reset eBook Topic -->
+							<div class="buttons">
+								<button type="button" class="button is-danger" id="resetButton2" disabled>Reset</button>
+							</div>
+
 						</form>
 					</div>  <!-- Box END -->
 					<article class="message is-dark" style="box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);">
@@ -357,7 +363,11 @@ require_once("user/protect.php");
 		function enableselect(){
 			//document.getElementById('promptselector').disabled=false; 
 			//document.getElementById('copybutton').disabled=false;
-			//document.getElementById('runbutton').disabled=false; 
+			document.getElementById('bookTopicInputButton').classList.remove('is-loading'); 
+			document.getElementById('bookTopicInputButton').removeAttribute('disabled');
+			document.getElementById('resetButton').disabled = true;
+			document.getElementById('resetButton2').disabled = true;
+
 			var apielement =  document.getElementById('apibutton');
 			if (typeof(apielement) != 'undefined' && apielement != null)
 			{
@@ -495,6 +505,10 @@ require_once("user/protect.php");
 				var bookTopicButton = document.getElementById('bookTopicInputButton');
 				var ebookTopic = document.getElementById('ebookTopic').value;
 				var bookTitleText;
+				var resetButton = document.getElementById('resetButton');
+				var resetButton2 = document.getElementById('resetButton2');
+				resetButton.removeAttribute('disabled');
+				resetButton2.removeAttribute('disabled');
 
 				//Show the loader
 				//var loaderWrapper = document.querySelector('.loader-wrapper');
@@ -580,7 +594,7 @@ require_once("user/protect.php");
 					const airesponse = JSON.parse(this.responseText);
 					const bookChapter = airesponse.bookChapter;
 					console.log('Chapter: ', bookChapter);	
-
+					
 					switch (chapter) {
 						case 1:
 							var chapterOneContent = document.getElementById('chapterOneContent');
@@ -621,6 +635,7 @@ require_once("user/protect.php");
 							chapterNineContent.innerHTML = bookChapter;
 							break;
 						case 10:
+							document.getElementById('chapter10Button').classList.remove('is-loading');
 							var chapterTenContent = document.getElementById('chapterTenContent');
 							chapterTenContent.innerHTML = bookChapter;
 							break;
@@ -630,25 +645,23 @@ require_once("user/protect.php");
 					}
 
 					chapter = chapter + 1
-					
-					var sectionName = "chapter"+chapter+"Section";
-					var buttonName = "chapter"+chapter+"Button";
 
-					var chapterSection = document.getElementById(sectionName);
-					chapterSection.style.display = 'block';
+					if(chapter < 11) {
+						var sectionName = "chapter"+chapter+"Section";
+						var buttonName = "chapter"+chapter+"Button";
 
-					var chapterButton = document.getElementById(buttonName);
-					chapterButton.style.display = 'block';
+						var chapterSection = document.getElementById(sectionName);
+						chapterSection.style.display = 'block';
+
+						var chapterButton = document.getElementById(buttonName);
+						chapterButton.style.display = 'block';
 						
+					}
+					
 
 					// Hide the loader-wrapper and loader by setting their display property to "none"
-					if (chapter == 11) {
-						document.getElementById('chapter10Button').classList.remove('is-loading');
-						document.getElementById('chapter10Button').disabled = true;
-					} else {
-						button.classList.remove('is-loading');
-						button.disabled = true;
-					}
+					button.classList.remove('is-loading');
+					button.disabled = true;
 					
 				}
 			}
@@ -756,6 +769,110 @@ require_once("user/protect.php");
 			}
 		}
 
+
+		//Reset Book Text
+		function resetContent() {
+			// Clear eBook Topic
+			var eBookTopicInput = document.getElementById('ebookTopic');
+			eBookTopicInput.value = '';
+
+			// Clear Book Outline Content
+			var bookOutlineContent = document.getElementById('bookOutlineContent');
+			bookOutlineContent.innerHTML = '';
+
+			// Clear Chapter Content and Hide Section With Border
+			for (var i = 1; i <= 10; i++) {
+				var bookChapter = document.getElementById('chapter' + i + 'Button');
+				if(bookChapter) {
+					bookChapter.style.display = 'none';
+				}
+				var chapterSection = document.getElementById('chapter' + i + 'Section');
+				if (chapterSection) {
+					chapterSection.style.display = 'none';
+				}
+			}
+
+			var chapterOneContent = document.getElementById('chapterOneContent');
+			if (chapterOneContent) {
+				chapterOneContent.innerHTML = '';
+			}
+
+			var chapterTwoContent = document.getElementById('chapterTwoContent');
+			if (chapterTwoContent) {
+				chapterTwoContent.innerHTML = '';
+			}
+
+			var chapterThreeContent = document.getElementById('chapterThreeContent');
+			if (chapterThreeContent) {
+				chapterThreeContent.innerHTML = '';
+			}
+
+			var chapterFourContent = document.getElementById('chapterFourContent');
+			if (chapterFourContent) {
+				chapterFourContent.innerHTML = '';
+			}
+
+			var chapterFiveContent = document.getElementById('chapterFiveContent');
+			if (chapterFiveContent) {
+				chapterFiveContent.innerHTML = '';
+			}
+
+			var chapterSixContent = document.getElementById('chapterSixContent');
+			if (chapterSixContent) {
+				chapterSixContent.innerHTML = '';
+			}
+
+			var chapterSevenContent = document.getElementById('chapterSevenContent');
+			if (chapterSevenContent) {
+				chapterSevenContent.innerHTML = '';
+			}
+
+			var chapterEightContent = document.getElementById('chapterEightContent');
+			if (chapterEightContent) {
+				chapterEightContent.innerHTML = '';
+			}
+
+			var chapterNineContent = document.getElementById('chapterNineContent');
+			if (chapterNineContent) {
+				chapterNineContent.innerHTML = '';
+			}
+
+			var chapterTenContent = document.getElementById('chapterTenContent');
+			if (chapterTenContent) {
+				chapterTenContent.innerHTML = '';
+			}
+
+			
+			// Hide Book Titles Section
+			var bookTitlesSection = document.getElementById('bookTitlesSection');
+			bookTitlesSection.style.display = 'none';
+
+			var bookOutlineContent = document.getElementById('bookOutlineContent');
+			bookOutlineContent.innerHTML = '';
+
+			// Hide Book Outline Section
+			var bookOutlineSection = document.getElementById('bookOutlineSection');
+			bookOutlineSection.style.display = 'none';
+
+			// Enable Book Topic Button
+			var bookTopicInputButton = document.getElementById('bookTopicInputButton');
+			bookTopicInputButton.removeAttribute('disabled');
+
+			var bookTitleContent = document.getElementById('bookTitleContent');
+			bookTitleContent.innerHTML = '';
+
+			// Disable Reset Buttons
+			document.getElementById('resetButton').disabled = true;
+			document.getElementById('resetButton2').disabled = true;
+
+		}
+
+		// Add event listener to Reset button
+		var resetButton = document.getElementById('resetButton');
+		resetButton.addEventListener('click', resetContent);
+
+		var resetButton2 = document.getElementById('resetButton2');
+		resetButton2.addEventListener('click', resetContent);
 
 
 
