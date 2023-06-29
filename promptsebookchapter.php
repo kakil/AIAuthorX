@@ -72,9 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['chapter'])) {
 
 	try {
 
-		if($chapter === 1) {
+		if($chapter == 1) {
 			$bookChapterMessage = "Chapter 1: Introduction - Write an engaging introduction that provides an overview of the topic " . $ebookTopic . ", and the potential benefits. Highlight the importance of having the right mindset and taking action. Explain how this ebook will guide readers in their journey with the topic: " . $ebookTopic . ".  The content should be formatted in SEO-friendly HTML, limited to the following HTML tags: p, h1, h2, h3, h4, h5, h6, strong, li, ol, i, br.";
-		} else if ($chapter === 10) {
+		} else if ($chapter == 10) {
 			$bookChapterMessage = "Chapter 10: Conclusion - In this final chapter, wrap up the key points discussed throughout the ebook. Emphasize the importance of perseverance, continuous learning, and adapting to changes in the online business landscape. Provide some inspiring success stories or examples to motivate readers. End with a call to action, encouraging readers to take the first step towards journey with the topic: " . $ebookTopic . ".  The content should be formatted in SEO-friendly HTML, limited to the following HTML tags: p, h1, h2, h3, h4, h5, h6, strong, li, ol, i, br.";
 		} else {
 			// Generate the book chapters using the OpenAI API

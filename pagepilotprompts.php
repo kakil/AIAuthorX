@@ -302,8 +302,7 @@ require_once("user/protect.php");
 							<!-- Reset eBook Topic -->
 							<div class="buttons">
 								<button type="button" class="button is-link" id="pdfDownloadButton" style="display: none;">Download PDF</button>
-								<!-- <button type="button" class="button is-link is-light" id="googleDocDownloadButton" style="display: none;">Download Google Doc</button> -->
-								<button type="button" class="button is-link is-light" id="wordDocDownloadButton" style="display: none;">Download Word Doc</button>
+								<button type="button" class="button is-primary" id="copyBookButton" style="display: none;">COPY eBook Content</button>
 								<button type="button" class="button is-danger" id="resetButton2" disabled>Reset</button>
 							</div>
 
@@ -369,8 +368,9 @@ require_once("user/protect.php");
 			//document.getElementById('copybutton').disabled=false;
 			document.getElementById('bookTopicInputButton').classList.remove('is-loading'); 
 			document.getElementById('bookTopicInputButton').removeAttribute('disabled');
-			document.getElementById('resetButton').disabled = true;
-			document.getElementById('resetButton2').disabled = true;
+			document.getElementById('resetButton').disabled = false;
+			document.getElementById('resetButton2').disabled = false;
+			document.getElementById('copyBookButton').disabled = false;
 
 			var apielement =  document.getElementById('apibutton');
 			if (typeof(apielement) != 'undefined' && apielement != null)
@@ -385,6 +385,9 @@ require_once("user/protect.php");
 			//document.getElementById('promptselector').disabled=true;
 			//document.getElementById('copybutton').disabled=true;
 			//document.getElementById('runbutton').disabled=true;
+			document.getElementById('resetButton').disabled = true;
+			document.getElementById('resetButton2').disabled = true;
+			document.getElementById('copyBookButton').disabled = true;
 			var apielement =  document.getElementById('apibutton');
 			if (typeof(apielement) != 'undefined' && apielement != null)
 			{
@@ -501,76 +504,77 @@ require_once("user/protect.php");
 		},false);
 
 
-		//Create Book Titles
+		// Create Book Titles
 		function submitBookTopic() {
-
 			console.log("Book Topic Button Pressed");
-				var apikey = document.getElementById('apikeystorage-modal').value;
-				var bookTopicButton = document.getElementById('bookTopicInputButton');
-				var ebookTopic = document.getElementById('ebookTopic').value;
-				var bookTitleText;
-				var resetButton = document.getElementById('resetButton');
-				var resetButton2 = document.getElementById('resetButton2');
-				resetButton.removeAttribute('disabled');
-				resetButton2.removeAttribute('disabled');
+			var apikey = document.getElementById('apikeystorage-modal').value;
+			var bookTopicButton = document.getElementById('bookTopicInputButton');
+			var ebookTopic = document.getElementById('ebookTopic').value;
+			var bookTitleText;
+			enableselect();
 
-				//Show the loader
-				//var loaderWrapper = document.querySelector('.loader-wrapper');
-				//var loader = document.querySelector('.loader');
-				//loaderWrapper.classList.add('is-active');
-				bookTopicButton.classList.add('is-loading');
+			// Show the loader
+			// var loaderWrapper = document.querySelector('.loader-wrapper');
+			// var loader = document.querySelector('.loader');
+			// loaderWrapper.classList.add('is-active');
+			bookTopicButton.classList.add('is-loading');
 
-				console.log('Book Topic: ', ebookTopic);
-				console.log('API key: ', apikey);
+			console.log('Book Topic: ', ebookTopic);
+			console.log('API key: ', apikey);
 
-				if(ebookTopic.length > 0 && apikey.length > 45) {
+			if (ebookTopic.length > 0 && apikey.length > 45) {
+				console.log("Making OpenAI API Request");
 
-					console.log("Making OpenAI API Request");
-
-					var xhr = new XMLHttpRequest();
-					xhr.open("POST", 'promptsebook.php', true);
-					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-					xhr.onreadystatechange = function() {
-						if ( this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-							//const typ = document.querySelector("");
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", 'promptsebook.php', true);
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.onreadystatechange = function () {
+					if (this.readyState === XMLHttpRequest.DONE) {
+						if (this.status === 200) {
+							// const typ = document.querySelector("");
 							var bookTitlesSection = document.getElementById('bookTitlesSection');
 							bookTitlesSection.style.display = 'block';
 
 							console.log('Response: ', JSON.parse(this.responseText));
 							const airesponse = JSON.parse(this.responseText);
 
-							// This needs to be udated to return an array of book titles
+							// This needs to be updated to return an array of book titles
 							const bookTitles = airesponse.bookTitles;
 							console.log('BookTitles: ', airesponse.bookTitles);
 							// Get the textarea element by its id
 							bookTitleText = document.getElementById('bookTitleContent');
-							var modifiedBookTitles = bookTitles.replace
+							var modifiedBookTitles = bookTitles.replace;
 							bookTitleText.insertAdjacentHTML('beforeend', bookTitles);
 
 							// This needs to be updated to return the book outline content
-							//const bookOutline = airesponse.choices[0].message.content;
+							// const bookOutline = airesponse.choices[0].message.content;
 
 							// Hide the loader-wrapper and loader by setting their display property to "none"
 							bookTopicButton.classList.remove('is-loading');
 							bookTopicButton.disabled = true;
 
 							showBookOutline(ebookTopic, bookTitles);
+						} else {
+							console.error('Error: ', this.responseText); // Log the error response
+							showPromptAPIKeyErrorModal('API Error', 'Failed to generate book titles or outline. Please try again later.'); // Show error modal
+							bookTopicButton.classList.remove('is-loading'); // Remove loader state
+							bookTopicButton.disabled = false; // Enable the button
 						}
 					}
+				};
 
-					xhr.send("bookTopic=" + ebookTopic)
+				xhr.send("bookTopic=" + ebookTopic);
+			} else if (apikey.length < 45) {
+				showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key. Please enter a valid API Key.');
+				enableselect();
+			} else {
+				showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt. Please enter a valid prompt and try again.');
+				enableselect();
+			}
 
-					
-				} else if ( apikey.length < 45 ) {
-					showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
-					enableselect();
-				} else {
-					showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
-					enableselect();
-				}
-
-				console.log("Checking Book Titles After: ", bookTitleText);
+			console.log("Checking Book Titles After: ", bookTitleText);
 		}
+
 
 
 		//Write Chapters 
@@ -650,9 +654,9 @@ require_once("user/protect.php");
 								//var googleDocDownloadButton = document.getElementById('googleDocDownloadButton');
 								//googleDocDownloadButton.style.display = 'block';
 
-								var wordDocDownloadButton = document.getElementById('wordDocDownloadButton');
-								wordDocDownloadButton.style.display = 'block';
-
+								var copyBookButton = document.getElementById('copyBookButton');
+								copyBookButton.style.display = 'block';
+								
 								break;
 							default:
 								// Code to execute if chapter number doesn't match any case
@@ -879,8 +883,7 @@ require_once("user/protect.php");
 			bookTitleContent.innerHTML = '';
 
 			// Disable Reset Buttons
-			document.getElementById('resetButton').disabled = true;
-			document.getElementById('resetButton2').disabled = true;
+			disableselect();
 
 			// Hide PDF Button
 			var pdfDownloadButton = document.getElementById('pdfDownloadButton');
@@ -889,8 +892,8 @@ require_once("user/protect.php");
 			//var googleDocDownloadButton = document.getElementById('googleDocDownloadButton');
 			//googleDocDownloadButton.style.display = 'none';
 
-			var wordDocDownloadButton = document.getElementById('wordDocDownloadButton');
-			wordDocDownloadButton.style.display = 'none';
+			// var wordDocDownloadButton = document.getElementById('wordDocDownloadButton');
+			// wordDocDownloadButton.style.display = 'none';
 
 		}
 
@@ -944,49 +947,39 @@ require_once("user/protect.php");
 		document.getElementById('pdfDownloadButton').addEventListener('click', downloadWordDoc);
 
 
-		// Generate a Google Doc
-		function generateGoogleDoc() {
+		// Copy the plain text content to clipboard with preserved formatting
+		function copyToClipboard() {
 			var bookOutlineContent = document.getElementById('bookOutlineContent').innerText;
 			var chapterDivs = document.querySelectorAll('.contentWrapper.content');
 
-			// Create a hidden form to send the data to the PHP script
-			var form = document.createElement('form');
-			form.action = 'generategoogle.php'; // Replace with the appropriate PHP script for generating a Google Doc
-			form.method = 'POST';
-
-			// Add the book outline content to the form data
-			var bookOutlineInput = document.createElement('input');
-			bookOutlineInput.type = 'hidden';
-			bookOutlineInput.name = 'bookOutlineContent';
-			bookOutlineInput.value = bookOutlineContent;
-			form.appendChild(bookOutlineInput);
-
-			// Add each chapter content to the form data
-			chapterDivs.forEach(function (div, index) {
-				var chapterContentInput = document.createElement('input');
-				chapterContentInput.type = 'hidden';
-				chapterContentInput.name = 'chapterContent_' + (index + 1);
-				chapterContentInput.value = div.innerText;
-				form.appendChild(chapterContentInput);
+			// Combine the book outline content and chapter contents
+			var combinedContent = bookOutlineContent;
+			chapterDivs.forEach(function (div) {
+				combinedContent += '\n\n' + div.innerText;
 			});
 
-			// Append the form to the document body
-			document.body.appendChild(form);
+			// Create a temporary textarea element to store the plain text content
+			var textarea = document.createElement('textarea');
+			textarea.style.position = 'fixed';
+			textarea.style.opacity = '0';
+			textarea.value = combinedContent;
+			document.body.appendChild(textarea);
 
-			// Submit the form to trigger the Google Doc generation script
-			form.submit();
+			// Copy the content to clipboard
+			textarea.select();
+			document.execCommand('copy');
+			document.body.removeChild(textarea);
 
-			// Remove the form from the document
-			document.body.removeChild(form);
+			// Show modal with success message
+			showModal('Copied to Clipboard', 'eBook content successfully copied to clipboard.');
 		}
 
 		// Add click event listener to the button
-		//document.getElementById('googleDocDownloadButton').addEventListener('click', generateGoogleDoc);
+		document.getElementById('copyBookButton').addEventListener('click', copyToClipboard);
 
 
 		// Generate a Microsoft Word Doc
 		function downloadWordDoc() {
-			console.log('GENERATE WORD DOC');
 			var bookOutlineContent = document.getElementById('bookOutlineContent').innerText;
 			var chapterDivs = document.querySelectorAll('.contentWrapper.content');
 
@@ -1022,7 +1015,9 @@ require_once("user/protect.php");
 		}
 
 		// Add click event listener to the button
-		document.getElementById('wordDocDownloadButton').addEventListener('click', downloadWordDoc);
+		//document.getElementById('wordDocDownloadButton').addEventListener('click', downloadWordDoc);
+
+
 
 
 
@@ -1039,11 +1034,10 @@ require_once("user/protect.php");
 					<button class="delete jb-modal-close" aria-label="close"></button>
 				</header>
 				<section class="modal-card-body">
-					<textarea class="textarea" rows="15" id="responsedata">${content}</textarea>
+					<textarea class="textarea" rows="2" id="responsedata">${content}</textarea>
 					<div id="copy-message" class="copy-message has-text-success has-text-weight-bold has-text-centered"></div>
 				</section>
 				<footer class="modal-card-foot">
-					<button class="button is-success" id="responsebutton">Copy</button>
 					<button class="button jb-modal-close is-danger">Close</button>
 				</footer>
 				</div>
