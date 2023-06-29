@@ -1,6 +1,7 @@
 <?php
 require_once("config.php");
 require_once("user/protect.php");
+
 ?>
 
 <!doctype HTML>
@@ -300,6 +301,9 @@ require_once("user/protect.php");
 
 							<!-- Reset eBook Topic -->
 							<div class="buttons">
+								<button type="button" class="button is-link" id="pdfDownloadButton" style="display: none;">Download PDF</button>
+								<!-- <button type="button" class="button is-link is-light" id="googleDocDownloadButton" style="display: none;">Download Google Doc</button> -->
+								<button type="button" class="button is-link is-light" id="wordDocDownloadButton" style="display: none;">Download Word Doc</button>
 								<button type="button" class="button is-danger" id="resetButton2" disabled>Reset</button>
 							</div>
 
@@ -571,41 +575,42 @@ require_once("user/protect.php");
 
 		//Write Chapters 
 		function displayChapterOutput(chapter) {
-			console.log("Write Chapter " + chapter + " Button Pressed");
-			var apikey = document.getElementById('apikeystorage-modal').value;
-			var ebookTopic = document.getElementById('ebookTopic').value;
-			var bookOutlineContent = document.getElementById('bookOutlineContent').textContent;
-			var buttonName = "chapter"+chapter+"Button";
-			var button = document.getElementById(buttonName);
-			console.log('Book Outline Content:  ', bookOutlineContent);
+		console.log("Write Chapter " + chapter + " Button Pressed");
+		var apikey = document.getElementById('apikeystorage-modal').value;
+		var ebookTopic = document.getElementById('ebookTopic').value;
+		var bookOutlineContent = document.getElementById('bookOutlineContent').textContent;
+		var buttonName = "chapter" + chapter + "Button";
+		var button = document.getElementById(buttonName);
+		console.log('Book Outline Content:  ', bookOutlineContent);
 
-			// Show the loader
-			button.classList.add('is-loading');
+		// Show the loader
+		button.classList.add('is-loading');
 
-			if (bookOutlineContent.length > 10 && ebookTopic.length > 3 && apikey.length > 45) {
-				console.log("Making OpenAI API Request");
+		if (bookOutlineContent.length > 10 && ebookTopic.length > 3 && apikey.length > 45) {
+			console.log("Making OpenAI API Request");
 
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST", 'promptsebookchapter.php', true);
-				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xhr.onreadystatechange = function() {
-				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-					console.log('Response: ', JSON.parse(this.responseText));
-					const airesponse = JSON.parse(this.responseText);
-					const bookChapter = airesponse.bookChapter;
-					console.log('Chapter: ', bookChapter);	
-					
-					switch (chapter) {
-						case 1:
-							var chapterOneContent = document.getElementById('chapterOneContent');
-							chapterOneContent.innerHTML = bookChapter;
-							break;
-						case 2:
-							var chapterTwoContent = document.getElementById('chapterTwoContent');
-							var modifiedBookChapter = bookChapter.replace(/<h1>/g, '<h1 class="is-large">');
-							chapterTwoContent.insertAdjacentHTML('beforeend', modifiedBookChapter);
-							//chapterTwoContent.innerHTML = bookChapter;
-							break;
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", 'promptsebookchapter.php', true);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.onreadystatechange = function () {
+				if (this.readyState === XMLHttpRequest.DONE) {
+					if (this.status === 200) {
+						console.log('Response: ', JSON.parse(this.responseText));
+						const airesponse = JSON.parse(this.responseText);
+						const bookChapter = airesponse.bookChapter;
+						console.log('Chapter: ', bookChapter);
+
+						switch (chapter) {
+							case 1:
+								var chapterOneContent = document.getElementById('chapterOneContent');
+								chapterOneContent.innerHTML = bookChapter;
+
+								break;
+							case 2:
+								var chapterTwoContent = document.getElementById('chapterTwoContent');
+								chapterTwoContent.innerHTML = bookChapter;
+
+								break;
 						case 3:
 							var chapterThreeContent = document.getElementById('chapterThreeContent');
 							chapterThreeContent.innerHTML = bookChapter;
@@ -634,56 +639,68 @@ require_once("user/protect.php");
 							var chapterNineContent = document.getElementById('chapterNineContent');
 							chapterNineContent.innerHTML = bookChapter;
 							break;
-						case 10:
-							document.getElementById('chapter10Button').classList.remove('is-loading');
-							var chapterTenContent = document.getElementById('chapterTenContent');
-							chapterTenContent.innerHTML = bookChapter;
-							break;
-						default:
-							// Code to execute if chapter number doesn't match any case
-							break;
+							case 10:
+								document.getElementById('chapter10Button').classList.remove('is-loading');
+								var chapterTenContent = document.getElementById('chapterTenContent');
+								chapterTenContent.innerHTML = bookChapter;
+
+								var pdfDownloadButton = document.getElementById('pdfDownloadButton');
+								pdfDownloadButton.style.display = 'block';
+
+								//var googleDocDownloadButton = document.getElementById('googleDocDownloadButton');
+								//googleDocDownloadButton.style.display = 'block';
+
+								var wordDocDownloadButton = document.getElementById('wordDocDownloadButton');
+								wordDocDownloadButton.style.display = 'block';
+
+								break;
+							default:
+								// Code to execute if chapter number doesn't match any case
+								break;
+						}
+
+						chapter = chapter + 1;
+
+						if (chapter < 11) {
+							var sectionName = "chapter" + chapter + "Section";
+							var buttonName = "chapter" + chapter + "Button";
+
+							var chapterSection = document.getElementById(sectionName);
+							chapterSection.style.display = 'block';
+
+							var chapterButton = document.getElementById(buttonName);
+							chapterButton.style.display = 'block';
+						}
+
+						// Hide the loader-wrapper and loader by setting their display property to "none"
+						button.classList.remove('is-loading');
+						button.disabled = true;
+					} else {
+						console.error('Error: ', this.responseText); // Log the error response
+						showPromptAPIKeyErrorModal('API Error', 'Failed to generate book chapter. Please try again later.'); // Show error modal
+						button.classList.remove('is-loading'); // Remove loader state
+						button.disabled = false; // Enable the button
 					}
-
-					chapter = chapter + 1
-
-					if(chapter < 11) {
-						var sectionName = "chapter"+chapter+"Section";
-						var buttonName = "chapter"+chapter+"Button";
-
-						var chapterSection = document.getElementById(sectionName);
-						chapterSection.style.display = 'block';
-
-						var chapterButton = document.getElementById(buttonName);
-						chapterButton.style.display = 'block';
-						
-					}
-					
-
-					// Hide the loader-wrapper and loader by setting their display property to "none"
-					button.classList.remove('is-loading');
-					button.disabled = true;
-					
 				}
-			}
+			};
 
-				const data = "chapter=" + encodeURIComponent(chapter) + "&ebookTopic=" + encodeURIComponent(ebookTopic) + "&bookOutlineText=" + encodeURIComponent(bookOutlineContent);
-				console.log('Data: ', data);
-				xhr.send(data);
-
-			} else if (apikey.length < 45) {
-				showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key.  Please enter a valid API Key.');
-				enableselect();
-			} else if (bookOutlineText.length < 1) {
-				showPromptAPIKeyErrorModal('Book Outline Error', 'No Book Outline.  Please enter an eBook Topic to generate an outline.');
-				enableselect();
-			} else if (ebookTopic.length < 1) {
-				showPromptAPIKeyErrorModal('eBook Topic Error', 'No eBook Topic entered.  Please enter an eBook Topic, and generate titles and outline.');
-			} else {
-				showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt.  Please enter a valid prompt and try again.');
-				enableselect();
-			}
-
+			const data = "chapter=" + encodeURIComponent(chapter) + "&ebookTopic=" + encodeURIComponent(ebookTopic) + "&bookOutlineText=" + encodeURIComponent(bookOutlineContent);
+			console.log('Data: ', data);
+			xhr.send(data);
+		} else if (apikey.length < 45) {
+			showPromptAPIKeyErrorModal('API Key Error', 'Invalid API Key. Please enter a valid API Key.');
+			enableselect();
+		} else if (bookOutlineContent.length < 1) {
+			showPromptAPIKeyErrorModal('Book Outline Error', 'No Book Outline. Please enter an eBook Topic to generate an outline.');
+			enableselect();
+		} else if (ebookTopic.length < 1) {
+			showPromptAPIKeyErrorModal('eBook Topic Error', 'No eBook Topic entered. Please enter an eBook Topic, and generate titles and outline.');
+		} else {
+			showPromptAPIKeyErrorModal('Prompt Error', 'Invalid Prompt. Please enter a valid prompt and try again.');
+			enableselect();
 		}
+	}
+
 
 
 		document.addEventListener("DOMContentLoaded", function() {
@@ -865,6 +882,16 @@ require_once("user/protect.php");
 			document.getElementById('resetButton').disabled = true;
 			document.getElementById('resetButton2').disabled = true;
 
+			// Hide PDF Button
+			var pdfDownloadButton = document.getElementById('pdfDownloadButton');
+			pdfDownloadButton.style.display = 'none';
+
+			//var googleDocDownloadButton = document.getElementById('googleDocDownloadButton');
+			//googleDocDownloadButton.style.display = 'none';
+
+			var wordDocDownloadButton = document.getElementById('wordDocDownloadButton');
+			wordDocDownloadButton.style.display = 'none';
+
 		}
 
 		// Add event listener to Reset button
@@ -874,6 +901,128 @@ require_once("user/protect.php");
 		var resetButton2 = document.getElementById('resetButton2');
 		resetButton2.addEventListener('click', resetContent);
 
+
+		// Generate a PDF
+		function downloadPDF() {
+			var bookOutlineContent = document.getElementById('bookOutlineContent').innerText;
+			var chapterDivs = document.querySelectorAll('.contentWrapper.content');
+
+			// Create a hidden form to send the data to the PHP script
+			var form = document.createElement('form');
+			form.action = 'generatepdf.php';
+			form.method = 'POST';
+
+			// Add the book outline content to the form data
+			// var bookOutlineInput = document.createElement('input');
+			// bookOutlineInput.type = 'hidden';
+			// bookOutlineInput.name = 'bookOutlineContent';
+			// bookOutlineInput.value = bookOutlineContent;
+			// form.appendChild(bookOutlineInput);
+
+			// Add each chapter content to the form data
+			chapterDivs.forEach(function (div, index) {
+				var chapterContentInput = document.createElement('input');
+				chapterContentInput.type = 'hidden';
+				chapterContentInput.name = 'chapterContent_' + (index + 1);
+				chapterContentInput.value = div.innerText;
+				console.log("To PDF: ", chapterContentInput);
+				form.appendChild(chapterContentInput);
+			});
+
+			// Append the form to the document body
+			document.body.appendChild(form);
+
+			// Submit the form to trigger the PDF generation script
+			form.submit();
+
+			// Remove the form from the document
+			document.body.removeChild(form);
+		}
+
+
+		// Add click event listener to the button
+		document.getElementById('pdfDownloadButton').addEventListener('click', downloadWordDoc);
+
+
+		// Generate a Google Doc
+		function generateGoogleDoc() {
+			var bookOutlineContent = document.getElementById('bookOutlineContent').innerText;
+			var chapterDivs = document.querySelectorAll('.contentWrapper.content');
+
+			// Create a hidden form to send the data to the PHP script
+			var form = document.createElement('form');
+			form.action = 'generategoogle.php'; // Replace with the appropriate PHP script for generating a Google Doc
+			form.method = 'POST';
+
+			// Add the book outline content to the form data
+			var bookOutlineInput = document.createElement('input');
+			bookOutlineInput.type = 'hidden';
+			bookOutlineInput.name = 'bookOutlineContent';
+			bookOutlineInput.value = bookOutlineContent;
+			form.appendChild(bookOutlineInput);
+
+			// Add each chapter content to the form data
+			chapterDivs.forEach(function (div, index) {
+				var chapterContentInput = document.createElement('input');
+				chapterContentInput.type = 'hidden';
+				chapterContentInput.name = 'chapterContent_' + (index + 1);
+				chapterContentInput.value = div.innerText;
+				form.appendChild(chapterContentInput);
+			});
+
+			// Append the form to the document body
+			document.body.appendChild(form);
+
+			// Submit the form to trigger the Google Doc generation script
+			form.submit();
+
+			// Remove the form from the document
+			document.body.removeChild(form);
+		}
+
+		// Add click event listener to the button
+		//document.getElementById('googleDocDownloadButton').addEventListener('click', generateGoogleDoc);
+
+
+		// Generate a Microsoft Word Doc
+		function downloadWordDoc() {
+			console.log('GENERATE WORD DOC');
+			var bookOutlineContent = document.getElementById('bookOutlineContent').innerText;
+			var chapterDivs = document.querySelectorAll('.contentWrapper.content');
+
+			// Create a hidden form to send the data to the PHP script
+			var form = document.createElement('form');
+			form.action = 'generateword.php'; // Replace with the appropriate PHP script for generating a Word Doc
+			form.method = 'POST';
+
+			// Add the book outline content to the form data
+			var bookOutlineInput = document.createElement('input');
+			bookOutlineInput.type = 'hidden';
+			bookOutlineInput.name = 'bookOutlineContent';
+			bookOutlineInput.value = bookOutlineContent;
+			form.appendChild(bookOutlineInput);
+
+			// Add each chapter content to the form data
+			chapterDivs.forEach(function (div, index) {
+				var chapterContentInput = document.createElement('input');
+				chapterContentInput.type = 'hidden';
+				chapterContentInput.name = 'chapterContent_' + (index + 1);
+				chapterContentInput.value = div.innerText;
+				form.appendChild(chapterContentInput);
+			});
+
+			// Append the form to the document body
+			document.body.appendChild(form);
+
+			// Submit the form to trigger the Word Doc generation script
+			form.submit();
+
+			// Remove the form from the document
+			document.body.removeChild(form);
+		}
+
+		// Add click event listener to the button
+		document.getElementById('wordDocDownloadButton').addEventListener('click', downloadWordDoc);
 
 
 
