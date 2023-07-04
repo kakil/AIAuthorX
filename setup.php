@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_logins` bigint(20) NOT NULL,
   `user_apikey` varchar(255) NOT NULL,
   `user_status` int(11) NOT NULL,
+  `license_key` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_email` (`user_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;

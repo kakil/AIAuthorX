@@ -31,6 +31,12 @@ class Users {
     return $this->stmt->fetch();
   }
 
+  function getLicenseKey($id) {
+    $this->query("SELECT `license_key` FROM `users` WHERE `user_id`=?", [$id]);
+    $result = $this->stmt->fetchColumn();
+    return $result ? $result : null;
+  }
+
   
   function login ($email, $password) {
   
@@ -60,17 +66,17 @@ class Users {
   }
 
   
-  function save ($name, $email, $pass, $id=null) {
+  function save ($name, $email, $pass, $licenseKey, $id=null) {
   
 	$nowtime=time();
 	
     if ($id===null) {
-      $sql = "INSERT INTO `users` (`user_name`, `user_email`, `user_password`,`user_creation`,`user_lastlogin`,`user_logins`,`user_apikey`,`user_status`) VALUES (?,?,?,?,?,?,?,?)";
-      $data = [$name, $email, password_hash($pass, PASSWORD_DEFAULT),$nowtime,$nowtime,0,"",1];
+      $sql = "INSERT INTO `users` (`user_name`, `user_email`, `user_password`,`user_creation`,`user_lastlogin`,`user_logins`,`user_apikey`,`user_status`, `license_key`) VALUES (?,?,?,?,?,?,?,?,?)";
+      $data = [$name, $email, password_hash($pass, PASSWORD_DEFAULT),$nowtime,$nowtime,0,"",1, $licenseKey];
 	
     } else {
-      $sql = "UPDATE `users` SET `user_name`=?, `user_email`=?, `user_password`=? WHERE `user_id`=?";
-      $data = [$name, $email, password_hash($pass, PASSWORD_DEFAULT), $id];
+      $sql = "UPDATE `users` SET `user_name`=?, `user_email`=?, `user_password`=?, `license_key`=? WHERE `user_id`=?";
+      $data = [$name, $email, password_hash($pass, PASSWORD_DEFAULT), $licenseKey, $id];
     }
 
     

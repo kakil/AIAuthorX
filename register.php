@@ -1,24 +1,69 @@
 <?php
 
-// Check for cart system payment here and redirect if not applicable
+  // Load environment variables
+  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+  $dotenv->load();
 
-session_start();
-if (isset($_POST["email"]) && trim($_POST["password"])!="" && trim($_POST["name"]!="")) {
-	require_once "user/user-lib.php";
-	$isusr=$USR->get($_POST["email"]);
-	if (!is_array($isusr)) {  
-		$USR->save(trim ($_POST["name"]), trim($_POST["email"]),trim($_POST["password"]));
-		header("Location: login.php?new=1");
-	} 
-	
-	
-}
+  // Access environment variables
+  $apiKey = $_ENV['PRODUCTDYNO_API_KEY'];
+  $licenseVerifyURL = $_ENV['PRODUCTDYNO_ACTIVATE_LICENSE_URL'];
+
+  // Check for cart system payment here and redirect if not applicable
+
+  session_start();
+  if (isset($_POST["email"]) && trim($_POST["password"]) != "" && trim($_POST["name"] != "")) {
+      require_once "user/user-lib.php";
+      $isusr = $USR->get($_POST["email"]);
+      if (!is_array($isusr)) {
+        
+          // Verify the license
+          $licenseKey = $_POST["license"];
+          //$apiKey = "b3b3b6db9e0ad0f88588abbb5779f16c"; // Replace with your actual API key
+          $guid = "pagepilotpro.com"; // Replace with the user's GUID
+          //$licenseVerifyURL = "https://app.productdyno.com/api/v1/licenses/activate";
+
+          $requestData = [
+              "_api_key" => $apiKey,
+              "license_key" => $licenseKey,
+              "guid" => $guid
+          ];
+
+          // Send a POST request to verify the license
+          $ch = curl_init($licenseVerifyURL);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_POST, true);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $requestData);
+          $response = curl_exec($ch);
+          curl_close($ch);
+
+          $responseData = json_decode($response, true);
+          //var_dump('Response Data', $responseData);
+          if (isset($responseData["license_key"]) && isset($responseData["activated_at"])) {
+
+              // License verified, save the user details
+              $USR->save(trim($_POST["name"]), trim($_POST["email"]), trim($_POST["password"]), trim($_POST["license"]));
+              // Save the license to the database
+              $licenseKey = $responseData["license_key"];
+              $USR->saveapi($licenseKey, $_POST["email"]);
+
+              // store license in session
+              $_SESSION["license_key"] = $licenseKey;
+
+              header("Location: login.php?new=1");
+          } else {
+              // License verification failed
+              //var_dump('Failed');
+              $invalidLicenseKey = true;
+
+          }
+      }
+  }
 
 
-if (isset($_SESSION["user"])) {
-	header("Location: go.php");
-	exit();
-}
+  if (isset($_SESSION["user"])) {
+      header("Location: go.php");
+      exit();
+  }
 
 ?>
 
@@ -37,6 +82,7 @@ if (isset($_SESSION["user"])) {
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css"> 
     <!-- <script src="admintable.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <div id="app">
@@ -108,10 +154,10 @@ if (isset($_SESSION["user"])) {
         </div>
       </aside>
       <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-4">
-            <form id="login" method="post">
+        <div class="container">
+          <div class="columns is-centered">
+            <div class="column is-4">
+              <form id="login" method="post">
               <figure class="image">
                 <img class="center" style="max-width:100%; height:auto;" src="img/logo.png">
               </figure>
@@ -135,29 +181,77 @@ if (isset($_SESSION["user"])) {
                 </div>
               </div>
               <div class="field">
+                <label class="label">License Key</label>
+                <div class="control">
+                  <input class="input" type="text" name="license" placeholder="License Key" required>
+                </div>
+              </div>
+              <div class="field">
                 <div class="control">
                   <input class="button is-link is-fullwidth" type="submit" value="Create Account">
                 </div>
               </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
    
-    <footer class="footer">
-		<div class="content has-text-centered">
+      <footer class="footer">
+        <div class="content has-text-centered">
 			<p>
 				<?php echo($footer); ?>
 			</p>
-		</div>
-	</footer>
+        </div>
+      </footer>
 
-    <!-- Scripts below are for demo only -->
-    <script type="text/javascript" src="js/main.min.js"></script>
+      <!-- Scripts below are for demo only -->
+      <script type="text/javascript" src="js/main.min.js"></script>
 
-    <!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
+      <!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
+      <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
 
+      <script>
+        <?php if (isset($invalidLicenseKey) && $invalidLicenseKey): ?>
+          document.addEventListener("DOMContentLoaded", function() {
+            showInvalidLicenseModal("Invalid License Key", "Please enter a valid license key.");
+          });
+        <?php endif; ?>
+
+        function showInvalidLicenseModal(title, content) {
+          // Hide the loader when the modal is created
+          $('.loader-wrapper').css('display', 'none');
+
+          var modal = document.createElement('div');
+          modal.className = 'modal is-active';
+          modal.innerHTML = `
+            <div class="modal-background jb-modal-close"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">${title}</p>
+                <button class="delete jb-modal-close" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body">
+                <p class="has-text-danger has-text-weight-bold">${content}</p>
+              </section>
+              <footer class="modal-card-foot">
+                <button class="button jb-modal-close is-danger">Close</button>
+              </footer>
+            </div>
+            <button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+          `;
+
+          document.body.appendChild(modal);
+
+          Array.from(modal.getElementsByClassName('jb-modal-close')).forEach(function (el) {
+            el.addEventListener('click', function (e) {
+              e.currentTarget.closest('.modal').classList.remove('is-active');
+              document.documentElement.classList.remove('is-clipped');
+              document.body.removeChild(modal);
+            });
+          });
+        }
+      </script>
+    </div>
   </body>
 </html>

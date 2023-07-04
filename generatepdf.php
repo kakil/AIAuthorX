@@ -28,5 +28,5 @@ foreach ($chapterContents as $chapterContent) {
 }
 
 // Output the PDF as a download
-$pdf->Output('book_content.pdf', 'D');
+$pdf->Output('PagePilotEbook.pdf', 'D');
 
